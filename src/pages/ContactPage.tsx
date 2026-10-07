@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Phone, Mail, Globe, MapPin, CheckCircle, MailCheck } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  ClipboardCheck,
+  Globe,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Route,
+  Send,
+} from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
 
 interface ContactPageProps {
@@ -7,8 +18,30 @@ interface ContactPageProps {
   onOpenQuoteModal: () => void;
 }
 
+const Eyebrow = ({
+  children,
+  light = false,
+}: {
+  children: React.ReactNode;
+  light?: boolean;
+}) => (
+  <div
+    className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
+      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+    }`}
+  >
+    <span className="h-[2px] w-8 bg-[#c9a227]" />
+    <span>{children}</span>
+  </div>
+);
+
+const inputClass =
+  'w-full border border-slate-300 bg-white px-3.5 py-3 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]';
+
+const labelClass =
+  'mb-1.5 block text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#071a33]';
+
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
-  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     companyName: '',
@@ -16,458 +49,439 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
     phone: '',
     origin: '',
     destination: '',
-    mode: 'Ocean Freight',
+    mode: 'Ocean',
     type: 'FCL',
     incoterm: 'FOB',
     cargoDetails: '',
-    message: ''
+    message: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    const subject = encodeURIComponent(
+      `Shipment Enquiry - ${formData.companyName || formData.fullName}`
+    );
+
+    const body = encodeURIComponent(
+      [
+        `Full Name: ${formData.fullName}`,
+        `Company Name: ${formData.companyName}`,
+        `Email: ${formData.email}`,
+        `Phone / WhatsApp: ${formData.phone}`,
+        `Origin - POL: ${formData.origin}`,
+        `Destination - POD: ${formData.destination}`,
+        `Shipment Mode: ${formData.mode}`,
+        `Shipment Type: ${formData.type}`,
+        `Incoterm: ${formData.incoterm}`,
+        `Cargo Details: ${formData.cargoDetails || '-'}`,
+        `Message: ${formData.message || '-'}`,
+      ].join('\n')
+    );
+
+    window.location.href = `mailto:sales@averonfs.com?subject=${subject}&body=${body}`;
   };
 
+  const nextSteps = [
+    {
+      num: '01',
+      title: 'Share Your Requirement',
+      desc: 'Send the route, cargo and service information available for your shipment.',
+      icon: Send,
+    },
+    {
+      num: '02',
+      title: 'Requirement Review',
+      desc: 'The Averon team reviews the shipment details and coordinates the suitable freight approach.',
+      icon: ClipboardCheck,
+    },
+    {
+      num: '03',
+      title: 'Coordinate the Next Step',
+      desc: 'Move forward with quotation, documentation and shipment coordination as required.',
+      icon: Route,
+    },
+  ];
+
   return (
-    <div className="bg-white font-sans text-slate-800">
-      
-      {/* PAGE HERO HEADER */}
-      <section className="relative bg-[#071627] text-white py-16 lg:py-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=1600" 
-            alt="Contact Container Terminal" 
-            className="w-full h-full object-cover opacity-25"
+    <div className="bg-white text-[#14263d]">
+      {/* HERO */}
+      <section className="relative min-h-[420px] overflow-hidden bg-[#071a33] text-white">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
+            alt="International cargo terminal"
+            className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#071627] via-[#071627]/90 to-transparent"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.92)_44%,rgba(7,26,51,.62)_74%,rgba(7,26,51,.34)_100%)]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-xs font-mono text-slate-400 mb-3 flex items-center space-x-2">
-            <span className="hover:text-white cursor-pointer" onClick={() => onNavigate('home')}>Home</span>
-            <span>/</span>
-            <span className="text-[#d9a74a] font-bold">Contact Us</span>
+        <div className="relative z-10 mx-auto flex min-h-[420px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
+          <div className="max-w-[780px]">
+            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+              <button
+                type="button"
+                onClick={() => onNavigate('home')}
+                className="transition hover:text-white"
+              >
+                Home
+              </button>
+              <span>/</span>
+              <span className="text-[#d4af37]">Contact Us</span>
+            </div>
+
+            <Eyebrow light>Contact Averon</Eyebrow>
+
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[58px]">
+              Tell Us About Your Shipment
+            </h1>
+
+            <p className="mt-5 max-w-[700px] text-base leading-7 text-slate-200 sm:text-lg">
+              Share your shipment requirements with our team and we will work with you on a suitable logistics solution.
+            </p>
           </div>
-
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#d9a74a] block mb-2">
-            CONTACT AVERON
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-serif">
-            Tell Us About Your Shipment
-          </h1>
-
-          <p className="text-xs sm:text-sm text-slate-300 font-normal max-w-2xl mt-3 leading-relaxed">
-            Share your shipment requirements with our team and we will work with you on a suitable logistics solution.
-          </p>
         </div>
       </section>
 
-      {/* REQUEST A QUOTE & CONTACT FORM SECTION */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+      {/* QUOTE FORM + CONTACT */}
+      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332] block mb-1">
-                REQUEST A QUOTE
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-[#0b1f3a] font-serif">
-                Start With Your Shipment Details.
+              <Eyebrow>Request a Quote</Eyebrow>
+              <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
+                Start With Your Shipment Details
               </h2>
             </div>
-            <p className="text-xs text-slate-500 max-w-md leading-relaxed">
+
+            <p className="max-w-[520px] text-sm leading-6 text-slate-600">
               Provide the information available to you. Our team can use it to understand the route, cargo and service requirement before coordinating the next step.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            
-            {/* Left Form Box */}
-            <div className="lg:col-span-7 bg-white p-8 rounded-lg border border-slate-200 shadow-sm space-y-6">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332] block">
-                SHIPMENT ENQUIRY
-              </span>
+          <div className="grid gap-8 lg:grid-cols-12">
+            <form
+              onSubmit={handleSubmit}
+              className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8"
+            >
+              <div className="mb-7 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#b88924]">
+                Shipment Enquiry
+              </div>
 
-              {submitted ? (
-                <div className="p-8 bg-emerald-50 border border-emerald-200 rounded-lg text-center space-y-4">
-                  <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">Enquiry Submitted Successfully!</h3>
-                  <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out, <strong className="text-slate-900">{formData.fullName || 'Valued Partner'}</strong>. Our specialized freight forwarding desk is reviewing your requirements from <strong className="text-slate-900">{formData.origin || 'POL'}</strong> to <strong className="text-slate-900">{formData.destination || 'POD'}</strong>.
-                  </p>
-                  <p className="text-xs text-emerald-800 font-semibold bg-emerald-100/60 p-2 rounded">
-                    We will get back to you at {formData.email} or {formData.phone} shortly.
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="px-6 py-2 bg-[#0b1f3a] text-white font-bold text-xs uppercase rounded hover:bg-[#102a4e]"
-                  >
-                    Submit Another Inquiry
-                  </button>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className={labelClass}>Full Name *</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Your full name"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className={inputClass}
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        FULL NAME *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        placeholder="Your full name"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        COMPANY NAME *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        placeholder="Company name"
-                        value={formData.companyName}
-                        onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
-                  </div>
+                <div>
+                  <label className={labelClass}>Company Name *</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Company name"
+                    value={formData.companyName}
+                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        EMAIL *
-                      </label>
-                      <input
-                        required
-                        type="email"
-                        placeholder="name@company.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
+                <div>
+                  <label className={labelClass}>Email *</label>
+                  <input
+                    required
+                    type="email"
+                    placeholder="name@company.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        PHONE / WHATSAPP *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        placeholder="+91 Phone number"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
-                  </div>
+                <div>
+                  <label className={labelClass}>Phone / WhatsApp *</label>
+                  <input
+                    required
+                    type="tel"
+                    placeholder="+91"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        ORIGIN – POL *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        placeholder="Origin / port of loading"
-                        value={formData.origin}
-                        onChange={(e) => setFormData({...formData, origin: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
+                <div>
+                  <label className={labelClass}>Origin – POL *</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Origin / port of loading"
+                    value={formData.origin}
+                    onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        DESTINATION – POD *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        placeholder="Destination / port of discharge"
-                        value={formData.destination}
-                        onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
-                  </div>
+                <div>
+                  <label className={labelClass}>Destination – POD *</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Destination / port of discharge"
+                    value={formData.destination}
+                    onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        SHIPMENT MODE
-                      </label>
-                      <select
-                        value={formData.mode}
-                        onChange={(e) => setFormData({...formData, mode: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                      >
-                        <option value="Ocean Freight">Ocean / Air / Road</option>
-                        <option value="Ocean Freight">Ocean Freight</option>
-                        <option value="Air Freight">Air Freight</option>
-                        <option value="Road Freight">Road Freight</option>
-                      </select>
-                    </div>
+                <div>
+                  <label className={labelClass}>Shipment Mode</label>
+                  <select
+                    value={formData.mode}
+                    onChange={(e) => setFormData({ ...formData, mode: e.target.value })}
+                    className={inputClass}
+                  >
+                    <option>Ocean</option>
+                    <option>Air</option>
+                    <option>Road</option>
+                  </select>
+                </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        SHIPMENT TYPE
-                      </label>
-                      <select
-                        value={formData.type}
-                        onChange={(e) => setFormData({...formData, type: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                      >
-                        <option value="FCL">FCL / LCL / Air Cargo / Other</option>
-                        <option value="FCL">Full Container Load (FCL)</option>
-                        <option value="LCL">Less Container Load (LCL)</option>
-                        <option value="Air Freight">Air Freight</option>
-                      </select>
-                    </div>
-                  </div>
+                <div>
+                  <label className={labelClass}>Shipment Type</label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className={inputClass}
+                  >
+                    <option>FCL</option>
+                    <option>LCL</option>
+                    <option>Air Cargo</option>
+                    <option>Other</option>
+                  </select>
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        INCOTERM
-                      </label>
-                      <select
-                        value={formData.incoterm}
-                        onChange={(e) => setFormData({...formData, incoterm: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                      >
-                        <option value="FOB">EXW / FOB / CIF / DDP / Other</option>
-                        <option value="FOB">FOB</option>
-                        <option value="CIF">CIF</option>
-                        <option value="EXW">EXW</option>
-                        <option value="DDP">DDP</option>
-                      </select>
-                    </div>
+                <div>
+                  <label className={labelClass}>Incoterm</label>
+                  <select
+                    value={formData.incoterm}
+                    onChange={(e) => setFormData({ ...formData, incoterm: e.target.value })}
+                    className={inputClass}
+                  >
+                    <option>EXW</option>
+                    <option>FOB</option>
+                    <option>CIF</option>
+                    <option>DDP</option>
+                    <option>Other</option>
+                  </select>
+                </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        CARGO DETAILS
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Commodity, packages, weight, volume, dimensions"
-                        value={formData.cargoDetails}
-                        onChange={(e) => setFormData({...formData, cargoDetails: e.target.value})}
-                        className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                      />
-                    </div>
-                  </div>
+                <div>
+                  <label className={labelClass}>Cargo Details</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Commodity, packages, weight, volume, dimensions if available"
+                    value={formData.cargoDetails}
+                    onChange={(e) => setFormData({ ...formData, cargoDetails: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
 
-                  <div>
-                    <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                      MESSAGE
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Additional requirements"
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                    ></textarea>
-                  </div>
+                <div className="sm:col-span-2">
+                  <label className={labelClass}>Message</label>
+                  <textarea
+                    rows={4}
+                    placeholder="Optional additional requirements"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
 
-                  <div className="pt-2 flex flex-wrap gap-3">
-                    <button
-                      type="submit"
-                      className="px-6 py-3 bg-[#d9a74a] hover:bg-[#c89332] text-slate-950 font-bold uppercase tracking-wider rounded transition-colors"
-                    >
-                      REQUEST A QUOTE →
-                    </button>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <button
+                  type="submit"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+                >
+                  REQUEST A QUOTE
+                  <ArrowRight className="h-4 w-4" />
+                </button>
 
-                    <a
-                      href="tel:+919833464629"
-                      className="px-6 py-3 bg-[#0b1f3a] hover:bg-[#102a4e] text-white font-bold uppercase tracking-wider rounded transition-colors inline-flex items-center space-x-2"
-                    >
-                      <Phone className="w-3.5 h-3.5 text-[#d9a74a]" />
-                      <span>CALL OUR TEAM</span>
-                    </a>
-                  </div>
+                <a
+                  href="tel:+919833464629"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#071a33] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#0b2342]"
+                >
+                  <Phone className="h-4 w-4 text-[#d4af37]" />
+                  CALL OUR TEAM
+                </a>
+              </div>
+            </form>
 
-                </form>
-              )}
-            </div>
-
-            {/* Right Contact Cards Column */}
-            <div className="lg:col-span-5 space-y-6">
-              
-              {/* Talk to Our Team Navy Box */}
-              <div className="bg-[#08182b] text-white p-7 rounded-lg shadow-md space-y-6 border border-slate-800">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#d9a74a] block">
-                  DIRECT CONTACT
-                </span>
-
-                <h3 className="text-2xl font-black text-white font-serif">
-                  Talk to Our Team
-                </h3>
-
-                <p className="text-xs text-slate-300 leading-relaxed">
+            <div className="space-y-6 lg:col-span-4">
+              <div className="bg-[#071a33] p-7 text-white shadow-[0_18px_45px_rgba(7,26,51,.16)]">
+                <Eyebrow light>Direct Contact</Eyebrow>
+                <h3 className="text-2xl font-extrabold">Talk to Our Team</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">
                   For shipment enquiries, quotations and logistics coordination, contact Averon Freight Solutions directly.
                 </p>
 
-                <div className="space-y-4 text-xs pt-2 border-t border-slate-800">
-                  <div className="flex items-start space-x-3">
-                    <Phone className="w-4 h-4 text-[#d9a74a] mt-0.5 shrink-0" />
+                <div className="mt-6 space-y-5 border-t border-white/10 pt-6 text-sm">
+                  <div className="flex items-start gap-3">
+                    <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#d4af37]" />
                     <div>
-                      <a href="tel:+919833464629" className="block hover:text-[#d9a74a] font-bold">+91 98334 64629</a>
-                      <a href="tel:+919833464627" className="block hover:text-[#d9a74a] font-bold">+91 9833464627</a>
+                      {COMPANY_INFO.phones.map((phone) => (
+                        <a
+                          key={phone}
+                          href={`tel:${phone.replace(/\s/g, '')}`}
+                          className="block font-semibold text-white transition hover:text-[#d4af37]"
+                        >
+                          {phone}
+                        </a>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3">
-                    <Mail className="w-4 h-4 text-[#d9a74a] mt-0.5 shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#d4af37]" />
                     <div>
-                      <a href="mailto:info@averonfs.com" className="block hover:text-[#d9a74a]">info@averonfs.com</a>
-                      <a href="mailto:sales@averonfs.com" className="block hover:text-[#d9a74a]">sales@averonfs.com</a>
+                      {COMPANY_INFO.emails.map((email) => (
+                        <a
+                          key={email}
+                          href={`mailto:${email}`}
+                          className="block text-slate-200 transition hover:text-[#d4af37]"
+                        >
+                          {email}
+                        </a>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <Globe className="w-4 h-4 text-[#d9a74a] shrink-0" />
-                    <a href={`https://${COMPANY_INFO.website}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#d9a74a] font-mono">
+                  <div className="flex items-center gap-3">
+                    <Globe className="h-4 w-4 shrink-0 text-[#d4af37]" />
+                    <a
+                      href={`https://${COMPANY_INFO.website}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-slate-200 transition hover:text-[#d4af37]"
+                    >
                       {COMPANY_INFO.website}
                     </a>
                   </div>
 
-                  <div className="pt-2">
-                    <a 
-                      href={COMPANY_INFO.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center p-2.5 bg-slate-800 hover:bg-[#d9a74a] hover:text-slate-900 rounded transition-colors text-slate-200"
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-                      </svg>
-                    </a>
-                  </div>
+                  <a
+                    href={COMPANY_INFO.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Averon Freight Solutions on LinkedIn"
+                    className="inline-flex h-10 w-10 items-center justify-center border border-white/15 text-slate-200 transition hover:border-[#c9a227] hover:text-[#d4af37]"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
 
-              {/* Office Image Location Box */}
-              <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
-                <img 
-                  src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=500&w=800" 
-                  alt="Averon Mumbai Office Location" 
-                  className="w-full h-44 object-cover"
+              <div className="overflow-hidden border border-slate-200 bg-white">
+                <img
+                  src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900"
+                  alt="Mumbai freight and logistics visual"
+                  loading="lazy"
+                  className="h-44 w-full object-cover"
                 />
-                <div className="p-5 space-y-2">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#c89332] font-bold block">
-                    OFFICE
-                  </span>
-                  <h4 className="text-sm font-bold text-[#0b1f3a]">
+
+                <div className="p-6">
+                  <div className="text-[10px] font-extrabold uppercase tracking-[0.17em] text-[#b88924]">
+                    Office
+                  </div>
+                  <h4 className="mt-2 text-sm font-extrabold text-[#071a33]">
                     Averon Freight Solutions LLP
                   </h4>
-                  <div className="flex items-start space-x-2 text-xs text-slate-600">
-                    <MapPin className="w-3.5 h-3.5 text-[#c89332] mt-0.5 shrink-0" />
-                    <p className="leading-snug">
-                      Office No. 404, 4th Floor, Dev Milan Co-operative Premises Society, Above Woodland Retreat, LBS Marg, Near Tip Top Plaza, Thane West – 400604, Mumbai, Maharashtra, India.
-                    </p>
+
+                  <div className="mt-3 flex items-start gap-2 text-xs leading-5 text-slate-600">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b88924]" />
+                    <p>{COMPANY_INFO.address}</p>
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </section>
 
       {/* WHAT HAPPENS NEXT */}
-      <section className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332]">
-              WHAT HAPPENS NEXT
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#0b1f3a] font-serif">
-              From Enquiry to the Right Logistics Solution.
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <Eyebrow>What Happens Next</Eyebrow>
+            <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
+              From Enquiry to the Right Logistics Solution
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="mt-4 text-sm leading-6 text-slate-600">
               A simple, coordinated first step to understand the shipment and move the conversation forward.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div className="p-6 bg-slate-50 border border-slate-200 rounded space-y-3">
-              <div className="w-10 h-10 rounded-full border border-[#d9a74a] bg-amber-50 flex items-center justify-center text-[#c89332]">
-                <MailCheck className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-mono font-bold text-[#c89332] block">01</span>
-              <h3 className="text-sm font-extrabold text-[#0b1f3a]">Share Your Requirement</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Send the route, cargo and service information available for your shipment.
-              </p>
-            </div>
+          <div className="grid gap-px overflow-hidden border border-slate-200 bg-slate-200 md:grid-cols-3">
+            {nextSteps.map((step) => {
+              const Icon = step.icon;
 
-            <div className="p-6 bg-slate-50 border border-slate-200 rounded space-y-3">
-              <div className="w-10 h-10 rounded-full border border-[#d9a74a] bg-amber-50 flex items-center justify-center text-[#c89332]">
-                <CheckCircle className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-mono font-bold text-[#c89332] block">02</span>
-              <h3 className="text-sm font-extrabold text-[#0b1f3a]">Requirement Review</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                The Averon team reviews the shipment details and coordinates the suitable freight approach.
-              </p>
-            </div>
+              return (
+                <article key={step.num} className="bg-white p-7">
+                  <div className="flex items-center justify-between">
+                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-2xl font-extrabold text-[#c9a227]">{step.num}</span>
+                  </div>
 
-            <div className="p-6 bg-slate-50 border border-slate-200 rounded space-y-3">
-              <div className="w-10 h-10 rounded-full border border-[#d9a74a] bg-amber-50 flex items-center justify-center text-[#c89332]">
-                <Globe className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-mono font-bold text-[#c89332] block">03</span>
-              <h3 className="text-sm font-extrabold text-[#0b1f3a]">Coordinate the Next Step</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Move forward with quotation, documentation and shipment coordination as required.
-              </p>
-            </div>
-
+                  <h3 className="mt-6 text-base font-extrabold text-[#071a33]">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{step.desc}</p>
+                </article>
+              );
+            })}
           </div>
-
         </div>
       </section>
 
-      {/* CTA BANNER */}
-      <section className="relative py-16 bg-[#08182b] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="space-y-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#d9a74a] font-bold block">
-              LET'S MOVE YOUR CARGO FORWARD
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-serif">
+      {/* CTA */}
+      <section className="relative overflow-hidden bg-[#071a33] py-16 text-white">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />
+        </div>
+
+        <div className="relative z-10 mx-auto flex max-w-[1360px] flex-col justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+          <div className="max-w-[760px]">
+            <Eyebrow light>Let’s Move Your Cargo Forward</Eyebrow>
+            <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
               Ready to Discuss Your Shipment?
             </h2>
-            <p className="text-xs text-slate-300 max-w-xl">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
               Share your shipment requirements with Averon Freight Solutions and our team will work with you on a suitable logistics solution.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="tel:+919833464629"
-              className="px-6 py-3 bg-[#d9a74a] hover:bg-[#c89332] text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg"
-            >
-              CALL +91 98334 64629 →
-            </a>
-          </div>
+          <a
+            href="tel:+919833464629"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+          >
+            CALL +91 98334 64629
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </section>
-
     </div>
   );
 };
