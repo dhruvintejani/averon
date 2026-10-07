@@ -3,9 +3,7 @@ import {
   ArrowRight,
   CircleDot,
   Eye,
-  Globe2,
   Handshake,
-  MapPin,
   Network,
   Route,
 } from 'lucide-react';
