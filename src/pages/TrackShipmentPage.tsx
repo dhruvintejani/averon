@@ -14,7 +14,6 @@ import {
   Route,
   Search,
   ShieldCheck,
-  Ship,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
 
