@@ -1,5 +1,14 @@
 import React from 'react';
-import { Shield, Clock, FileText, Headphones, RotateCw, Eye, Target } from 'lucide-react';
+import {
+  ArrowRight,
+  Eye,
+  FileText,
+  Handshake,
+  Headphones,
+  RefreshCw,
+  ShieldCheck,
+  Target,
+} from 'lucide-react';
 import { CORE_VALUES } from '../data/companyData';
 
 interface AboutPageProps {
@@ -7,217 +16,252 @@ interface AboutPageProps {
   onOpenQuoteModal: () => void;
 }
 
-export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenQuoteModal }) => {
-  const getValueIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Shield': return <Shield className="w-5 h-5 text-[#c89332]" />;
-      case 'Clock': return <Clock className="w-5 h-5 text-[#c89332]" />;
-      case 'FileText': return <FileText className="w-5 h-5 text-[#c89332]" />;
-      case 'Headphones': return <Headphones className="w-5 h-5 text-[#c89332]" />;
-      case 'RotateCw': return <RotateCw className="w-5 h-5 text-[#c89332]" />;
-      default: return <Shield className="w-5 h-5 text-[#c89332]" />;
-    }
-  };
+const valueIcons = {
+  Shield: ShieldCheck,
+  Clock: Handshake,
+  FileText,
+  Headphones,
+  RotateCw: RefreshCw,
+} as const;
 
+const SectionEyebrow = ({
+  children,
+  light = false,
+}: {
+  children: React.ReactNode;
+  light?: boolean;
+}) => (
+  <div
+    className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
+      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+    }`}
+  >
+    <span className="h-[2px] w-8 bg-[#c9a227]" />
+    <span>{children}</span>
+  </div>
+);
+
+export const AboutPage: React.FC<AboutPageProps> = ({
+  onNavigate,
+  onOpenQuoteModal,
+}) => {
   return (
-    <div className="bg-white font-sans text-slate-800">
-      
-      {/* PAGE HERO HEADER */}
-      <section className="relative bg-[#071627] text-white py-16 lg:py-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=1600" 
-            alt="Container port header" 
-            className="w-full h-full object-cover opacity-25"
+    <div className="bg-white text-[#14263d]">
+      {/* HERO */}
+      <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[500px]">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
+            alt="Container vessel and port operations"
+            className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#071627] via-[#071627]/90 to-transparent"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.90)_42%,rgba(7,26,51,.58)_70%,rgba(7,26,51,.28)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071a33]/55 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-xs font-mono text-slate-400 mb-3 flex items-center space-x-2">
-            <span className="hover:text-white cursor-pointer" onClick={() => onNavigate('home')}>Home</span>
-            <span>/</span>
-            <span className="text-[#d9a74a] font-bold">About Us</span>
+        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-[1360px] items-center px-4 py-16 sm:min-h-[500px] sm:px-6 lg:px-8">
+          <div className="max-w-[740px]">
+            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+              <button
+                type="button"
+                onClick={() => onNavigate('home')}
+                className="transition hover:text-white"
+              >
+                Home
+              </button>
+              <span className="text-slate-500">/</span>
+              <span className="text-[#d4af37]">About Us</span>
+            </div>
+
+            <SectionEyebrow light>About Us</SectionEyebrow>
+
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[58px]">
+              About Averon
+              <span className="block text-[#d4af37]">Freight Solutions</span>
+            </h1>
+
+            <p className="mt-5 text-base font-medium text-slate-200 sm:text-lg">
+              Your Gateway to Global Trade
+            </p>
           </div>
-
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#d9a74a] block mb-2">
-            ABOUT US
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-serif">
-            About Averon <br /> Freight Solutions
-          </h1>
-
-          <p className="text-sm text-slate-300 font-medium mt-3">
-            Your Gateway to Global Trade
-          </p>
         </div>
       </section>
 
-      {/* MOVING GLOBAL TRADE WITH COORDINATED SUPPORT */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332]">
-                ABOUT AVERON FREIGHT SOLUTIONS
-              </span>
+      {/* COMPANY STORY */}
+      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-6">
+            <SectionEyebrow>Our Story</SectionEyebrow>
 
-              <h2 className="text-3xl sm:text-4xl font-black text-[#0b1f3a] tracking-tight font-serif leading-tight">
-                Moving Global Trade <br /> with Coordinated Support.
-              </h2>
+            <h2 className="max-w-[620px] text-3xl font-extrabold leading-[1.08] tracking-[-0.025em] text-[#071a33] sm:text-4xl lg:text-[46px]">
+              Averon Freight Solutions LLP
+            </h2>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <div className="mt-7 max-w-[660px] space-y-4 text-[15px] leading-7 text-slate-600">
+              <p>
                 Averon Freight Solutions LLP is a Mumbai-based freight forwarding and international logistics company led by experienced logistics professionals with 12+ years of combined industry experience.
               </p>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p>
                 We are dedicated to facilitating seamless global trade through reliable, efficient and customized logistics solutions.
               </p>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p>
                 We help importers, exporters, manufacturers and traders move cargo across international markets with confidence, transparency and operational excellence.
               </p>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p>
                 From shipment planning and documentation to customs coordination, transportation and final delivery, our team provides coordinated support throughout the shipment journey.
               </p>
             </div>
+          </div>
 
-            {/* Right Image Container with Experience Overlay */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-white">
-                <img 
-                  src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=900" 
-                  alt="Averon Experience" 
-                  className="w-full h-80 sm:h-96 object-cover"
-                />
+          <div className="relative lg:col-span-6">
+            <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.16)]">
+              <img
+                src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+                alt="International logistics and port operations"
+                loading="lazy"
+                className="h-[470px] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/60 via-transparent to-transparent" />
 
-                <div className="absolute bottom-0 left-0 bg-[#0b1f3a] text-white p-6 shadow-2xl border-t-4 border-[#d9a74a] max-w-[260px]">
-                  <div className="text-3xl font-black text-[#d9a74a]">12+</div>
-                  <div className="text-[11px] font-extrabold tracking-wider uppercase text-slate-200 mt-1">
-                    YEARS OF COMBINED INDUSTRY EXPERIENCE
-                  </div>
+              <div className="absolute bottom-0 left-0 border-t-4 border-[#c9a227] bg-[#071a33]/95 px-7 py-5 text-white backdrop-blur-sm">
+                <div className="text-4xl font-extrabold tracking-tight text-[#d4af37]">12+</div>
+                <div className="mt-1 max-w-[240px] text-[10px] font-bold uppercase leading-4 tracking-[0.16em] text-slate-200">
+                  Years of combined industry experience
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* OUR FOUNDATION: VISION & MISSION */}
-      <section className="py-16 bg-[#08182b] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="mb-8">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#d9a74a] font-bold">
-              OUR FOUNDATION
-            </span>
-          </div>
+      {/* VISION & MISSION */}
+      <section className="relative overflow-hidden bg-[#071a33] py-20 text-white sm:py-24">
+        <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_25%_30%,#ffffff_1px,transparent_1.5px)] [background-size:14px_14px]" />
+        <div className="relative z-10 mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          <SectionEyebrow light>Our Purpose</SectionEyebrow>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 divide-y md:divide-y-0 md:divide-x divide-slate-800">
-            
-            {/* Vision */}
-            <div className="pt-6 md:pt-0 md:pr-8 flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-full border border-[#d9a74a] bg-[#0b223d] flex items-center justify-center shrink-0">
-                <Eye className="w-6 h-6 text-[#d9a74a]" />
+          <div className="mt-9 grid gap-0 border-y border-white/10 md:grid-cols-2">
+            <article className="flex gap-6 py-9 md:border-r md:border-white/15 md:pr-12">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#c9a227] bg-[#0b2342] text-[#d4af37]">
+                <Eye className="h-6 w-6" strokeWidth={1.7} />
               </div>
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-white">
-                  Our <span className="text-[#d9a74a]">Vision</span>
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+              <div>
+                <div className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#d4af37]">
+                  Our Vision
+                </div>
+                <p className="mt-4 max-w-[520px] text-lg leading-8 text-slate-100">
                   To become a trusted global logistics partner by delivering seamless, innovative and sustainable freight solutions.
                 </p>
               </div>
-            </div>
+            </article>
 
-            {/* Mission */}
-            <div className="pt-6 md:pt-0 md:pl-8 flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-full border border-[#d9a74a] bg-[#0b223d] flex items-center justify-center shrink-0">
-                <Target className="w-6 h-6 text-[#d9a74a]" />
+            <article className="flex gap-6 border-t border-white/10 py-9 md:border-t-0 md:pl-12">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#c9a227] bg-[#0b2342] text-[#d4af37]">
+                <Target className="h-6 w-6" strokeWidth={1.7} />
               </div>
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-white">
-                  Our <span className="text-[#d9a74a]">Mission</span>
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+              <div>
+                <div className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#d4af37]">
+                  Our Mission
+                </div>
+                <p className="mt-4 max-w-[520px] text-lg leading-8 text-slate-100">
                   To simplify international trade by providing reliable logistics services that help businesses grow confidently across global markets.
                 </p>
               </div>
-            </div>
-
+            </article>
           </div>
         </div>
       </section>
 
-      {/* OUR CORE VALUES */}
-      <section className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+      {/* CORE VALUES */}
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332] block mb-1">
-                OUR VALUES
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-[#0b1f3a] tracking-tight font-serif">
+              <SectionEyebrow>Our Values</SectionEyebrow>
+              <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
                 Our Core Values
               </h2>
             </div>
-            <p className="text-xs text-slate-500 max-w-md leading-relaxed">
+
+            <p className="max-w-[520px] text-sm leading-6 text-slate-600">
               These principles shape how Averon approaches client relationships, shipment coordination and day-to-day logistics support.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {CORE_VALUES.map((val, idx) => (
-              <div key={idx} className="p-5 bg-slate-50 border border-slate-200 rounded space-y-3 hover:bg-slate-100/80 transition-all">
-                <div className="w-10 h-10 rounded-full border border-[#d9a74a] bg-white flex items-center justify-center">
-                  {getValueIcon(val.icon)}
-                </div>
-                <h3 className="text-xs font-extrabold text-[#0b1f3a]">{val.title}</h3>
-                <p className="text-[11px] text-slate-600 leading-relaxed">{val.desc}</p>
-              </div>
-            ))}
-          </div>
+          <div className="grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-5">
+            {CORE_VALUES.map((value) => {
+              const Icon =
+                valueIcons[value.icon as keyof typeof valueIcons] ?? ShieldCheck;
 
+              return (
+                <article
+                  key={value.title}
+                  className="group min-h-[280px] bg-white p-6 transition hover:bg-[#f8f6f0]"
+                >
+                  <div className="grid h-12 w-12 place-items-center rounded-full border border-[#c9a227]/60 bg-[#f8f6f0] text-[#b88924] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
+                    <Icon className="h-5 w-5" strokeWidth={1.7} />
+                  </div>
+
+                  <h3 className="mt-6 text-base font-extrabold leading-5 text-[#071a33]">
+                    {value.title}
+                  </h3>
+
+                  <div className="mt-4 h-[2px] w-8 bg-[#c9a227]" />
+
+                  <p className="mt-4 text-sm leading-6 text-slate-600">
+                    {value.desc}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* BOTTOM CTA BANNER */}
-      <section className="relative py-16 bg-[#08182b] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#d9a74a] font-bold block">
-              LET'S MOVE YOUR CARGO FORWARD
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-serif">
+      {/* CTA */}
+      <section className="relative overflow-hidden bg-[#071a33] py-16 text-white sm:py-20">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.82),rgba(7,26,51,.74))]" />
+        </div>
+
+        <div className="relative z-10 mx-auto flex max-w-[1360px] flex-col justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+          <div className="max-w-[760px]">
+            <SectionEyebrow light>Let’s Work Together</SectionEyebrow>
+            <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
               Discuss Your Logistics Requirements
             </h2>
-            <p className="text-xs text-slate-300 max-w-xl">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
               Share your shipment requirements with Averon Freight Solutions and our team will work with you on a suitable logistics solution.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex shrink-0 flex-wrap gap-3">
             <button
+              type="button"
               onClick={onOpenQuoteModal}
-              className="px-6 py-3 bg-[#d9a74a] hover:bg-[#c89332] text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg"
+              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
-              GET A QUOTE →
+              GET A QUOTE
+              <ArrowRight className="h-4 w-4" />
             </button>
 
             <button
+              type="button"
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3 border border-slate-400 hover:border-white text-white font-bold text-xs uppercase tracking-wider rounded transition-colors"
+              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </div>
       </section>
-
     </div>
   );
 };
