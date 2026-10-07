@@ -585,24 +585,6 @@ export const HomePage: React.FC<HomePageProps> = ({
               );
             })}
 
-            <div className="hidden border border-[#c9a227]/30 bg-[#071a33] p-6 text-white lg:flex lg:flex-col lg:justify-between">
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-                  Need a tailored solution?
-                </div>
-                <p className="mt-3 text-xl font-extrabold leading-7">
-                  Share your shipment requirements with our team.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={onOpenQuoteModal}
-                className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#d4af37]"
-              >
-                Get a quote
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
           </div>
         </div>
       </section>
