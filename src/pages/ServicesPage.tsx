@@ -4,6 +4,7 @@ import { SERVICES_LIST, ServiceItem } from '../data/companyData';
 import { OceanFreightPage } from './OceanFreightPage';
 import { AirFreightPage } from './AirFreightPage';
 import { CustomsClearancePage } from './CustomsClearancePage';
+import { RoadInlandTransportPage } from './RoadInlandTransportPage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -37,6 +38,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   if (selectedServiceId === 'customs-clearance') {
     return (
       <CustomsClearancePage
+        onNavigate={onNavigate}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+    );
+  }
+
+  if (selectedServiceId === 'road-inland-transport') {
+    return (
+      <RoadInlandTransportPage
         onNavigate={onNavigate}
         onOpenQuoteModal={onOpenQuoteModal}
       />
