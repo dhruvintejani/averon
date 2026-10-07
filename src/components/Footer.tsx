@@ -13,84 +13,71 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenTrackModal
 }) => {
   return (
-    <footer className="bg-[#061325] text-slate-300 font-sans border-t border-slate-800">
+    <footer className="bg-[#071a33] text-slate-300 font-sans border-t border-white/10">
       {/* Upper Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           
           {/* Column 1: Brand Info */}
           <div className="space-y-4">
-            <div 
-              className="flex items-center space-x-3 cursor-pointer"
+            <button
+              type="button"
+              className="inline-flex bg-white p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33]"
               onClick={() => onNavigate('home')}
+              aria-label="Go to Averon home page"
             >
-              <div className="w-10 h-11 bg-[#0b1f3a] rounded flex items-center justify-center border-2 border-[#d9a74a] text-white font-extrabold text-sm tracking-tighter">
-                <span className="text-[#d9a74a] text-xs font-mono">AFS</span>
-              </div>
-              <div>
-                <span className="text-2xl font-black text-white tracking-tight font-serif block">AVERON</span>
-                <span className="text-[9px] uppercase tracking-widest font-semibold text-[#d9a74a] block -mt-1">
-                  FREIGHT SOLUTIONS
-                </span>
-              </div>
-            </div>
+              <img
+                src="/averon-logo.webp"
+                alt="Averon Freight Solutions LLP"
+                className="h-[58px] w-auto max-w-[245px] object-contain"
+              />
+            </button>
 
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Your Gateway to Global Trade
-            </p>
-            <p className="text-[11px] text-slate-400 leading-normal border-t border-slate-800 pt-3">
+            <p className="text-sm font-semibold text-white">Your Gateway to Global Trade</p>
+            <p className="text-[11px] leading-relaxed text-slate-400">
               International Freight Forwarding • Customs Solutions • Global Logistics
             </p>
-
-            <div className="pt-2 text-xs text-slate-400 space-y-1.5">
-              <div className="flex items-start space-x-2">
-                <MapPin className="w-3.5 h-3.5 text-[#d9a74a] mt-0.5 shrink-0" />
-                <span className="text-[11px] leading-snug">
-                  Office No. 404, 4th Floor, Dev Milan Co-operative Premises Society, Above Woodland Retreat, LBS Marg, Near Tip Top Plaza, Thane West – 400604, Mumbai, Maharashtra, India.
-                </span>
-              </div>
-            </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+        {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#d9a74a]">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
               QUICK LINKS
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-300">
               <li>
-                <button onClick={() => onNavigate('home')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('home')} className="hover:text-[#c9a227] transition-colors">
                   Home
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('about')} className="hover:text-[#c9a227] transition-colors">
                   About Us
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('services')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('services')} className="hover:text-[#c9a227] transition-colors">
                   Services
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('lcl-consolidation')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('lcl-consolidation')} className="hover:text-[#c9a227] transition-colors">
                   LCL Consolidation
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('global-reach')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('global-reach')} className="hover:text-[#c9a227] transition-colors">
                   Global Reach
                 </button>
               </li>
               <li>
-                <button onClick={onOpenTrackModal} className="hover:text-[#d9a74a] transition-colors text-left flex items-center space-x-1">
+                <button onClick={onOpenTrackModal} className="hover:text-[#c9a227] transition-colors text-left flex items-center space-x-1">
                   <span>Track Shipment</span>
-                  <span className="bg-[#d9a74a] text-slate-950 font-extrabold text-[9px] px-1 rounded">LIVE</span>
+                  <span className="bg-[#c9a227] text-slate-950 font-extrabold text-[9px] px-1 rounded">LIVE</span>
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('contact')} className="hover:text-[#d9a74a] transition-colors">
+                <button onClick={() => onNavigate('contact')} className="hover:text-[#c9a227] transition-colors">
                   Contact Us
                 </button>
               </li>
@@ -99,7 +86,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Column 3: Services */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#d9a74a]">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
               SERVICES
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
@@ -107,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <li key={svc.id}>
                   <button 
                     onClick={() => onNavigate('service-detail', svc.id)} 
-                    className="hover:text-[#d9a74a] transition-colors text-left"
+                    className="hover:text-[#c9a227] transition-colors text-left"
                   >
                     {svc.title}
                   </button>
@@ -118,35 +105,35 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Column 4: Contact Averon */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#d9a74a]">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
               CONTACT
             </h4>
             <div className="space-y-3 text-xs text-slate-300">
               <div className="space-y-1">
-                <a href="tel:+919833464629" className="flex items-center space-x-2 hover:text-[#d9a74a] transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-[#d9a74a]" />
+                <a href="tel:+919833464629" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
+                  <Phone className="w-3.5 h-3.5 text-[#c9a227]" />
                   <span>+91 98334 64629</span>
                 </a>
-                <a href="tel:+919833464627" className="flex items-center space-x-2 hover:text-[#d9a74a] transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-[#d9a74a]" />
+                <a href="tel:+919833464627" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
+                  <Phone className="w-3.5 h-3.5 text-[#c9a227]" />
                   <span>+91 9833464627</span>
                 </a>
               </div>
 
               <div className="space-y-1 pt-1 border-t border-slate-800">
-                <a href="mailto:info@averonfs.com" className="flex items-center space-x-2 hover:text-[#d9a74a] transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-[#d9a74a]" />
+                <a href="mailto:info@averonfs.com" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
+                  <Mail className="w-3.5 h-3.5 text-[#c9a227]" />
                   <span>info@averonfs.com</span>
                 </a>
-                <a href="mailto:sales@averonfs.com" className="flex items-center space-x-2 hover:text-[#d9a74a] transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-[#d9a74a]" />
+                <a href="mailto:sales@averonfs.com" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
+                  <Mail className="w-3.5 h-3.5 text-[#c9a227]" />
                   <span>sales@averonfs.com</span>
                 </a>
               </div>
 
               <div className="pt-1 border-t border-slate-800">
-                <a href={`https://${COMPANY_INFO.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:text-[#d9a74a] transition-colors">
-                  <Globe className="w-3.5 h-3.5 text-[#d9a74a]" />
+                <a href={`https://${COMPANY_INFO.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
+                  <Globe className="w-3.5 h-3.5 text-[#c9a227]" />
                   <span>{COMPANY_INFO.website}</span>
                 </a>
               </div>
@@ -156,7 +143,7 @@ export const Footer: React.FC<FooterProps> = ({
                   href={COMPANY_INFO.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center p-2 bg-slate-800/80 hover:bg-[#d9a74a] hover:text-slate-900 rounded transition-colors text-slate-300"
+                  className="inline-flex items-center justify-center p-2 bg-slate-800/80 hover:bg-[#c9a227] hover:text-slate-900 rounded transition-colors text-slate-300"
                   aria-label="LinkedIn"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -171,18 +158,14 @@ export const Footer: React.FC<FooterProps> = ({
       </div>
 
       {/* Bottom Legal Bar */}
-      <div className="bg-[#040e1d] py-4 border-t border-slate-800/80 text-[11px] text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div className="bg-[#051426] py-4 border-t border-white/10 text-[11px] text-slate-400">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-2">
           <div>
             © 2026 Averon Freight Solutions LLP. All Rights Reserved.
           </div>
           <div className="flex space-x-6">
-            <button onClick={() => alert("Privacy Policy: Averon Freight Solutions protects client trade data in accordance with international logistics standards.")} className="hover:text-slate-200 transition-colors">
-              Privacy Policy
-            </button>
-            <button onClick={() => alert("Terms & Conditions: Freight forwarding and logistics services governed by standard FIATA and Indian custom house regulations.")} className="hover:text-slate-200 transition-colors">
-              Terms & Conditions
-            </button>
+            <span>Privacy Policy</span>
+            <span>Terms & Conditions</span>
           </div>
         </div>
       </div>
