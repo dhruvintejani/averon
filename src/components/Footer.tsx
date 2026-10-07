@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({
               aria-label="Go to Averon home page"
             >
               <img
-                src="/averon-logo.webp"
+                src="/averon-logo.png"
                 alt="Averon Freight Solutions LLP"
                 className="h-[58px] w-auto max-w-[245px] object-contain"
               />
@@ -73,7 +73,6 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button onClick={onOpenTrackModal} className="hover:text-[#c9a227] transition-colors text-left flex items-center space-x-1">
                   <span>Track Shipment</span>
-                  <span className="bg-[#c9a227] text-slate-950 font-extrabold text-[9px] px-1 rounded">LIVE</span>
                 </button>
               </li>
               <li>
