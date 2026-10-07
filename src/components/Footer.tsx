@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, Globe } from 'lucide-react';
+import { Globe, Mail, Phone } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
 
 interface FooterProps {
@@ -10,159 +10,101 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigate,
-  onOpenTrackModal
+  onOpenTrackModal,
 }) => {
   return (
-    <footer className="bg-[#071a33] text-slate-300 font-sans border-t border-white/10">
-      {/* Upper Footer Content */}
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          
-          {/* Column 1: Brand Info */}
+    <footer className="border-t border-white/10 bg-[#071a33] text-slate-300">
+      <div className="mx-auto max-w-[1360px] px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 sm:gap-10 xl:grid-cols-4">
           <div className="space-y-4">
             <button
               type="button"
-              className="inline-flex bg-white p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33]"
+              className="inline-flex bg-white p-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33] sm:p-3"
               onClick={() => onNavigate('home')}
               aria-label="Go to Averon home page"
             >
-              <img
-                src="/averon-logo.png"
-                alt="Averon Freight Solutions LLP"
-                className="h-[58px] w-auto max-w-[245px] object-contain"
-              />
+              <img src="/averon-logo.png" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain sm:h-[58px] sm:max-w-[245px]" />
             </button>
-
             <p className="text-sm font-semibold text-white">Your Gateway to Global Trade</p>
-            <p className="text-[11px] leading-relaxed text-slate-400">
+            <p className="max-w-[300px] text-[11px] leading-5 text-slate-400">
               International Freight Forwarding • Customs Solutions • Global Logistics
             </p>
           </div>
 
-        {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
-              QUICK LINKS
-            </h4>
-            <ul className="space-y-2.5 text-xs text-slate-300">
+            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Quick Links</h4>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs text-slate-300 sm:block sm:space-y-2.5">
+              {[
+                ['home', 'Home'],
+                ['about', 'About Us'],
+                ['services', 'Services'],
+                ['lcl-consolidation', 'LCL Consolidation'],
+                ['global-reach', 'Global Reach'],
+                ['contact', 'Contact Us'],
+              ].map(([page, label]) => (
+                <li key={page}>
+                  <button type="button" onClick={() => onNavigate(page)} className="min-h-7 text-left transition-colors hover:text-[#d4af37]">{label}</button>
+                </li>
+              ))}
               <li>
-                <button onClick={() => onNavigate('home')} className="hover:text-[#c9a227] transition-colors">
-                  Home
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-[#c9a227] transition-colors">
-                  About Us
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('services')} className="hover:text-[#c9a227] transition-colors">
-                  Services
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('lcl-consolidation')} className="hover:text-[#c9a227] transition-colors">
-                  LCL Consolidation
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('global-reach')} className="hover:text-[#c9a227] transition-colors">
-                  Global Reach
-                </button>
-              </li>
-              <li>
-                <button onClick={onOpenTrackModal} className="hover:text-[#c9a227] transition-colors text-left flex items-center space-x-1">
-                  <span>Track Shipment</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('contact')} className="hover:text-[#c9a227] transition-colors">
-                  Contact Us
-                </button>
+                <button type="button" onClick={onOpenTrackModal} className="min-h-7 text-left transition-colors hover:text-[#d4af37]">Track Shipment</button>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Services */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
-              SERVICES
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-300">
-              {SERVICES_LIST.map((svc) => (
-                <li key={svc.id}>
-                  <button 
-                    onClick={() => onNavigate('service-detail', svc.id)} 
-                    className="hover:text-[#c9a227] transition-colors text-left"
-                  >
-                    {svc.title}
-                  </button>
+            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Services</h4>
+            <ul className="grid gap-2 text-xs text-slate-300">
+              {SERVICES_LIST.map((service) => (
+                <li key={service.id}>
+                  <button type="button" onClick={() => onNavigate('service-detail', service.id)} className="min-h-7 text-left leading-5 transition-colors hover:text-[#d4af37]">{service.title}</button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 4: Contact Averon */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-1 border-b border-slate-800 text-[#c9a227]">
-              CONTACT
-            </h4>
+            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Contact</h4>
             <div className="space-y-3 text-xs text-slate-300">
-              <div className="space-y-1">
-                <a href="tel:+919833464629" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-[#c9a227]" />
-                  <span>+91 98334 64629</span>
-                </a>
-                <a href="tel:+919833464627" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-[#c9a227]" />
-                  <span>+91 9833464627</span>
-                </a>
+              <div className="space-y-2">
+                {COMPANY_INFO.phones.map((phone) => (
+                  <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`} className="flex min-h-7 items-center gap-2 transition-colors hover:text-[#d4af37]">
+                    <Phone className="h-3.5 w-3.5 shrink-0 text-[#d4af37]" />
+                    <span>{phone}</span>
+                  </a>
+                ))}
               </div>
 
-              <div className="space-y-1 pt-1 border-t border-slate-800">
-                <a href="mailto:info@averonfs.com" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-[#c9a227]" />
-                  <span>info@averonfs.com</span>
-                </a>
-                <a href="mailto:sales@averonfs.com" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-[#c9a227]" />
-                  <span>sales@averonfs.com</span>
-                </a>
+              <div className="space-y-2 border-t border-white/10 pt-3">
+                {COMPANY_INFO.emails.map((email) => (
+                  <a key={email} href={`mailto:${email}`} className="flex min-h-7 items-center gap-2 break-all transition-colors hover:text-[#d4af37]">
+                    <Mail className="h-3.5 w-3.5 shrink-0 text-[#d4af37]" />
+                    <span>{email}</span>
+                  </a>
+                ))}
               </div>
 
-              <div className="pt-1 border-t border-slate-800">
-                <a href={`https://${COMPANY_INFO.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:text-[#c9a227] transition-colors">
-                  <Globe className="w-3.5 h-3.5 text-[#c9a227]" />
+              <div className="border-t border-white/10 pt-3">
+                <a href={`https://${COMPANY_INFO.website}`} target="_blank" rel="noopener noreferrer" className="flex min-h-7 items-center gap-2 transition-colors hover:text-[#d4af37]">
+                  <Globe className="h-3.5 w-3.5 shrink-0 text-[#d4af37]" />
                   <span>{COMPANY_INFO.website}</span>
                 </a>
               </div>
 
-              <div className="pt-2">
-                <a 
-                  href={COMPANY_INFO.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center p-2 bg-slate-800/80 hover:bg-[#c9a227] hover:text-slate-900 rounded transition-colors text-slate-300"
-                  aria-label="LinkedIn"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-                  </svg>
-                </a>
-              </div>
+              <a href={COMPANY_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 w-10 items-center justify-center border border-white/15 text-slate-200 transition-colors hover:border-[#c9a227] hover:bg-[#c9a227] hover:text-[#071a33]" aria-label="Averon Freight Solutions on LinkedIn">
+                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                </svg>
+              </a>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Bottom Legal Bar */}
-      <div className="bg-[#051426] py-4 border-t border-white/10 text-[11px] text-slate-400">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div>
-            © 2026 Averon Freight Solutions LLP. All Rights Reserved.
-          </div>
-          <div className="flex space-x-6">
+      <div className="border-t border-white/10 bg-[#051426] py-4 text-[10px] text-slate-400 sm:text-[11px]">
+        <div className="mx-auto flex max-w-[1360px] flex-col gap-3 px-4 text-left sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+          <div>© 2026 Averon Freight Solutions LLP. All Rights Reserved.</div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
             <span>Privacy Policy</span>
             <span>Terms & Conditions</span>
           </div>

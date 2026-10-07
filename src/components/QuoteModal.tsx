@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, CheckCircle, Calculator } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Calculator, X } from 'lucide-react';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -7,8 +7,17 @@ interface QuoteModalProps {
   onNavigateToFullContact?: () => void;
 }
 
-export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, onNavigateToFullContact }) => {
-  const [submitted, setSubmitted] = useState(false);
+const inputClass =
+  'w-full border border-slate-300 bg-white px-3.5 py-3 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]';
+
+const labelClass =
+  'mb-1.5 block text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#071a33]';
+
+export const QuoteModal: React.FC<QuoteModalProps> = ({
+  isOpen,
+  onClose,
+  onNavigateToFullContact,
+}) => {
   const [formData, setFormData] = useState({
     fullName: '',
     companyName: '',
@@ -19,248 +28,172 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, onNavig
     mode: 'Ocean Freight',
     type: 'FCL',
     incoterm: 'FOB',
-    details: ''
+    details: '',
   });
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
-  const resetForm = () => {
-    setSubmitted(false);
-    onClose();
+    // Brevo submission will replace this mailto fallback after the client provides API keys.
+    const subject = encodeURIComponent(
+      `Freight Quote Request - ${formData.companyName || formData.fullName}`
+    );
+    const body = encodeURIComponent(
+      [
+        `Full Name: ${formData.fullName}`,
+        `Company Name: ${formData.companyName}`,
+        `Email: ${formData.email}`,
+        `Phone / WhatsApp: ${formData.phone}`,
+        `Origin - POL: ${formData.origin}`,
+        `Destination - POD: ${formData.destination}`,
+        `Mode: ${formData.mode}`,
+        `Shipment Type: ${formData.type}`,
+        `Incoterm: ${formData.incoterm}`,
+        `Cargo Details: ${formData.details || '-'}`,
+      ].join('\n')
+    );
+
+    window.location.href = `mailto:sales@averonfs.com?subject=${subject}&body=${body}`;
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4 animate-fadeIn">
-      <div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto border border-slate-200">
-        
-        {/* Modal Header */}
-        <div className="bg-[#0b1f3a] text-white p-5 flex justify-between items-center border-b border-slate-800">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-[#d9a74a] rounded text-slate-950 font-bold">
-              <Calculator className="w-5 h-5" />
+    <div
+      className="fixed inset-0 z-[70] flex items-end justify-center bg-slate-950/70 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="quote-modal-title"
+      onMouseDown={(event) => {
+        if (event.currentTarget === event.target) onClose();
+      }}
+    >
+      <div className="max-h-[94dvh] w-full overflow-y-auto rounded-t-2xl border border-slate-200 bg-white shadow-2xl sm:max-w-3xl sm:rounded-lg">
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-white/10 bg-[#071a33] px-4 py-4 text-white sm:px-6">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="grid h-10 w-10 shrink-0 place-items-center bg-[#c9a227] text-[#071a33]">
+              <Calculator className="h-5 w-5" />
             </div>
-            <div>
-              <h3 className="text-lg font-bold tracking-tight">Request Freight Rate Quote</h3>
-              <p className="text-xs text-slate-300">Averon Freight Solutions Rapid Quotation Desk</p>
+            <div className="min-w-0">
+              <h3 id="quote-modal-title" className="text-base font-extrabold sm:text-lg">Request a Freight Quote</h3>
+              <p className="mt-0.5 text-[10px] leading-4 text-slate-300 sm:text-xs">Share the shipment details available to you.</p>
             </div>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
-          >
-            <X className="w-5 h-5" />
+
+          <button type="button" onClick={onClose} className="grid h-11 w-11 shrink-0 place-items-center text-slate-300 transition hover:bg-white/10 hover:text-white" aria-label="Close quote form">
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="p-6">
-          {submitted ? (
-            <div className="text-center py-8 space-y-4">
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="w-10 h-10" />
-              </div>
-              <h4 className="text-xl font-bold text-slate-900">Enquiry Received Successfully!</h4>
-              <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                Thank you, <strong className="text-slate-900">{formData.fullName || 'Valued Client'}</strong>. Our specialized freight coordinators are analyzing your route from <strong className="text-slate-900">{formData.origin || 'Origin'}</strong> to <strong className="text-slate-900">{formData.destination || 'Destination'}</strong>.
-              </p>
-              <div className="p-4 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900 font-medium">
-                Reference ID: <span className="font-mono font-bold text-[#0b1f3a]">RFQ-2026-{(Math.random()*10000).toFixed(0)}</span> • Estimated response within 2 hours.
-              </div>
-              <div className="pt-4 flex justify-center space-x-3">
-                <button
-                  onClick={resetForm}
-                  className="px-6 py-2.5 bg-[#0b1f3a] text-white font-bold text-xs uppercase tracking-wider rounded hover:bg-[#102a4e]"
-                >
-                  Done
-                </button>
-              </div>
+        <form onSubmit={handleSubmit} className="space-y-5 p-4 sm:p-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className={labelClass} htmlFor="quote-full-name">Full Name *</label>
+              <input id="quote-full-name" name="fullName" autoComplete="name" required type="text" placeholder="Your full name" value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} className={inputClass} />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    FULL NAME *
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Your full name"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
+            <div>
+              <label className={labelClass} htmlFor="quote-company-name">Company Name *</label>
+              <input id="quote-company-name" name="companyName" autoComplete="organization" required type="text" placeholder="Company name" value={formData.companyName} onChange={(e) => setFormData({ ...formData, companyName: e.target.value })} className={inputClass} />
+            </div>
+          </div>
 
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    COMPANY NAME *
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Company name"
-                    value={formData.companyName}
-                    onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
-              </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className={labelClass} htmlFor="quote-email">Email *</label>
+              <input id="quote-email" name="email" autoComplete="email" required type="email" placeholder="name@company.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="quote-phone">Phone / WhatsApp *</label>
+              <input id="quote-phone" name="phone" autoComplete="tel" required type="tel" placeholder="+91" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className={inputClass} />
+            </div>
+          </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    EMAIL *
-                  </label>
-                  <input
-                    required
-                    type="email"
-                    placeholder="name@company.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className={labelClass} htmlFor="quote-origin">Origin – POL *</label>
+              <input id="quote-origin" name="origin" required type="text" placeholder="Origin / port of loading" value={formData.origin} onChange={(e) => setFormData({ ...formData, origin: e.target.value })} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="quote-destination">Destination – POD *</label>
+              <input id="quote-destination" name="destination" required type="text" placeholder="Destination / port of discharge" value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })} className={inputClass} />
+            </div>
+          </div>
 
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    PHONE / WHATSAPP *
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="+91 Phone Number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
-              </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div>
+              <label className={labelClass} htmlFor="quote-mode">Mode</label>
+              <select id="quote-mode" name="mode" value={formData.mode} onChange={(e) => setFormData({ ...formData, mode: e.target.value })} className={inputClass}>
+                <option>Ocean Freight</option>
+                <option>Air Freight</option>
+                <option>Road Freight</option>
+                <option>Customs Clearance Only</option>
+              </select>
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="quote-type">Shipment Type</label>
+              <select id="quote-type" name="type" value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value })} className={inputClass}>
+                <option value="FCL">FCL</option>
+                <option value="LCL">LCL</option>
+                <option value="Air Cargo">Air Cargo</option>
+                <option value="Project Cargo">Project / Breakbulk</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="quote-incoterm">Incoterm</label>
+              <select id="quote-incoterm" name="incoterm" value={formData.incoterm} onChange={(e) => setFormData({ ...formData, incoterm: e.target.value })} className={inputClass}>
+                <option>FOB</option>
+                <option>CIF</option>
+                <option>EXW</option>
+                <option>DDP</option>
+                <option>DAP</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    ORIGIN - POL *
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Origin / port of loading (e.g. Shanghai)"
-                    value={formData.origin}
-                    onChange={(e) => setFormData({...formData, origin: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
+          <div>
+            <label className={labelClass} htmlFor="quote-details">Cargo Details & Message</label>
+            <textarea id="quote-details" name="details" rows={4} placeholder="Commodity, packages, weight, volume, dimensions or additional requirements..." value={formData.details} onChange={(e) => setFormData({ ...formData, details: e.target.value })} className={inputClass} />
+          </div>
 
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    DESTINATION - POD *
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Destination / port of discharge (e.g. Nhava Sheva)"
-                    value={formData.destination}
-                    onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                  />
-                </div>
-              </div>
+          <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto">
+              Request a Quote
+              <ArrowRight className="h-4 w-4" />
+            </button>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    MODE
-                  </label>
-                  <select
-                    value={formData.mode}
-                    onChange={(e) => setFormData({...formData, mode: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                  >
-                    <option value="Ocean Freight">Ocean Freight</option>
-                    <option value="Air Freight">Air Freight</option>
-                    <option value="Road Freight">Road Freight</option>
-                    <option value="Customs Clearance Only">Customs Clearance Only</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    SHIPMENT TYPE
-                  </label>
-                  <select
-                    value={formData.type}
-                    onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                  >
-                    <option value="FCL">FCL Container</option>
-                    <option value="LCL">LCL Cargo</option>
-                    <option value="Air Cargo">Air Cargo</option>
-                    <option value="Project Cargo">Project / Breakbulk</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                    INCOTERM
-                  </label>
-                  <select
-                    value={formData.incoterm}
-                    onChange={(e) => setFormData({...formData, incoterm: e.target.value})}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a] bg-white"
-                  >
-                    <option value="FOB">FOB (Free on Board)</option>
-                    <option value="CIF">CIF (Cost Insurance Freight)</option>
-                    <option value="EXW">EXW (Ex Works)</option>
-                    <option value="DDP">DDP (Delivered Duty Paid)</option>
-                    <option value="DAP">DAP (Delivered at Place)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                  CARGO DETAILS & MESSAGE
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="Commodity, weight (kg), volume (CBM), dimensions or additional requirements..."
-                  value={formData.details}
-                  onChange={(e) => setFormData({...formData, details: e.target.value})}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded focus:outline-none focus:border-[#0b1f3a]"
-                ></textarea>
-              </div>
-
-              <div className="pt-2 flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-slate-200">
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto px-6 py-2.5 bg-[#d9a74a] hover:bg-[#c89332] text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors flex items-center justify-center space-x-2"
-                >
-                  <span>REQUEST A QUOTE →</span>
-                </button>
-
-                {onNavigateToFullContact && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onClose();
-                      onNavigateToFullContact();
-                    }}
-                    className="text-xs text-[#0b1f3a] font-bold hover:underline"
-                  >
-                    Open Full Contact Page
-                  </button>
-                )}
-              </div>
-
-            </form>
-          )}
-        </div>
+            {onNavigateToFullContact && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onNavigateToFullContact();
+                }}
+                className="min-h-11 text-xs font-bold text-[#071a33] transition hover:text-[#b88924]"
+              >
+                Open Full Contact Page
+              </button>
+            )}
+          </div>
+        </form>
       </div>
     </div>
   );

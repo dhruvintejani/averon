@@ -10,29 +10,6 @@ export interface ServiceItem {
   approach: { title: string; desc: string }[];
 }
 
-export interface TrackingStatus {
-  id: string;
-  trackingNumber: string;
-  type: string;
-  mode: 'Ocean Freight' | 'Air Freight' | 'Customs Clearance' | 'Road Transport';
-  status: 'In Transit' | 'Customs Cleared' | 'Delivered' | 'Documentation Ready';
-  origin: string;
-  destination: string;
-  vesselFlight: string;
-  containerId: string;
-  eta: string;
-  etd: string;
-  progressPercent: number;
-  timeline: {
-    stage: string;
-    location: string;
-    date: string;
-    completed: boolean;
-    active?: boolean;
-    description: string;
-  }[];
-}
-
 export const COMPANY_INFO = {
   name: "Averon Freight Solutions LLP",
   shortName: "Averon",
@@ -225,72 +202,6 @@ export const SERVICES_LIST: ServiceItem[] = [
     ],
     approach: [
       { title: "One Coordinated Point of Contact", desc: "Our supply chain support brings multiple logistics activities together under one coordinated point of contact." }
-    ]
-  }
-];
-
-export const SAMPLE_TRACKING_DATA: TrackingStatus[] = [
-  {
-    id: "AFS-2026-8849",
-    trackingNumber: "AFS-2026-8849",
-    type: "FCL - 40ft High Cube Container",
-    mode: "Ocean Freight",
-    status: "In Transit",
-    origin: "Shanghai Port, China (CNSHA)",
-    destination: "Nhava Sheva (JNPT), Mumbai, India (INNSA)",
-    vesselFlight: "MV Averon Express V.2026E",
-    containerId: "TGHU8839201",
-    eta: "March 18, 2026",
-    etd: "March 02, 2026",
-    progressPercent: 65,
-    timeline: [
-      { stage: "Booking & Cargo Pickup", location: "Shanghai Logistics Hub", date: "Mar 01, 2026", completed: true, description: "Cargo picked up from factory and gated into Shanghai port container yard." },
-      { stage: "Customs Clearance (Origin)", location: "Shanghai Customs", date: "Mar 02, 2026", completed: true, description: "Export declaration passed and customs release issued." },
-      { stage: "Vessel Loaded & Departed", location: "Shanghai Terminal 3", date: "Mar 03, 2026", completed: true, description: "Vessel MV Averon Express set sail towards Singapore transshipment hub." },
-      { stage: "In Transit - Indian Ocean", location: "Arabian Sea Corridor", date: "Mar 10, 2026", completed: true, active: true, description: "Shipment in ocean transit with normal weather and steady speed." },
-      { stage: "Arrival & Customs Clearance", location: "Nhava Sheva Port, India", date: "Mar 18, 2026", completed: false, description: "Scheduled arrival and import document processing." },
-      { stage: "Final Door Delivery", location: "Client Warehouse, Thane", date: "Mar 20, 2026", completed: false, description: "Container haulage to factory." }
-    ]
-  },
-  {
-    id: "AFS-2026-4412",
-    trackingNumber: "AFS-2026-4412",
-    type: "Air Express Shipment - 480 kg",
-    mode: "Air Freight",
-    status: "Customs Cleared",
-    origin: "Frankfurt Airport (FRA), Germany",
-    destination: "Mumbai Airport (BOM), India",
-    vesselFlight: "Lufthansa Cargo LH8320",
-    containerId: "AWB 020-9481720",
-    eta: "March 12, 2026",
-    etd: "March 11, 2026",
-    progressPercent: 90,
-    timeline: [
-      { stage: "Airway Bill Generated", location: "Frankfurt Cargo Terminal", date: "Mar 10, 2026", completed: true, description: "Cargo accepted at Frankfurt air freight center." },
-      { stage: "Flight Departed", location: "Frankfurt Airport", date: "Mar 11, 2026", completed: true, description: "Flight LH8320 airborne to Mumbai." },
-      { stage: "Airport Arrival", location: "Mumbai Air Cargo Complex", date: "Mar 12, 2026", completed: true, description: "Plane landed and cargo de-consolidated." },
-      { stage: "Customs Cleared", location: "BOM Customs Wing", date: "Mar 12, 2026", completed: true, active: true, description: "Bill of Entry passed and duties cleared." },
-      { stage: "Out for Inland Dispatch", location: "Mumbai Hub", date: "Mar 13, 2026", completed: false, description: "Loaded onto bonded truck for final delivery." }
-    ]
-  },
-  {
-    id: "AFS-2026-9930",
-    trackingNumber: "AFS-2026-9930",
-    type: "LCL Consolidated Cargo - 3.8 CBM",
-    mode: "Ocean Freight",
-    status: "Delivered",
-    origin: "Jebel Ali Port, Dubai (AEJEA)",
-    destination: "Mundra Port, Gujarat, India (INMUN)",
-    vesselFlight: "MV Gulf Pioneer V.118",
-    containerId: "TLLU4481029",
-    eta: "March 08, 2026",
-    etd: "March 01, 2026",
-    progressPercent: 100,
-    timeline: [
-      { stage: "LCL Cargo Consolidation", location: "Jebel Ali CFS Depot", date: "Feb 28, 2026", completed: true, description: "Cargo stuffed into shared container." },
-      { stage: "Vessel Voyage", location: "Arabian Sea", date: "Mar 01, 2026", completed: true, description: "Vessel departed Jebel Ali port." },
-      { stage: "Mundra Port Unloading", location: "Mundra Port CFS", date: "Mar 06, 2026", completed: true, description: "Container unstuffed and cargo inspected." },
-      { stage: "Delivered to Consignee", location: "Ahmedabad Industrial Park", date: "Mar 08, 2026", completed: true, active: true, description: "Cargo safely handed over with signed Proof of Delivery." }
     ]
   }
 ];

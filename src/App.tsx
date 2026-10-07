@@ -18,7 +18,7 @@ export function App() {
 
   // Scroll to top on page change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [currentPage, selectedServiceId]);
 
   const handleNavigate = (page: string, serviceId?: string) => {
@@ -102,7 +102,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-[#d9a74a] selection:text-slate-950">
+    <div className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-[#c9a227] selection:text-[#071a33]">
       {/* Navigation Header */}
       <Header 
         currentPage={currentPage}

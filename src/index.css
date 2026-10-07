@@ -10,9 +10,17 @@
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
     background: #ffffff;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -27,6 +35,15 @@
     overflow-x: hidden;
   }
 
+  img,
+  svg {
+    max-width: 100%;
+  }
+
+  img {
+    display: block;
+  }
+
   button,
   a,
   input,
@@ -38,10 +55,17 @@
   button,
   a {
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   button {
     cursor: pointer;
+  }
+
+  input,
+  select,
+  textarea {
+    min-width: 0;
   }
 
   ::selection {
@@ -61,6 +85,17 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+}
+
+main h1,
+main h2,
+main h3,
+main p {
+  overflow-wrap: break-word;
+}
+
+main section {
+  scroll-margin-top: 110px;
 }
 
 :focus-visible {
@@ -87,9 +122,53 @@
   background: var(--averon-gold);
 }
 
+@media (max-width: 639px) {
+  main h1 {
+    font-size: clamp(2rem, 9.4vw, 2.4rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  main h2 {
+    font-size: clamp(1.7rem, 7.4vw, 2.05rem) !important;
+    line-height: 1.14 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  main input,
+  main select,
+  main textarea,
+  [role="dialog"] input,
+  [role="dialog"] select,
+  [role="dialog"] textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.32; transform: scale(1); }
-  50% { opacity: 0.82; transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.82;
+    transform: scale(1.1);
+  }
 }
 
 .animate-pulse-glow {
