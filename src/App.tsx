@@ -4,6 +4,7 @@ import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
+import { ServicesOverviewPage } from './pages/ServicesOverviewPage';
 import { LCLConsolidationPage } from './pages/LCLConsolidationPage';
 import { GlobalReachPage } from './pages/GlobalReachPage';
 import { ContactPage } from './pages/ContactPage';
@@ -48,9 +49,15 @@ export function App() {
           />
         );
       case 'services':
+        return (
+          <ServicesOverviewPage
+            onNavigate={handleNavigate}
+            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          />
+        );
       case 'service-detail':
         return (
-          <ServicesPage 
+          <ServicesPage
             selectedServiceId={selectedServiceId}
             onNavigate={handleNavigate}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
