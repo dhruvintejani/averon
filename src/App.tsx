@@ -8,13 +8,12 @@ import { ServicesOverviewPage } from './pages/ServicesOverviewPage';
 import { LCLConsolidationPage } from './pages/LCLConsolidationPage';
 import { GlobalReachPage } from './pages/GlobalReachPage';
 import { ContactPage } from './pages/ContactPage';
-import { TrackShipmentModal } from './components/TrackShipmentModal';
+import { TrackShipmentPage } from './pages/TrackShipmentPage';
 import { QuoteModal } from './components/QuoteModal';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const [selectedServiceId, setSelectedServiceId] = useState<string>('ocean-freight');
-  const [isTrackModalOpen, setIsTrackModalOpen] = useState<boolean>(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState<boolean>(false);
 
   // Scroll to top on page change
@@ -37,7 +36,7 @@ export function App() {
         return (
           <HomePage 
             onNavigate={handleNavigate}
-            onOpenTrackModal={() => setIsTrackModalOpen(true)}
+            onOpenTrackModal={() => handleNavigate('track-shipment')}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
         );
@@ -79,7 +78,14 @@ export function App() {
         );
       case 'contact':
         return (
-          <ContactPage 
+          <ContactPage
+            onNavigate={handleNavigate}
+            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          />
+        );
+      case 'track-shipment':
+        return (
+          <TrackShipmentPage
             onNavigate={handleNavigate}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
@@ -88,7 +94,7 @@ export function App() {
         return (
           <HomePage 
             onNavigate={handleNavigate}
-            onOpenTrackModal={() => setIsTrackModalOpen(true)}
+            onOpenTrackModal={() => handleNavigate('track-shipment')}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
         );
@@ -101,7 +107,7 @@ export function App() {
       <Header 
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        onOpenTrackModal={() => setIsTrackModalOpen(true)}
+        onOpenTrackModal={() => handleNavigate('track-shipment')}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
@@ -113,16 +119,11 @@ export function App() {
       {/* Footer */}
       <Footer 
         onNavigate={handleNavigate}
-        onOpenTrackModal={() => setIsTrackModalOpen(true)}
+        onOpenTrackModal={() => handleNavigate('track-shipment')}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
       {/* Modals */}
-      <TrackShipmentModal 
-        isOpen={isTrackModalOpen}
-        onClose={() => setIsTrackModalOpen(false)}
-      />
-
       <QuoteModal 
         isOpen={isQuoteModalOpen}
         onClose={() => setIsQuoteModalOpen(false)}
