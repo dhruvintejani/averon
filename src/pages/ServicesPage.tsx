@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle2, ShieldCheck, Anchor, Plane, Truck, Box, Warehouse, Layers } from 'lucide-react';
 import { SERVICES_LIST, ServiceItem } from '../data/companyData';
 import { OceanFreightPage } from './OceanFreightPage';
+import { AirFreightPage } from './AirFreightPage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -17,6 +18,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   if (selectedServiceId === 'ocean-freight') {
     return (
       <OceanFreightPage
+        onNavigate={onNavigate}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+    );
+  }
+
+  if (selectedServiceId === 'air-freight') {
+    return (
+      <AirFreightPage
         onNavigate={onNavigate}
         onOpenQuoteModal={onOpenQuoteModal}
       />
