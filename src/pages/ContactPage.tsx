@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   ArrowRight,
-  CheckCircle2,
   ClipboardCheck,
   Globe,
   Linkedin,
