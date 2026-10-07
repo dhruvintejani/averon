@@ -187,22 +187,21 @@ export const SERVICES_LIST: ServiceItem[] = [
     code: "06",
     title: "Project Cargo & Breakbulk",
     shortDesc: "Specialized handling for oversized, heavy-lift and non-containerized shipments.",
-    fullDesc: "Specialized Coordination for Oversized, Heavy-Lift and Non-Containerized Cargo. We coordinate project cargo and breakbulk shipments with careful planning across port, transport and destination requirements.",
+    fullDesc: "Specialized coordination for oversized, heavy-lift and non-containerized shipments.",
     heroImage: "https://images.pexels.com/photos/38414138/pexels-photo-38414138.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     features: [
-      "Oversized cargo coordination and route survey.",
+      "Oversized cargo coordination.",
       "Heavy-lift shipment planning support.",
       "Breakbulk cargo handling coordination.",
-      "Route and movement feasibility planning.",
+      "Route and movement planning.",
       "Coordination across port, transport and destination requirements."
     ],
     solutions: [
-      { title: "Project Cargo", desc: "Tailored coordination for oversized energy, construction, and manufacturing equipment." },
-      { title: "Breakbulk Handling", desc: "Non-containerized cargo loading with dedicated crane and lashing crews." }
+      { title: "Project Cargo", desc: "Coordination for oversized and heavy-lift shipment requirements." },
+      { title: "Breakbulk", desc: "Coordination for non-containerized cargo movement." }
     ],
     approach: [
-      { title: "Planned Coordination", desc: "Thorough route engineering and port equipment verification before transit." },
-      { title: "Operational Execution", desc: "On-site supervision during heavy lifting and vessel stowing." }
+      { title: "Planned Coordination", desc: "For non-standard cargo, Averon coordinates movement requirements across the logistics chain with appropriate planning and operational communication." }
     ]
   },
   {
