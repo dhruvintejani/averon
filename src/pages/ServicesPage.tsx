@@ -3,6 +3,7 @@ import { CheckCircle2, ShieldCheck, Anchor, Plane, Truck, Box, Warehouse, Layers
 import { SERVICES_LIST, ServiceItem } from '../data/companyData';
 import { OceanFreightPage } from './OceanFreightPage';
 import { AirFreightPage } from './AirFreightPage';
+import { CustomsClearancePage } from './CustomsClearancePage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -27,6 +28,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   if (selectedServiceId === 'air-freight') {
     return (
       <AirFreightPage
+        onNavigate={onNavigate}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+    );
+  }
+
+  if (selectedServiceId === 'customs-clearance') {
+    return (
+      <CustomsClearancePage
         onNavigate={onNavigate}
         onOpenQuoteModal={onOpenQuoteModal}
       />
