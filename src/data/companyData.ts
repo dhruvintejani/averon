@@ -208,21 +208,23 @@ export const SERVICES_LIST: ServiceItem[] = [
     id: "supply-chain-management",
     code: "07",
     title: "Supply Chain Management",
-    shortDesc: "Coordinated planning across modes, vendors and carriers with one forwarding partner.",
-    fullDesc: "Unified Supply Chain Management. Seamless integration of vendors, multi-modal transport, customs compliance, and inventory flow.",
-    heroImage: "https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+    shortDesc: "Coordinated planning across shipments, modes and vendors with one forwarding partner.",
+    fullDesc: "Coordinated planning across shipments, transport modes and vendors with one forwarding partner.",
+    heroImage: "https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     features: [
-      "Single point of contact for complex international logistics.",
-      "Vendor and carrier coordination.",
-      "Cost optimization and route planning.",
-      "Risk management and contingency planning."
+      "Shipment planning and coordination.",
+      "Multi-modal logistics support.",
+      "Vendor and service-provider coordination.",
+      "Documentation and operational communication.",
+      "Origin-to-destination visibility.",
+      "Integrated support across freight and inland logistics."
     ],
     solutions: [
-      { title: "Multi-Modal Freight Integration", desc: "Smooth combination of sea, air, and road transit for maximum efficiency." },
-      { title: "Vendor Order Tracking", desc: "Coordinate directly with suppliers to ensure cargo is ready on schedule." }
+      { title: "Multi-Modal Logistics Support", desc: "Coordinated support across different transport modes." },
+      { title: "Origin-to-Destination Visibility", desc: "Coordinated visibility throughout the shipment journey." }
     ],
     approach: [
-      { title: "Strategic Oversight", desc: "Proactive communication and continuous process optimization." }
+      { title: "One Coordinated Point of Contact", desc: "Our supply chain support brings multiple logistics activities together under one coordinated point of contact." }
     ]
   }
 ];

@@ -7,6 +7,7 @@ import { CustomsClearancePage } from './CustomsClearancePage';
 import { RoadInlandTransportPage } from './RoadInlandTransportPage';
 import { WarehousingDistributionPage } from './WarehousingDistributionPage';
 import { ProjectCargoBreakbulkPage } from './ProjectCargoBreakbulkPage';
+import { SupplyChainManagementPage } from './SupplyChainManagementPage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -67,6 +68,14 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   if (selectedServiceId === 'project-cargo') {
     return (
       <ProjectCargoBreakbulkPage
+        onNavigate={onNavigate}
+      />
+    );
+  }
+
+  if (selectedServiceId === 'supply-chain-management') {
+    return (
+      <SupplyChainManagementPage
         onNavigate={onNavigate}
       />
     );
