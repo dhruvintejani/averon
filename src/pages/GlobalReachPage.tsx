@@ -1,336 +1,371 @@
 import React from 'react';
-import { TRADE_LANES, KEY_IMPORT_ORIGINS } from '../data/companyData';
-import { CheckCircle2 } from 'lucide-react';
+import {
+  ArrowRight,
+  CircleDot,
+  Eye,
+  Globe2,
+  Handshake,
+  MapPin,
+  Network,
+  Route,
+} from 'lucide-react';
+import { KEY_IMPORT_ORIGINS, TRADE_LANES } from '../data/companyData';
 
 interface GlobalReachPageProps {
   onNavigate: (page: string) => void;
   onOpenQuoteModal: () => void;
 }
 
-export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({ onNavigate, onOpenQuoteModal }) => {
+type IconType = React.ComponentType<{ className?: string; strokeWidth?: number }>;
+
+const approachItems: { title: string; desc: string; icon: IconType }[] = [
+  {
+    title: 'Partner-Network Coverage',
+    desc: 'International support through coordinated partner-network coverage.',
+    icon: Network,
+  },
+  {
+    title: 'One Point of Contact',
+    desc: 'Coordinated communication throughout the shipment lifecycle.',
+    icon: Handshake,
+  },
+  {
+    title: 'Route-Focused Planning',
+    desc: 'Solutions aligned with cargo, route and shipment requirements.',
+    icon: Route,
+  },
+  {
+    title: 'End-to-End Visibility',
+    desc: 'Proactive coordination from origin through destination.',
+    icon: Eye,
+  },
+];
+
+const Eyebrow = ({
+  children,
+  light = false,
+}: {
+  children: React.ReactNode;
+  light?: boolean;
+}) => (
+  <div
+    className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
+      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+    }`}
+  >
+    <span className="h-[2px] w-8 bg-[#c9a227]" />
+    <span>{children}</span>
+  </div>
+);
+
+const GlobalMap = () => (
+  <div className="relative overflow-hidden border border-white/10 bg-[#061426] p-4 sm:p-7">
+    <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] [background-size:34px_34px]" />
+
+    <svg
+      viewBox="0 0 960 460"
+      className="relative z-10 min-h-[330px] w-full"
+      role="img"
+      aria-label="Illustrative global trade route map with India as the coordination point"
+    >
+      <g fill="#173a5d" stroke="#315777" strokeWidth="2">
+        <path d="M72 125l96-47 91 22 38 53-43 46-86 0-48 47-59-51z" />
+        <path d="M248 224l50 36 21 55-23 84-39-33-17-79z" />
+        <path d="M399 106l59-25 45 19-2 37-44 14-50-11z" />
+        <path d="M446 154l72 19 47 70-28 116-49-12-31-78-45-64z" />
+        <path d="M510 109l105-48 137 19 78 49-38 56-101 5-60 55-84-21-22-51z" />
+        <path d="M745 296l63-23 52 36-24 47-66 8-36-34z" />
+      </g>
+
+      <g fill="none" stroke="#c9a227" strokeWidth="2.25" opacity=".9">
+        <path d="M620 205 Q438 24 170 143" />
+        <path d="M620 205 Q485 54 460 123" />
+        <path d="M620 205 Q623 67 756 133" />
+        <path d="M620 205 Q795 165 804 324" />
+        <path d="M620 205 Q516 279 514 301" />
+        <path d="M620 205 Q400 255 285 299" />
+        <path d="M620 205 Q335 133 104 176" />
+      </g>
+
+      <g fill="#d4af37">
+        <circle cx="620" cy="205" r="10" />
+        <circle cx="170" cy="143" r="5" />
+        <circle cx="460" cy="123" r="5" />
+        <circle cx="756" cy="133" r="5" />
+        <circle cx="804" cy="324" r="5" />
+        <circle cx="514" cy="301" r="5" />
+        <circle cx="285" cy="299" r="5" />
+        <circle cx="104" cy="176" r="5" />
+      </g>
+
+      <g
+        fill="#f8fafc"
+        fontSize="13"
+        fontFamily="Inter, Arial, sans-serif"
+        fontWeight="700"
+      >
+        <text x="635" y="198">INDIA</text>
+        <text x="125" y="132">USA / CANADA</text>
+        <text x="420" y="112">EUROPE</text>
+        <text x="727" y="121">FAR EAST</text>
+        <text x="762" y="386">AUSTRALIA</text>
+        <text x="468" y="331">AFRICA</text>
+        <text x="251" y="329">LATAM</text>
+      </g>
+    </svg>
+
+    <div className="relative z-10 mt-2 flex flex-col gap-2 border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.17em] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+      <span>Partner-network coverage across major international trade lanes</span>
+      <span className="text-[#d4af37]">India coordination point</span>
+    </div>
+  </div>
+);
+
+export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
+  onNavigate,
+  onOpenQuoteModal,
+}) => {
   return (
-    <div className="bg-white font-sans text-slate-800">
-      
-      {/* PAGE HERO HEADER */}
-      <section className="relative bg-[#071627] text-white py-16 lg:py-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=1600" 
-            alt="Global Shipping Routes" 
-            className="w-full h-full object-cover opacity-25"
+    <div className="bg-white text-[#14263d]">
+      {/* HERO */}
+      <section className="relative min-h-[500px] overflow-hidden bg-[#071a33] text-white">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
+            alt="International freight and port operations"
+            className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#071627] via-[#071627]/90 to-transparent"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.92)_44%,rgba(7,26,51,.64)_73%,rgba(7,26,51,.38)_100%)]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-xs font-mono text-slate-400 mb-3 flex items-center space-x-2">
-            <span className="hover:text-white cursor-pointer" onClick={() => onNavigate('home')}>Home</span>
-            <span>/</span>
-            <span className="text-[#d9a74a] font-bold">Global Reach</span>
-          </div>
-
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#d9a74a] block mb-2">
-            GLOBAL REACH
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-serif max-w-3xl leading-tight">
-            Connecting Businesses Across <br /> International Trade Routes
-          </h1>
-
-          <p className="text-xs sm:text-sm text-slate-300 font-normal max-w-2xl mt-3 leading-relaxed">
-            Through our global network, we support shipments across major international trade lanes including USA, Canada, Europe, Mediterranean, Middle East, Far East, Africa, Australia, LATAM and ISC.
-          </p>
-        </div>
-      </section>
-
-      {/* INDIA AT THE CENTRE */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332]">
-                WORLDWIDE COORDINATION
-              </span>
-
-              <h2 className="text-3xl font-black text-[#0b1f3a] font-serif leading-tight">
-                Global Logistics Support <br /> with India at the Centre.
-              </h2>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Through our global network, Averon Freight Solutions supports cargo movement across major international trade lanes while coordinating each shipment through a single, connected logistics process.
-              </p>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Key import origins include China, Far East, Europe, Dubai, Istanbul and USA.
-              </p>
+        <div className="relative z-10 mx-auto flex min-h-[500px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
+          <div className="max-w-[860px]">
+            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+              <button
+                type="button"
+                onClick={() => onNavigate('home')}
+                className="transition hover:text-white"
+              >
+                Home
+              </button>
+              <span>/</span>
+              <span className="text-[#d4af37]">Global Reach</span>
             </div>
 
-            {/* Vessel Image Box */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-white">
-                <img 
-                  src="https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=900" 
-                  alt="Ocean Freight Global Network" 
-                  className="w-full h-80 sm:h-96 object-cover"
-                />
+            <Eyebrow light>Global Reach</Eyebrow>
 
-                <div className="absolute bottom-4 left-4 bg-[#0b1f3a]/95 text-white p-4 rounded border-l-4 border-[#d9a74a] shadow-xl space-y-1 max-w-xs">
-                  <div className="text-xs font-bold text-[#d9a74a] uppercase">Global Network</div>
-                  <div className="text-[11px] text-slate-300 leading-snug">
-                    International trade-lane support through coordinated partner coverage.
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h1 className="max-w-[820px] text-4xl font-extrabold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[58px]">
+              Connecting Businesses Across
+              <span className="block text-[#d4af37]">International Trade Routes</span>
+            </h1>
 
+            <p className="mt-5 max-w-[760px] text-base leading-7 text-slate-200 sm:text-lg">
+              Through our global network, we support shipments across major international trade lanes including USA, Canada, Europe, Mediterranean, Middle East, Far East, Africa, Australia, LATAM and ISC.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ONE COORDINATION POINT - WORLD MAP */}
-      <section className="py-20 bg-[#08182b] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
-          
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-            <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#d9a74a] font-bold block mb-1">
-                NETWORK VISUAL
-              </span>
-              <h2 className="text-3xl font-black text-white font-serif">
-                One Coordination Point. Global Connections.
-              </h2>
-            </div>
-            <p className="text-xs text-slate-400 max-w-md leading-relaxed">
-              India is shown as the central coordination point, with route lines indicating the international regions listed by the client.
+      {/* GLOBAL SUPPORT */}
+      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-6">
+            <Eyebrow>Worldwide Coordination</Eyebrow>
+
+            <h2 className="text-3xl font-extrabold leading-[1.08] tracking-[-0.025em] text-[#071a33] sm:text-4xl lg:text-[44px]">
+              Global Logistics Support with India at the Centre
+            </h2>
+
+            <p className="mt-6 text-[15px] leading-7 text-slate-600">
+              Through our global network, Averon Freight Solutions supports cargo movement across major international trade lanes with coordinated freight-forwarding support.
+            </p>
+
+            <p className="mt-4 text-[15px] leading-7 text-slate-600">
+              Key import origins include China, Far East, Europe, Dubai, Istanbul and USA.
             </p>
           </div>
 
-          {/* World Map Graphical Board */}
-          <div className="relative bg-[#051120] rounded-xl border border-slate-800 p-6 md:p-10 overflow-hidden shadow-2xl min-h-[380px] flex items-center justify-center">
-            
-            {/* World Map Dots / Routes Canvas simulation */}
-            <svg className="w-full h-80 opacity-50" viewBox="0 0 1000 500" fill="none">
-              {/* World outline paths simulation */}
-              <circle cx="500" cy="220" r="10" fill="#d9a74a" />
-              
-              {/* Lines connecting India to global ports */}
-              <line x1="500" y1="220" x2="250" y2="150" stroke="#d9a74a" strokeWidth="2" strokeDasharray="5 5" />
-              <line x1="500" y1="220" x2="200" y2="280" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" />
-              <line x1="500" y1="220" x2="420" y2="120" stroke="#d9a74a" strokeWidth="2" strokeDasharray="5 5" />
-              <line x1="500" y1="220" x2="680" y2="180" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" />
-              <line x1="500" y1="220" x2="780" y2="300" stroke="#d9a74a" strokeWidth="2" strokeDasharray="5 5" />
-              <line x1="500" y1="220" x2="400" y2="300" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" />
+          <div className="relative lg:col-span-6">
+            <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
+              <img
+                src="https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+                alt="Container vessel on an international trade route"
+                loading="lazy"
+                className="h-[430px] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
 
-              {/* Hub Dots */}
-              <circle cx="250" cy="150" r="6" fill="#38bdf8" />
-              <circle cx="200" cy="280" r="6" fill="#38bdf8" />
-              <circle cx="420" cy="120" r="6" fill="#d9a74a" />
-              <circle cx="680" cy="180" r="6" fill="#d9a74a" />
-              <circle cx="780" cy="300" r="6" fill="#38bdf8" />
-              <circle cx="400" cy="300" r="6" fill="#38bdf8" />
-            </svg>
-
-            {/* Central Badge */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0b1f3a] text-white px-5 py-2.5 rounded-lg border-2 border-[#d9a74a] shadow-2xl text-center">
-              <span className="text-xs font-black text-[#d9a74a] tracking-widest block uppercase">INDIA</span>
-              <span className="text-[10px] font-extrabold text-slate-200 uppercase tracking-wider block">COORDINATION POINT</span>
+              <div className="absolute bottom-0 left-0 border-t-4 border-[#c9a227] bg-[#071a33]/95 px-6 py-4 text-white backdrop-blur-sm">
+                <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#d4af37]">
+                  Global Network
+                </div>
+                <div className="mt-1 max-w-[300px] text-xs leading-5 text-slate-200">
+                  Coordinated support across major international trade lanes.
+                </div>
+              </div>
             </div>
-
-            {/* Region labels over map */}
-            <div className="absolute top-16 left-12 bg-slate-900/80 px-2.5 py-1 rounded text-[10px] font-mono text-cyan-300 border border-slate-700">
-              USA & CANADA
-            </div>
-            <div className="absolute top-10 left-[380px] bg-slate-900/80 px-2.5 py-1 rounded text-[10px] font-mono text-amber-300 border border-slate-700">
-              EUROPE & ISTANBUL
-            </div>
-            <div className="absolute bottom-20 left-[350px] bg-slate-900/80 px-2.5 py-1 rounded text-[10px] font-mono text-cyan-300 border border-slate-700">
-              MIDDLE EAST / DUBAI
-            </div>
-            <div className="absolute top-24 right-20 bg-slate-900/80 px-2.5 py-1 rounded text-[10px] font-mono text-amber-300 border border-slate-700">
-              CHINA & FAR EAST
-            </div>
-            <div className="absolute bottom-16 right-16 bg-slate-900/80 px-2.5 py-1 rounded text-[10px] font-mono text-cyan-300 border border-slate-700">
-              AUSTRALIA & PACIFIC
-            </div>
-
           </div>
-
-          <div className="text-center font-mono text-[10px] text-slate-400">
-            Partner network coverage across major international trade lanes.
-          </div>
-
         </div>
       </section>
 
-      {/* TRADE LANES & KEY ORIGINS */}
-      <section className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
-            {/* Major Trade Lanes Grid */}
-            <div className="lg:col-span-7 space-y-6">
-              <div>
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332] block mb-1">
-                  MAJOR TRADE LANES
-                </span>
-                <h3 className="text-2xl font-black text-[#0b1f3a] font-serif">
-                  International Markets We Support
-                </h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Averon supports shipments across the regions listed by the client through its global network and coordinated freight-forwarding relationships.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 pt-2">
-                {TRADE_LANES.map((lane) => (
-                  <div key={lane} className="p-3 bg-slate-50 border border-slate-200 rounded flex items-center space-x-2 text-xs font-bold text-[#0b1f3a]">
-                    <div className="w-2 h-2 rounded-full bg-[#d9a74a]"></div>
-                    <span>{lane}</span>
-                  </div>
-                ))}
-              </div>
+      {/* NETWORK MAP */}
+      <section className="bg-[#071a33] py-20 text-white sm:py-24">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+            <div className="max-w-3xl">
+              <Eyebrow light>Network Visual</Eyebrow>
+              <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
+                One Coordination Point. Global Connections.
+              </h2>
             </div>
 
-            {/* Key Import Origins Card */}
-            <div className="lg:col-span-5 bg-slate-50 p-6 rounded-lg border border-slate-200 space-y-4">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332]">
-                KEY IMPORT ORIGINS
-              </span>
-              <h3 className="text-xl font-bold text-[#0b1f3a]">
+            <p className="max-w-[480px] text-sm leading-6 text-slate-300">
+              India is shown as the coordination point, with route lines illustrating partner-network connections to the regions listed by Averon.
+            </p>
+          </div>
+
+          <GlobalMap />
+        </div>
+      </section>
+
+      {/* TRADE LANES */}
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto grid max-w-[1360px] gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-7">
+            <Eyebrow>Major Trade Lanes</Eyebrow>
+            <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
+              International Markets We Support
+            </h2>
+
+            <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
+              {TRADE_LANES.map((lane) => (
+                <div key={lane} className="flex items-center gap-3 bg-white px-5 py-4">
+                  <CircleDot className="h-4 w-4 shrink-0 text-[#b88924]" strokeWidth={1.7} />
+                  <span className="text-sm font-extrabold text-[#071a33]">{lane}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="h-full border border-slate-200 bg-[#f8f6f0] p-7 sm:p-8">
+              <Eyebrow>Key Import Origins</Eyebrow>
+              <h3 className="text-2xl font-extrabold tracking-[-0.02em] text-[#071a33]">
                 Coordinated Import Movement
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Key import origins provided by the client are shown below. Shipment planning and execution are coordinated around the specific route, cargo and logistics requirement.
+
+              <p className="mt-4 text-sm leading-6 text-slate-600">
+                Key import origins include China, Far East, Europe, Dubai, Istanbul and USA.
               </p>
 
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                {KEY_IMPORT_ORIGINS.map((orig) => (
-                  <div key={orig.code} className="p-3 bg-white border border-slate-200 rounded flex items-center space-x-3">
-                    <span className="text-xs font-mono font-bold text-[#d9a74a]">{orig.code}</span>
-                    <span className="text-xs font-bold text-[#0b1f3a]">{orig.name}</span>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {KEY_IMPORT_ORIGINS.map((origin) => (
+                  <div
+                    key={origin.code}
+                    className="flex items-center gap-3 border border-slate-200 bg-white px-4 py-3"
+                  >
+                    <span className="text-[10px] font-extrabold tracking-[0.16em] text-[#c9a227]">
+                      {origin.code}
+                    </span>
+                    <span className="text-sm font-extrabold text-[#071a33]">{origin.name}</span>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* AVERON APPROACH - SHIPMENT JOURNEY */}
-      <section className="py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Image */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-white">
-                <img 
-                  src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=900" 
-                  alt="Cargo Vessel" 
-                  className="w-full h-80 object-cover"
-                />
-              </div>
+      {/* AVERON APPROACH */}
+      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-5">
+            <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)]">
+              <img
+                src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1100"
+                alt="International cargo coordination"
+                loading="lazy"
+                className="h-[430px] w-full object-cover"
+              />
             </div>
+          </div>
 
-            {/* Approach Points */}
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#c89332]">
-                AVERON APPROACH
-              </span>
+          <div className="lg:col-span-7">
+            <Eyebrow>Averon Approach</Eyebrow>
 
-              <h2 className="text-3xl font-black text-[#0b1f3a] font-serif leading-tight">
-                Coordinated Across the Shipment Journey.
-              </h2>
+            <h2 className="text-3xl font-extrabold leading-[1.08] tracking-[-0.025em] text-[#071a33] sm:text-4xl">
+              Coordinated Across the Shipment Journey
+            </h2>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Averon's role is to keep international cargo movement connected through freight planning, documentation, customs coordination, transportation and destination support.
-              </p>
+            <p className="mt-5 text-sm leading-6 text-slate-600">
+              Averon coordinates international cargo movement through freight planning, documentation, customs coordination, transportation and destination support.
+            </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                
-                <div className="p-4 bg-white border border-slate-200 rounded space-y-1">
-                  <div className="flex items-center space-x-2 text-[#0b1f3a]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c89332]" />
-                    <span className="text-xs font-bold">Partner-Network Coverage</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    International support without implying owned infrastructure in every market.
-                  </p>
-                </div>
+            <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
+              {approachItems.map((item) => {
+                const Icon = item.icon;
 
-                <div className="p-4 bg-white border border-slate-200 rounded space-y-1">
-                  <div className="flex items-center space-x-2 text-[#0b1f3a]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c89332]" />
-                    <span className="text-xs font-bold">One Point of Contact</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    Coordinated communication throughout the shipment lifecycle.
-                  </p>
-                </div>
+                return (
+                  <article key={item.title} className="bg-white p-6">
+                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                      <Icon className="h-5 w-5" strokeWidth={1.7} />
+                    </div>
 
-                <div className="p-4 bg-white border border-slate-200 rounded space-y-1">
-                  <div className="flex items-center space-x-2 text-[#0b1f3a]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c89332]" />
-                    <span className="text-xs font-bold">Route-Focused Planning</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    Solutions aligned with cargo, route and shipment requirements.
-                  </p>
-                </div>
-
-                <div className="p-4 bg-white border border-slate-200 rounded space-y-1">
-                  <div className="flex items-center space-x-2 text-[#0b1f3a]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c89332]" />
-                    <span className="text-xs font-bold">End-to-End Visibility</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    Proactive coordination from origin through destination.
-                  </p>
-                </div>
-
-              </div>
-
+                    <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">{item.title}</h3>
+                    <p className="mt-2 text-xs leading-5 text-slate-600">{item.desc}</p>
+                  </article>
+                );
+              })}
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* CTA BANNER */}
-      <section className="relative py-16 bg-[#08182b] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="space-y-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#d9a74a] font-bold block">
-              PLAN YOUR NEXT SHIPMENT
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-serif">
+      {/* CTA */}
+      <section className="relative overflow-hidden bg-[#071a33] py-16 text-white sm:py-20">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />
+        </div>
+
+        <div className="relative z-10 mx-auto flex max-w-[1360px] flex-col justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+          <div className="max-w-[760px]">
+            <Eyebrow light>Plan Your Next Shipment</Eyebrow>
+            <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
               Connect Your Cargo to Global Markets
             </h2>
-            <p className="text-xs text-slate-300 max-w-xl">
+
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300">
               Share your shipment requirements with Averon Freight Solutions and our team will work with you on a suitable logistics solution.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex shrink-0 flex-wrap gap-3">
             <button
+              type="button"
               onClick={onOpenQuoteModal}
-              className="px-6 py-3 bg-[#d9a74a] hover:bg-[#c89332] text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg"
+              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
-              GET A QUOTE →
+              PLAN YOUR NEXT SHIPMENT
+              <ArrowRight className="h-4 w-4" />
             </button>
 
             <button
+              type="button"
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3 border border-slate-400 hover:border-white text-white font-bold text-xs uppercase tracking-wider rounded transition-colors"
+              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </div>
       </section>
-
     </div>
   );
 };
