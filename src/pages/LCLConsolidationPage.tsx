@@ -98,7 +98,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
 
         <div className="relative z-10 mx-auto flex min-h-[500px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-[780px]">
-            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
@@ -137,8 +137,8 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
       </section>
 
       {/* INTRODUCTION */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-6">
             <Eyebrow>LCL Consolidation</Eyebrow>
 
@@ -162,7 +162,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
                 src="https://images.pexels.com/photos/30115463/pexels-photo-30115463.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Container consolidation and cargo handling"
                 loading="lazy"
-                className="h-[430px] w-full object-cover"
+                className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/50 via-transparent to-transparent" />
 
@@ -178,7 +178,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
       </section>
 
       {/* LCL SUPPORT */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-3xl">
             <Eyebrow>Our LCL Support</Eyebrow>
@@ -217,17 +217,17 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
             Consolidation Flow
           </h2>
 
-          <div className="mt-12 grid gap-7 sm:grid-cols-5 sm:gap-2">
+          <div className="mt-12 grid gap-7 md:grid-cols-5 sm:gap-2">
             {flowSteps.map((step, index) => {
               const Icon = step.icon;
 
               return (
-                <div key={step.title} className="relative flex items-center gap-4 sm:block sm:text-center">
-                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#0b2342] text-[#d4af37] sm:mx-auto">
+                <div key={step.title} className="relative flex items-center gap-4 md:block md:text-center">
+                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#0b2342] text-[#d4af37] md:mx-auto">
                     <Icon className="h-6 w-6" strokeWidth={1.7} />
                   </div>
 
-                  <div className="text-[11px] font-extrabold uppercase tracking-[0.13em] text-white sm:mt-4">
+                  <div className="text-[11px] font-extrabold uppercase tracking-[0.13em] text-white md:mt-4">
                     {step.title}
                   </div>
 
@@ -248,7 +248,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
       </section>
 
       {/* WHY AVERON */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <Eyebrow>Why Businesses Choose Averon for LCL</Eyebrow>
@@ -277,7 +277,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-[#071a33] py-16 text-white sm:py-20">
+      <section className="relative overflow-hidden bg-[#071a33] py-14 text-white sm:py-16 lg:py-20">
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
@@ -304,7 +304,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
             <button
               type="button"
               onClick={onOpenQuoteModal}
-              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               DISCUSS YOUR LCL SHIPMENT
               <ArrowRight className="h-4 w-4" />
@@ -313,7 +313,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />

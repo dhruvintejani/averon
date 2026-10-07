@@ -120,7 +120,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
 
         <div className="relative z-10 mx-auto flex min-h-[430px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-[780px]">
-            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
@@ -146,7 +146,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
       </section>
 
       {/* TRACKING LOOKUP */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
@@ -298,7 +298,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
       </section>
 
       {/* PROCESS */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
@@ -339,14 +339,14 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
       </section>
 
       {/* SUPPORT */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)] lg:col-span-6">
             <img
               src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1200"
               alt="Container vessel moving international cargo"
               loading="lazy"
-              className="h-[390px] w-full object-cover"
+              className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[390px]"
             />
           </div>
 
@@ -404,7 +404,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
             <button
               type="button"
               onClick={onOpenQuoteModal}
-              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               GET A QUOTE
               <ArrowRight className="h-4 w-4" />
@@ -413,7 +413,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />

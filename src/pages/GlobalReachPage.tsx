@@ -62,7 +62,7 @@ const GlobalMap = () => (
 
     <svg
       viewBox="0 0 960 460"
-      className="relative z-10 min-h-[330px] w-full"
+      className="relative z-10 min-h-[250px] w-full sm:min-h-[300px] lg:min-h-[330px]"
       role="img"
       aria-label="Illustrative global trade route map with India as the coordination point"
     >
@@ -138,7 +138,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
 
         <div className="relative z-10 mx-auto flex min-h-[500px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-[860px]">
-            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
@@ -165,8 +165,8 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       </section>
 
       {/* GLOBAL SUPPORT */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-6">
             <Eyebrow>Worldwide Coordination</Eyebrow>
 
@@ -189,7 +189,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
                 src="https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Container vessel on an international trade route"
                 loading="lazy"
-                className="h-[430px] w-full object-cover"
+                className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
 
@@ -227,8 +227,8 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       </section>
 
       {/* TRADE LANES */}
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-7">
             <Eyebrow>Major Trade Lanes</Eyebrow>
             <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
@@ -275,15 +275,15 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       </section>
 
       {/* AVERON APPROACH */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-5">
             <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)]">
               <img
                 src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1100"
                 alt="International cargo coordination"
                 loading="lazy"
-                className="h-[430px] w-full object-cover"
+                className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
             </div>
           </div>
@@ -320,7 +320,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-[#071a33] py-16 text-white sm:py-20">
+      <section className="relative overflow-hidden bg-[#071a33] py-14 text-white sm:py-16 lg:py-20">
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
@@ -347,7 +347,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
             <button
               type="button"
               onClick={onOpenQuoteModal}
-              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               PLAN YOUR NEXT SHIPMENT
               <ArrowRight className="h-4 w-4" />
@@ -356,7 +356,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />

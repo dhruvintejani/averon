@@ -117,7 +117,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
         <div className="relative z-10 mx-auto flex min-h-[420px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-[780px]">
-            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
@@ -143,7 +143,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* QUOTE FORM + CONTACT */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
@@ -308,7 +308,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <div className="mt-7 flex flex-wrap gap-3">
                 <button
                   type="submit"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+                  className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
                 >
                   REQUEST A QUOTE
                   <ArrowRight className="h-4 w-4" />
@@ -316,7 +316,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
                 <a
                   href="tel:+919833464629"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#071a33] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#0b2342]"
+                  className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#071a33] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#0b2342]"
                 >
                   <Phone className="h-4 w-4 text-[#d4af37]" />
                   CALL OUR TEAM
@@ -415,7 +415,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* WHAT HAPPENS NEXT */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <Eyebrow>What Happens Next</Eyebrow>

@@ -136,7 +136,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
 
         <div className="relative z-10 mx-auto flex min-h-[450px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-[760px]">
-            <div className="mb-6 flex items-center gap-2 text-[11px] font-semibold text-slate-300">
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
@@ -163,14 +163,14 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
       </section>
 
       {/* INTRO */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)] lg:col-span-6">
             <img
               src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
               alt="International cargo movement"
               loading="lazy"
-              className="h-[390px] w-full object-cover"
+              className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[390px]"
             />
           </div>
 
@@ -192,7 +192,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
       </section>
 
       {/* SERVICES */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
@@ -216,7 +216,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                   key={service.id}
                   type="button"
                   onClick={() => onNavigate('service-detail', service.id)}
-                  className="group grid w-full grid-cols-[56px_1fr] gap-4 border-b border-slate-200 px-2 py-6 text-left transition last:border-b-0 hover:bg-[#f8f6f0] sm:grid-cols-[56px_minmax(220px,.8fr)_1.5fr_auto] sm:items-center sm:gap-6 sm:px-5"
+                  className="group grid w-full grid-cols-[56px_1fr] gap-4 border-b border-slate-200 px-2 py-6 text-left transition last:border-b-0 hover:bg-[#f8f6f0] lg:grid-cols-[56px_minmax(220px,.8fr)_1.5fr_auto] lg:items-center lg:gap-6 lg:px-5"
                 >
                   <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 bg-white text-[#b88924] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
@@ -231,11 +231,11 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                     </h3>
                   </div>
 
-                  <p className="col-span-2 text-sm leading-6 text-slate-600 sm:col-span-1">
+                  <p className="col-span-2 text-sm leading-6 text-slate-600 lg:col-span-1">
                     {service.desc}
                   </p>
 
-                  <div className="col-span-2 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#071a33] transition group-hover:text-[#b88924] sm:col-span-1">
+                  <div className="col-span-2 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#071a33] transition group-hover:text-[#b88924] lg:col-span-1">
                     Explore
                     <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </div>
@@ -248,7 +248,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
 
       {/* LCL */}
       <section className="bg-[#071a33] py-20 text-white sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+        <div className="mx-auto grid max-w-[1360px] gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-5">
             <Eyebrow light>Our Specialization</Eyebrow>
             <h2 className="text-3xl font-extrabold tracking-[-0.025em] sm:text-4xl">
@@ -266,7 +266,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('lcl-consolidation')}
-              className="mt-8 inline-flex min-h-11 items-center gap-2 bg-[#c9a227] px-5 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="mt-8 inline-flex min-h-11 w-full items-center sm:w-auto gap-2 bg-[#c9a227] px-5 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               EXPLORE LCL SOLUTIONS
               <ArrowRight className="h-4 w-4" />
@@ -279,16 +279,16 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
               Consolidation Flow
             </div>
 
-            <div className="relative z-10 grid gap-6 sm:grid-cols-5 sm:gap-2">
+            <div className="relative z-10 grid gap-6 md:grid-cols-5 sm:gap-2">
               {lclSteps.map((step, index) => {
                 const Icon = step.icon;
 
                 return (
-                  <div key={step.title} className="relative flex items-center gap-4 sm:block sm:text-center">
-                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#071a33] text-[#d4af37] sm:mx-auto">
+                  <div key={step.title} className="relative flex items-center gap-4 md:block md:text-center">
+                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#071a33] text-[#d4af37] md:mx-auto">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <div className="text-[11px] font-extrabold uppercase tracking-[0.11em] sm:mt-4">
+                    <div className="text-[11px] font-extrabold uppercase tracking-[0.11em] md:mt-4">
                       {step.title}
                     </div>
 
@@ -310,8 +310,8 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
       </section>
 
       {/* COORDINATION */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-5">
             <Eyebrow>Why Averon</Eyebrow>
             <h2 className="text-3xl font-extrabold leading-[1.08] tracking-[-0.025em] text-[#071a33] sm:text-4xl">
@@ -365,7 +365,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             <button
               type="button"
               onClick={onOpenQuoteModal}
-              className="inline-flex min-h-12 items-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               GET A QUOTE
               <ArrowRight className="h-4 w-4" />
@@ -374,7 +374,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="inline-flex min-h-12 items-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />

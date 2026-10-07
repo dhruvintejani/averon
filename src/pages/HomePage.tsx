@@ -322,7 +322,7 @@ const RouteMapGraphic = () => (
         <text x="214" y="272">LATAM</text>
       </g>
     </svg>
-    <div className="relative z-10 mt-1 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+    <div className="relative z-10 mt-1 flex flex-col gap-2 border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
       <span>Illustrative partner-network routes</span>
       <span className="text-[#d4af37]">India coordination point</span>
     </div>
@@ -357,7 +357,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
-      <section className="relative min-h-[680px] overflow-hidden bg-[#071a33] text-white lg:min-h-[720px]">
+      <section className="relative min-h-[600px] overflow-hidden bg-[#071a33] text-white sm:min-h-[640px] lg:min-h-[720px]">
         <div className="absolute inset-0">
           <img
             src={currentSlide.image}
@@ -368,7 +368,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#071a33] to-transparent" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[680px] max-w-[1360px] items-center px-4 py-20 sm:px-6 lg:min-h-[720px] lg:px-8">
+        <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-center px-4 py-14 sm:min-h-[640px] sm:px-6 sm:py-16 lg:min-h-[720px] lg:px-8 lg:py-20">
           <div className="max-w-[780px]">
             <div className="mb-6 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d4af37]">
               <span className="h-[2px] w-10 bg-[#c9a227]" />
@@ -391,7 +391,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <button
                 type="button"
                 onClick={handleHeroPrimaryAction}
-                className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+                className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
               >
                 {currentSlide.cta}
                 <ArrowRight className="h-4 w-4" />
@@ -400,7 +400,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigate('services')}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 bg-[#071a33]/35 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white backdrop-blur-sm transition hover:border-[#d4af37] hover:text-[#d4af37]"
+                className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 bg-[#071a33]/35 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white backdrop-blur-sm transition hover:border-[#d4af37] hover:text-[#d4af37]"
               >
                 EXPLORE OUR SERVICES
                 <ArrowRight className="h-4 w-4" />
@@ -456,8 +456,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* INTRODUCTION */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-6">
             <SectionEyebrow>About Averon Freight Solutions</SectionEyebrow>
             <h2 className="max-w-[650px] text-3xl font-extrabold leading-[1.08] tracking-[-0.025em] text-[#071a33] sm:text-4xl lg:text-[46px]">
@@ -492,7 +492,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 src="https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="International cargo port operations"
                 loading="lazy"
-                className="h-[430px] w-full object-cover"
+                className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/35 via-transparent to-transparent" />
             </div>
@@ -508,7 +508,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* WHAT WE DELIVER */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <SectionEyebrow>What We Deliver</SectionEyebrow>
@@ -535,7 +535,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* SERVICES */}
-      <section className="bg-[#f4f6f8] py-20 sm:py-24">
+      <section className="bg-[#f4f6f8] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div className="max-w-3xl">
@@ -591,7 +591,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* LCL SPECIALIZATION */}
       <section className="bg-[#071a33] py-20 text-white sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+        <div className="mx-auto grid max-w-[1360px] gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-5">
             <SectionEyebrow light>Our Specialization</SectionEyebrow>
             <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
@@ -609,7 +609,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('lcl-consolidation')}
-              className="mt-8 inline-flex min-h-11 items-center gap-2 bg-[#c9a227] px-5 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="mt-8 inline-flex min-h-11 w-full items-center sm:w-auto gap-2 bg-[#c9a227] px-5 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               EXPLORE LCL SOLUTIONS
               <ArrowRight className="h-4 w-4" />
@@ -622,15 +622,15 @@ export const HomePage: React.FC<HomePageProps> = ({
               Consolidation Flow
             </div>
 
-            <div className="relative z-10 grid gap-6 sm:grid-cols-5 sm:gap-2">
+            <div className="relative z-10 grid gap-6 md:grid-cols-5 sm:gap-2">
               {lclSteps.map((step, index) => {
                 const Icon = step.icon;
                 return (
-                  <div key={step.title} className="relative flex items-center gap-4 sm:block sm:text-center">
-                    <div className="mx-0 grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#071a33] text-[#d4af37] sm:mx-auto">
+                  <div key={step.title} className="relative flex items-center gap-4 md:block md:text-center">
+                    <div className="mx-0 grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-[#c9a227] bg-[#071a33] text-[#d4af37] md:mx-auto">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <div className="mt-0 text-[11px] font-extrabold uppercase tracking-[0.11em] text-white sm:mt-4">
+                    <div className="mt-0 text-[11px] font-extrabold uppercase tracking-[0.11em] text-white md:mt-4">
                       {step.title}
                     </div>
 
@@ -652,8 +652,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* GLOBAL REACH */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
-        <div className="mx-auto grid max-w-[1360px] items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1360px] items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-5">
             <SectionEyebrow>Global Reach</SectionEyebrow>
             <h2 className="text-3xl font-extrabold leading-[1.1] tracking-[-0.025em] text-[#071a33] sm:text-4xl">
@@ -725,7 +725,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* HOW WE WORK */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-14 max-w-3xl text-center">
             <SectionEyebrow>How We Work</SectionEyebrow>
@@ -759,7 +759,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* COMMITMENT */}
-      <section className="bg-[#f8f6f0] py-20 sm:py-24">
+      <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-5">
@@ -788,7 +788,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* WHO WE SERVE */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <SectionEyebrow>Who We Serve</SectionEyebrow>
@@ -843,7 +843,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={onOpenQuoteModal}
-              className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               GET A QUOTE
               <ArrowRight className="h-4 w-4" />
@@ -851,7 +851,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+              className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />
