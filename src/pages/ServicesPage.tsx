@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckCircle2, ShieldCheck, Anchor, Plane, Truck, Box, Warehouse, Layers } from 'lucide-react';
 import { SERVICES_LIST, ServiceItem } from '../data/companyData';
+import { OceanFreightPage } from './OceanFreightPage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -13,6 +14,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   onNavigate,
   onOpenQuoteModal
 }) => {
+  if (selectedServiceId === 'ocean-freight') {
+    return (
+      <OceanFreightPage
+        onNavigate={onNavigate}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+    );
+  }
+
   const activeService: ServiceItem = SERVICES_LIST.find(s => s.id === selectedServiceId) || SERVICES_LIST[0];
 
   const getHeaderIcon = (id: string) => {
