@@ -1,42 +1,97 @@
 @import "tailwindcss";
 
+:root {
+  --averon-navy: #071a33;
+  --averon-navy-2: #0b2342;
+  --averon-gold: #c9a227;
+  --averon-gold-light: #d4af37;
+  --averon-ivory: #f8f6f0;
+  --averon-text: #14263d;
+}
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    background: #ffffff;
+  }
+
   body {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    color: #0d1e36;
-    background-color: #f8fafc;
+    margin: 0;
+    min-width: 320px;
+    background: #ffffff;
+    color: var(--averon-text);
+    font-family: Inter, "Avenir Next", "Segoe UI", Arial, sans-serif;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--averon-gold);
+    color: var(--averon-navy);
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #0f223a;
-}
-::-webkit-scrollbar-thumb {
-  background: #3b82f6;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #d9a74a;
+@layer utilities {
+  .font-serif {
+    font-family: Inter, "Avenir Next", "Segoe UI", Arial, sans-serif !important;
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #d4af37 0%, #b88924 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
-/* Subtle glow animation for map nodes */
+:focus-visible {
+  outline: 2px solid var(--averon-gold);
+  outline-offset: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef2f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8795a8;
+  border: 2px solid #eef2f6;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--averon-gold);
+}
+
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.15); }
+  0%, 100% { opacity: 0.32; transform: scale(1); }
+  50% { opacity: 0.82; transform: scale(1.1); }
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 3s infinite ease-in-out;
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #f0ca72 0%, #d9a74a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
