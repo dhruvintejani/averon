@@ -165,22 +165,21 @@ export const SERVICES_LIST: ServiceItem[] = [
     code: "05",
     title: "Warehousing & Distribution",
     shortDesc: "Flexible storage, consolidation and onward distribution between shipping legs.",
-    fullDesc: "Strategic Warehousing & Distribution. Secure storage and organized distribution networks that optimize supply chain speed and inventory management.",
+    fullDesc: "Flexible warehousing, consolidation and onward distribution support between shipping legs.",
     heroImage: "https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
     features: [
-      "Short-term and long-term secure warehouse storage.",
-      "Inventory management & real-time stock visibility.",
-      "Order pick, pack, and labeling services.",
-      "Cross-docking and container stuffing/unstuffing.",
-      "Bonded and non-bonded warehouse facilities."
+      "Cargo storage support.",
+      "Cargo consolidation and deconsolidation coordination.",
+      "Inventory movement between transport legs.",
+      "Distribution to onward destinations.",
+      "Coordination with transportation and delivery requirements."
     ],
     solutions: [
-      { title: "Bonded Storage", desc: "Tax-deferred storage facilities for imported goods awaiting clearance." },
-      { title: "Cross-Docking", desc: "Immediate transfer of incoming cargo directly to outgoing transport with zero delay." }
+      { title: "Cargo Storage Support", desc: "Support for cargo storage between transport stages." },
+      { title: "Consolidation Coordination", desc: "Coordination of cargo consolidation and deconsolidation requirements." }
     ],
     approach: [
-      { title: "Safety First", desc: "24/7 CCTV, climate control options, and insurance-verified facilities." },
-      { title: "Optimized Layout", desc: "Rapid processing and inventory audit accuracy." }
+      { title: "Connected Logistics Support", desc: "Designed to help connect storage, consolidation and onward movement within the wider logistics chain." }
     ]
   },
   {

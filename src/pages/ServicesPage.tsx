@@ -5,6 +5,7 @@ import { OceanFreightPage } from './OceanFreightPage';
 import { AirFreightPage } from './AirFreightPage';
 import { CustomsClearancePage } from './CustomsClearancePage';
 import { RoadInlandTransportPage } from './RoadInlandTransportPage';
+import { WarehousingDistributionPage } from './WarehousingDistributionPage';
 
 interface ServicesPageProps {
   selectedServiceId?: string;
@@ -47,6 +48,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   if (selectedServiceId === 'road-inland-transport') {
     return (
       <RoadInlandTransportPage
+        onNavigate={onNavigate}
+        onOpenQuoteModal={onOpenQuoteModal}
+      />
+    );
+  }
+
+  if (selectedServiceId === 'warehousing-distribution') {
+    return (
+      <WarehousingDistributionPage
         onNavigate={onNavigate}
         onOpenQuoteModal={onOpenQuoteModal}
       />
