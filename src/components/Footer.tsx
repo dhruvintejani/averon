@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, Globe, MapPin } from 'lucide-react';
+import { Phone, Mail, Globe } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
 
 interface FooterProps {
