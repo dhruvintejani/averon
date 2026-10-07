@@ -5,7 +5,6 @@ import {
   BadgeDollarSign,
   Box,
   BriefcaseBusiness,
-  Building2,
   ChevronLeft,
   ChevronRight,
   CircleDollarSign,
