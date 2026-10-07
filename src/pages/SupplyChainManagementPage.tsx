@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Boxes,
   Eye,
   FileCheck2,
   Handshake,
