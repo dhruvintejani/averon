@@ -76,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
           aria-label="Go to Averon home page"
         >
           <img
-            src="/averon-logo.webp"
+            src="/averon-logo.png"
             alt="Averon Freight Solutions LLP"
             className="h-[48px] w-auto max-w-[205px] object-contain sm:h-[52px] sm:max-w-[225px]"
           />
