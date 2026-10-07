@@ -201,7 +201,7 @@ export const SERVICES_LIST: ServiceItem[] = [
       { title: "Breakbulk", desc: "Coordination for non-containerized cargo movement." }
     ],
     approach: [
-      { title: "Planned Coordination", desc: "For non-standard cargo, Averon coordinates movement requirements across the logistics chain with appropriate planning and operational communication." }
+      { title: "Planned Coordination", desc: "For non-standard cargo, Averon coordinates the movement requirements across the logistics chain with appropriate planning and operational communication." }
     ]
   },
   {

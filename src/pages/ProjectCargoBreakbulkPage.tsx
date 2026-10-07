@@ -144,7 +144,7 @@ export const ProjectCargoBreakbulkPage: React.FC<ProjectCargoBreakbulkPageProps>
             </h2>
 
             <p className="mt-6 text-[15px] leading-7 text-slate-600">
-              Averon coordinates project cargo and breakbulk requirements across the wider logistics chain, with planning focused on oversized, heavy-lift and other non-containerized shipment needs.
+              Specialized coordination for oversized, heavy-lift and non-containerized shipments.
             </p>
 
             <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
