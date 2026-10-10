@@ -443,7 +443,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 </div>
               )}
 
-              <div className="mt-7 flex flex-wrap gap-3">
+              <p className="mt-7 border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
+                Until Brevo email delivery is connected, <strong>Request a Quote</strong> opens your device's default email application with the enquiry details prefilled. You must press Send in your email app to complete the enquiry.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-3">
                 <button
                   type="submit"
                   className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto"
