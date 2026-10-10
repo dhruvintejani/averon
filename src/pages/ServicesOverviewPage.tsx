@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   Anchor,
   ArrowRight,
@@ -124,6 +125,8 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1800")}
+              sizes="100vw"
             alt="International freight and logistics port"
             className="h-full w-full object-cover"
           />
@@ -164,6 +167,8 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
           <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)] lg:col-span-6">
             <img
               src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
               alt="International cargo movement"
               loading="lazy" decoding="async"
               className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[390px]"
@@ -341,6 +346,8 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
