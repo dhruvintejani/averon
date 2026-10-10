@@ -22,6 +22,8 @@ import {
   Network,
   PackageCheck,
   PackageOpen,
+  Pause,
+  Play,
   Plane,
   Route,
   Send,
@@ -141,12 +143,6 @@ const services: { id: string; title: string; desc: string; icon: IconType }[] = 
     title: 'Warehousing & Distribution',
     desc: 'Flexible storage, consolidation and onward distribution between shipping legs.',
     icon: Warehouse,
-  },
-  {
-    id: 'project-cargo',
-    title: 'Project Cargo & Breakbulk',
-    desc: 'Specialized handling for oversized, heavy-lift and non-containerized shipments.',
-    icon: Box,
   },
   {
     id: 'supply-chain-management',
@@ -307,14 +303,28 @@ export const HomePage: React.FC<HomePageProps> = ({
   onOpenQuoteModal,
 }) => {
   const [heroSlide, setHeroSlide] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(media.matches);
+
+    updatePreference();
+    media.addEventListener('change', updatePreference);
+
+    return () => media.removeEventListener('change', updatePreference);
+  }, []);
+
+  useEffect(() => {
+    if (isHeroPaused || prefersReducedMotion) return;
+
     const timer = window.setInterval(() => {
       setHeroSlide((current) => (current + 1) % heroSlides.length);
     }, 7000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [isHeroPaused, prefersReducedMotion]);
 
   const currentSlide = heroSlides[heroSlide];
 
@@ -330,7 +340,19 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
-      <section className="relative min-h-[600px] overflow-hidden bg-[#071a33] text-white sm:min-h-[640px] lg:min-h-[720px]">
+      <section
+        className="relative min-h-[600px] overflow-hidden bg-[#071a33] text-white sm:min-h-[640px] lg:min-h-[720px]"
+        aria-roledescription="carousel"
+        aria-label="Averon freight services"
+        onMouseEnter={() => setIsHeroPaused(true)}
+        onMouseLeave={() => setIsHeroPaused(false)}
+        onFocusCapture={() => setIsHeroPaused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            setIsHeroPaused(false);
+          }
+        }}
+      >
         <div className="absolute inset-0">
           <img
             src={currentSlide.image}
@@ -342,7 +364,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-center px-4 py-14 sm:min-h-[640px] sm:px-6 sm:py-16 lg:min-h-[720px] lg:px-8 lg:py-20">
-          <div className="max-w-[780px]">
+          <div className="max-w-[780px]" aria-live="polite" aria-atomic="true">
             <div className="mb-6 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d4af37]">
               <span className="h-[2px] w-10 bg-[#c9a227]" />
               <span>{currentSlide.eyebrow}</span>
@@ -424,8 +446,18 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </button>
               </div>
 
-              <span className="text-xs font-bold tracking-[0.18em] text-slate-400">
-                0{heroSlide + 1} / 04
+              <button
+                type="button"
+                onClick={() => setIsHeroPaused((paused) => !paused)}
+                className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+                aria-label={isHeroPaused ? 'Resume automatic hero slides' : 'Pause automatic hero slides'}
+                aria-pressed={isHeroPaused}
+              >
+                {isHeroPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+              </button>
+
+              <span className="text-xs font-bold tracking-[0.18em] text-slate-300" aria-label={`Slide ${heroSlide + 1} of ${heroSlides.length}`}>
+                0{heroSlide + 1} / 0{heroSlides.length}
               </span>
             </div>
           </div>
