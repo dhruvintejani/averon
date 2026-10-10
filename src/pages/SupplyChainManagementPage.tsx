@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   Eye,
   FileCheck2,
@@ -76,6 +77,8 @@ export const SupplyChainManagementPage: React.FC<SupplyChainManagementPageProps>
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
+              sizes="100vw"
             alt="Modern warehouse and logistics planning operation"
             className="h-full w-full object-cover object-center"
           />
@@ -125,6 +128,8 @@ export const SupplyChainManagementPage: React.FC<SupplyChainManagementPageProps>
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
                 src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="Warehouse and shipment planning environment"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -218,6 +223,8 @@ export const SupplyChainManagementPage: React.FC<SupplyChainManagementPageProps>
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
