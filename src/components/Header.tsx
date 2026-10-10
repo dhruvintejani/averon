@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
+import { getPathForRoute } from '../utils/routes';
 
 interface HeaderProps {
   currentPage: string;
@@ -54,6 +55,15 @@ export const Header: React.FC<HeaderProps> = ({
     onNavigate(page, serviceId);
     setIsMobileMenuOpen(false);
     setIsServicesOpen(false);
+  };
+
+  const navigateFromLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    page: string,
+    serviceId?: string
+  ) => {
+    event.preventDefault();
+    navigate(page, serviceId);
   };
 
   const getServiceIcon = (id: string) => {
@@ -117,28 +127,31 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="mx-auto flex h-[66px] max-w-[1360px] items-center justify-between gap-4 px-3 sm:h-[72px] sm:px-6 xl:h-[76px] xl:px-8">
-        <button
-          type="button"
+        <a
+          href="/"
           className="group flex shrink-0 items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4"
-          onClick={() => navigate('home')}
+          onClick={(event) => navigateFromLink(event, 'home')}
           aria-label="Go to Averon home page"
         >
           <img
             src="/SVG%20Final/AFS%20-%20Horizontal%20SVG.svg"
             alt="Averon Freight Solutions LLP"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             className="h-[42px] w-auto max-w-[176px] object-contain transition-transform duration-300 group-hover:scale-[1.025] sm:h-[48px] sm:max-w-[205px] xl:h-[52px] xl:max-w-[225px]"
           />
-        </button>
+        </a>
 
         <nav className="hidden flex-1 items-center justify-center gap-5 text-sm font-semibold text-slate-700 xl:flex 2xl:gap-7">
           {[
             ['home', 'Home'],
             ['about', 'About Us'],
           ].map(([page, label]) => (
-            <button
+            <a
               key={page}
-              type="button"
-              onClick={() => navigate(page)}
+              href={getPathForRoute(page)}
+              onClick={(event) => navigateFromLink(event, page)}
               className={`rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage === page
                   ? 'border-[#c9a227] text-[#071a33]'
@@ -146,7 +159,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               {label}
-            </button>
+            </a>
           ))}
 
           <div
@@ -164,10 +177,10 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            <button
-              type="button"
-              onClick={() => navigate('services')}
-              aria-haspopup="menu"
+            <a
+              href="/services"
+              onClick={(event) => navigateFromLink(event, 'services')}
+              aria-haspopup="true"
               aria-expanded={isServicesOpen}
               className={`flex items-center gap-1 rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage.startsWith('service')
@@ -177,19 +190,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <span>Services</span>
               <ChevronDown className="h-4 w-4 text-slate-500" />
-            </button>
+            </a>
 
             {isServicesOpen && (
-              <div role="menu" className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
+              <div className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
                 <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
                   Logistics & Transport Solutions
                 </div>
                 {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
-                  <button
+                  <a
                     key={service.id}
-                    type="button"
-                    role="menuitem"
-                    onClick={() => navigate('service-detail', service.id)}
+                    href={getPathForRoute('service-detail', service.id)}
+                    onClick={(event) => navigateFromLink(event, 'service-detail', service.id)}
                     className="group flex w-full items-center gap-3 border-l-2 border-transparent px-4 py-3 text-left text-slate-700 transition-all duration-200 hover:border-[#c9a227] hover:bg-[#fffaf0] hover:pl-5 hover:text-[#071a33]"
                   >
                     <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#f8f6f0] transition-all duration-200 group-hover:bg-[#071a33] group-hover:shadow-[0_6px_18px_rgba(7,26,51,.18)]">
@@ -199,7 +211,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <div className="text-xs font-bold text-slate-800">{service.title}</div>
                       <div className="line-clamp-1 text-[10px] text-slate-500">{service.shortDesc}</div>
                     </div>
-                  </button>
+                  </a>
                 ))}
               </div>
             )}
@@ -221,14 +233,17 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               {label}
-            </button>
+            </a>
           ))}
         </nav>
 
         <div className="hidden items-center gap-2 xl:flex">
-          <button
-            type="button"
-            onClick={onOpenTrackModal}
+          <a
+            href="/shipment-status"
+            onClick={(event) => {
+              event.preventDefault();
+              onOpenTrackModal();
+            }}
             className={`flex min-h-10 items-center gap-2 border px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.08em] transition-colors ${
               currentPage === 'track-shipment'
                 ? 'border-[#071a33] bg-[#071a33] text-white'
@@ -237,7 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Truck className={`h-4 w-4 ${currentPage === 'track-shipment' ? 'text-[#d4af37]' : 'text-[#071a33]'}`} />
             <span>Shipment Status</span>
-          </button>
+          </a>
 
           <button type="button" onClick={onOpenQuoteModal} className="flex min-h-10 items-center gap-1.5 bg-[#c9a227] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[#071a33] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4af37] hover:shadow-[0_10px_24px_rgba(201,162,39,.26)]">
             <span>Get a Quote</span>
@@ -261,26 +276,26 @@ export const Header: React.FC<HeaderProps> = ({
         <div id="mobile-navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-98px)] overflow-y-auto border-t border-slate-200 bg-white shadow-[0_22px_50px_rgba(7,26,51,0.16)] xl:hidden">
           <div className="mx-auto max-w-[1360px] px-4 py-4 sm:px-6">
             <div className="grid gap-1">
-              <button type="button" onClick={() => navigate('home')} className={`min-h-11 rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'home' ? 'text-[#b88924]' : 'text-slate-800'}`}>Home</button>
-              <button type="button" onClick={() => navigate('about')} className={`min-h-11 rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'about' ? 'text-[#b88924]' : 'text-slate-800'}`}>About Us</button>
+              <a href="/" onClick={(event) => navigateFromLink(event, 'home')} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'home' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>Home</a>
+              <a href="/about" onClick={(event) => navigateFromLink(event, 'about')} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'about' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>About Us</a>
 
               <div className="border-b border-slate-100 py-3">
-                <button type="button" onClick={() => navigate('services')} className="mb-3 flex min-h-9 w-full items-center justify-between text-left text-sm font-semibold text-slate-800">
+                <a href="/services" onClick={(event) => navigateFromLink(event, 'services')} className="mb-3 flex min-h-9 w-full items-center justify-between text-left text-sm font-semibold text-slate-800">
                   <span>Services</span>
-                  <ArrowRight className="h-4 w-4 text-[#b88924]" />
-                </button>
+                  <ArrowRight className="h-4 w-4 text-[#8b6b1f]" />
+                </a>
 
                 <div className="grid gap-1 border-l-2 border-[#c9a227] pl-3 sm:grid-cols-2 sm:gap-x-5">
                   {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
-                    <button
+                    <a
                       key={service.id}
-                      type="button"
-                      onClick={() => navigate('service-detail', service.id)}
+                      href={getPathForRoute('service-detail', service.id)}
+                      onClick={(event) => navigateFromLink(event, 'service-detail', service.id)}
                       className="flex min-h-10 items-center gap-2 rounded-md px-2 py-1 text-left text-xs font-medium leading-5 text-slate-600 transition-all hover:bg-[#fffaf0] hover:pl-3 hover:text-[#071a33]"
                     >
                       {getServiceIcon(service.id)}
                       <span>{service.title}</span>
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -290,16 +305,17 @@ export const Header: React.FC<HeaderProps> = ({
                 ['global-reach', 'Global Reach'],
                 ['contact', 'Contact Us'],
               ].map(([page, label]) => (
-                <button key={page} type="button" onClick={() => navigate(page)} className={`min-h-11 rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === page ? 'text-[#b88924]' : 'text-slate-800'}`}>
+                <a key={page} href={getPathForRoute(page)} onClick={(event) => navigateFromLink(event, page)} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === page ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>
                   {label}
-                </button>
+                </a>
               ))}
             </div>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
-              <button
-                type="button"
-                onClick={() => {
+              <a
+                href="/shipment-status"
+                onClick={(event) => {
+                  event.preventDefault();
                   onOpenTrackModal();
                   setIsMobileMenuOpen(false);
                 }}
@@ -307,7 +323,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Truck className="h-4 w-4" />
                 <span>Shipment Status</span>
-              </button>
+              </a>
 
               <button
                 type="button"
