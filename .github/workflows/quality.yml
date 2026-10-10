@@ -1,0 +1,97 @@
+name: Quality checks
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Production build
+        run: npm run build
+
+      - name: Production dependency security audit
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Full dependency security audit
+        id: full-audit
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+      - name: Desktop and mobile browser smoke tests
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          npm run preview -- --host 127.0.0.1 > /tmp/averon-vite.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill "$PREVIEW_PID" 2>/dev/null || true' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          if ! curl -fsS http://127.0.0.1:4173/ > /dev/null; then
+            cat /tmp/averon-vite.log
+            exit 1
+          fi
+
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME" ]; then
+            echo "No Chrome/Chromium binary is available on this runner."
+            exit 1
+          fi
+
+          render_and_check() {
+            local route="$1"
+            local expected="$2"
+            local size="$3"
+            local slug="$4"
+            local output="/tmp/${slug}.html"
+
+            timeout 45s "$CHROME"               --headless               --no-sandbox               --disable-gpu               --disable-dev-shm-usage               --window-size="$size"               --virtual-time-budget=2500               --dump-dom "http://127.0.0.1:4173${route}" > "$output"
+
+            grep -Fq "$expected" "$output"
+          }
+
+          render_and_check "/" "Connecting Your Cargo to Global Markets" "1440,1000" "home-desktop"
+          render_and_check "/about" "About Averon" "1440,1000" "about-desktop"
+          render_and_check "/services/ocean-freight" "Ocean Freight" "1440,1000" "ocean-desktop"
+          render_and_check "/contact" "Start With Your Shipment Details" "1440,1000" "contact-desktop"
+          render_and_check "/shipment-status" "Request a Shipment Status Update" "1440,1000" "status-desktop"
+          render_and_check "/privacy-policy" "Client-approved legal text is pending" "1440,1000" "privacy-desktop"
+
+          render_and_check "/" "Connecting Your Cargo to Global Markets" "390,844" "home-mobile"
+          render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
+          render_and_check "/shipment-status" "Request a Shipment Status Update" "390,844" "status-mobile"
+
+      - name: Report full audit status
+        if: always()
+        run: |
+          echo "Full npm audit outcome: ${{ steps.full-audit.outcome }}"
