@@ -5,6 +5,8 @@ const withPexelsWidth = (src: string, width: number) => {
     const url = new URL(src);
     if (url.hostname !== 'images.pexels.com') return src;
     url.searchParams.set('w', String(width));
+    url.searchParams.set('auto', 'format,compress');
+    url.searchParams.set('q', '82');
     return url.toString();
   } catch {
     return src;
