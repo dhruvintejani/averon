@@ -80,14 +80,30 @@ jobs:
             grep -Fq "$expected" "$output"
           }
 
+          # Direct-route desktop rendering validates refreshability for every public route.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "1440,1000" "home-desktop"
           render_and_check "/about" "About Averon" "1440,1000" "about-desktop"
+          render_and_check "/services" "Freight & Logistics Services" "1440,1000" "services-desktop"
           render_and_check "/services/ocean-freight" "Ocean Freight" "1440,1000" "ocean-desktop"
+          render_and_check "/services/air-freight" "Air Freight" "1440,1000" "air-desktop"
+          render_and_check "/services/customs-clearance" "Customs Clearance" "1440,1000" "customs-desktop"
+          render_and_check "/services/road-inland-transport" "Road & Inland Transport" "1440,1000" "road-desktop"
+          render_and_check "/services/warehousing-distribution" "Warehousing & Distribution" "1440,1000" "warehouse-desktop"
+          render_and_check "/services/supply-chain-management" "Supply Chain Management" "1440,1000" "supply-chain-desktop"
+          render_and_check "/lcl-consolidation" "LCL Consolidation" "1440,1000" "lcl-desktop"
+          render_and_check "/global-reach" "Global Reach" "1440,1000" "global-desktop"
           render_and_check "/contact" "Start With Your Shipment Details" "1440,1000" "contact-desktop"
           render_and_check "/shipment-status" "Request a Shipment Status Update" "1440,1000" "status-desktop"
           render_and_check "/privacy-policy" "Client-approved legal text is pending" "1440,1000" "privacy-desktop"
+          render_and_check "/terms-and-conditions" "Client-approved legal text is pending" "1440,1000" "terms-desktop"
+          render_and_check "/services/project-cargo-breakbulk" "Service confirmation pending" "1440,1000" "project-pending-desktop"
+          render_and_check "/does-not-exist" "Page Not Found" "1440,1000" "not-found-desktop"
 
+          # Representative mobile viewports validate the responsive shell and core workflows.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "390,844" "home-mobile"
+          render_and_check "/services" "Freight & Logistics Services" "390,844" "services-mobile"
+          render_and_check "/services/ocean-freight" "Ocean Freight" "390,844" "ocean-mobile"
+          render_and_check "/global-reach" "Global Reach" "390,844" "global-mobile"
           render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
           render_and_check "/shipment-status" "Request a Shipment Status Update" "390,844" "status-mobile"
 
