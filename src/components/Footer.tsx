@@ -19,11 +19,11 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="space-y-4">
             <button
               type="button"
-              className="inline-flex bg-white p-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33] sm:p-3"
+              className="group inline-flex rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33]"
               onClick={() => onNavigate('home')}
               aria-label="Go to Averon home page"
             >
-              <img src="/SVG%20Final/AFS%20-%20Horizontal%20for%20Dark%20BG.svg" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain sm:h-[58px] sm:max-w-[245px]" />
+              <img src="/SVG%20Final/AFS%20-%20Horizontal%20for%20Dark%20BG.svg" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-[1.025] sm:h-[58px] sm:max-w-[245px]" />
             </button>
             <p className="text-sm font-semibold text-white">Your Gateway to Global Trade</p>
             <p className="max-w-[300px] text-[11px] leading-5 text-slate-400">
