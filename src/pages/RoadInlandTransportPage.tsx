@@ -81,11 +81,11 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
+            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1900")}
               sizes="100vw"
             alt="Container truck on a modern road"
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-[center_70%] sm:object-[center_68%] lg:object-[center_66%]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.93)_44%,rgba(7,26,51,.60)_74%,rgba(7,26,51,.32)_100%)]" />
         </div>
@@ -152,12 +152,12 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
-                src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
-              sizes="100vw"
+                src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1200")}
+              sizes="(min-width: 1024px) 50vw, 100vw"
                 alt="Modern container truck in transit"
                 loading="lazy" decoding="async"
-                className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
+                className="h-[300px] w-full object-cover object-[center_78%] sm:h-[360px] sm:object-[center_75%] lg:h-[430px] lg:object-[center_72%]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 border-t-4 border-[#c9a227] bg-[#071a33]/95 px-6 py-4 text-white backdrop-blur-sm">
@@ -243,12 +243,12 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
       <section className="relative overflow-hidden bg-[#071a33] py-20 text-white sm:py-24">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900")}
+            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1900")}
               sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
-            className="h-full w-full object-cover opacity-18"
+            className="h-full w-full object-cover object-[center_70%] opacity-18"
           />
           <div className="absolute inset-0 bg-[#071a33]/84" />
         </div>
@@ -288,12 +288,12 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
       <section className="relative overflow-hidden bg-[#071a33] py-16 text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800")}
+            src="https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/17761703/pexels-photo-17761703.jpeg?auto=compress&cs=tinysrgb&w=1800")}
               sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
-            className="h-full w-full object-cover opacity-16"
+            className="h-full w-full object-cover object-[center_70%] opacity-16"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.86),rgba(7,26,51,.78))]" />
         </div>
