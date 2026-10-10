@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   Anchor,
   ArrowRight,
@@ -93,6 +94,8 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/15346128/pexels-photo-15346128.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/15346128/pexels-photo-15346128.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
+              sizes="100vw"
             alt="LCL cargo movement at an international port"
             className="h-full w-full object-cover object-center"
           />
@@ -163,6 +166,8 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
                 src="https://images.pexels.com/photos/30115463/pexels-photo-30115463.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/30115463/pexels-photo-30115463.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="Container consolidation and cargo handling"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -284,6 +289,8 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
