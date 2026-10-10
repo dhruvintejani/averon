@@ -1,7 +1,10 @@
-import type { AppPage } from './routes';
+import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
+import { SERVICE_PATHS, type AppPage } from './routes';
 
 const SITE_ORIGIN = 'https://www.averonfs.com';
 const DEFAULT_IMAGE = `${SITE_ORIGIN}/PNG/AFS%20-%20Horizontal.png`;
+const ORGANIZATION_ID = `${SITE_ORIGIN}/#organization`;
+const WEBSITE_ID = `${SITE_ORIGIN}/#website`;
 
 interface SeoData {
   title: string;
@@ -41,7 +44,7 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
   if (page === 'service-detail' && serviceId && SERVICE_SEO[serviceId]) {
     return {
       ...SERVICE_SEO[serviceId],
-      path: `/services/${serviceId}`,
+      path: SERVICE_PATHS[serviceId] ?? '/services',
     };
   }
 
@@ -110,7 +113,12 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
   return map[page as AppPage] ?? map.home!;
 };
 
-const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
+const setMeta = (
+  selector: string,
+  attribute: 'name' | 'property',
+  key: string,
+  content: string
+) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
   if (!element) {
     element = document.createElement('meta');
@@ -118,6 +126,97 @@ const setMeta = (selector: string, attribute: 'name' | 'property', key: string, 
     document.head.appendChild(element);
   }
   element.setAttribute('content', content);
+};
+
+const setJsonLd = (data: unknown) => {
+  let script = document.head.querySelector<HTMLScriptElement>('#structured-data');
+  if (!script) {
+    script = document.createElement('script');
+    script.id = 'structured-data';
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(data);
+};
+
+const buildStructuredData = (
+  page: AppPage | string,
+  serviceId: string | undefined,
+  data: SeoData,
+  canonicalUrl: string
+) => {
+  const organization = {
+    '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
+    name: COMPANY_INFO.name,
+    url: SITE_ORIGIN,
+    logo: `${SITE_ORIGIN}/PNG/Hexagon%20AFS%20Logo%20PNG.png`,
+    description: COMPANY_INFO.aboutSummary,
+    email: COMPANY_INFO.emails[0],
+    telephone: COMPANY_INFO.phones[0],
+    sameAs: [COMPANY_INFO.linkedin],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress:
+        'Office No. 404, 4th Floor, Dev Milan Co-operative Premises Society, Above Woodland Retreat, LBS Marg, Near Tip Top Plaza',
+      addressLocality: 'Thane West',
+      addressRegion: 'Maharashtra',
+      postalCode: '400604',
+      addressCountry: 'IN',
+    },
+  };
+
+  const website = {
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    url: SITE_ORIGIN,
+    name: COMPANY_INFO.name,
+    publisher: { '@id': ORGANIZATION_ID },
+  };
+
+  const webPage = {
+    '@type': 'WebPage',
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: data.title,
+    description: data.description,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': ORGANIZATION_ID },
+  };
+
+  const graph: Record<string, unknown>[] = [organization, website, webPage];
+
+  if (page === 'service-detail' && serviceId) {
+    const service = SERVICES_LIST.find((item) => item.id === serviceId);
+    if (service && service.id !== 'project-cargo') {
+      graph.push({
+        '@type': 'Service',
+        '@id': `${canonicalUrl}#service`,
+        name: service.title,
+        serviceType: service.title,
+        description: data.description,
+        url: canonicalUrl,
+        provider: { '@id': ORGANIZATION_ID },
+      });
+    }
+  }
+
+  if (page === 'lcl-consolidation') {
+    graph.push({
+      '@type': 'Service',
+      '@id': `${canonicalUrl}#service`,
+      name: 'LCL Consolidation',
+      serviceType: 'LCL Consolidation',
+      description: data.description,
+      url: canonicalUrl,
+      provider: { '@id': ORGANIZATION_ID },
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
 };
 
 export const applySeo = (page: AppPage | string, serviceId?: string) => {
@@ -128,15 +227,19 @@ export const applySeo = (page: AppPage | string, serviceId?: string) => {
 
   setMeta('meta[name="description"]', 'name', 'description', data.description);
   setMeta('meta[name="robots"]', 'name', 'robots', data.robots ?? 'index, follow');
+  setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', COMPANY_INFO.name);
+  setMeta('meta[property="og:locale"]', 'property', 'og:locale', 'en_IN');
   setMeta('meta[property="og:title"]', 'property', 'og:title', data.title);
   setMeta('meta[property="og:description"]', 'property', 'og:description', data.description);
   setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
   setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
   setMeta('meta[property="og:image"]', 'property', 'og:image', DEFAULT_IMAGE);
+  setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', 'Averon Freight Solutions LLP');
   setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
   setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', data.title);
   setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', data.description);
   setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', DEFAULT_IMAGE);
+  setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', 'Averon Freight Solutions LLP');
 
   let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
   if (!canonical) {
@@ -145,4 +248,6 @@ export const applySeo = (page: AppPage | string, serviceId?: string) => {
     document.head.appendChild(canonical);
   }
   canonical.href = canonicalUrl;
+
+  setJsonLd(buildStructuredData(page, serviceId, data, canonicalUrl));
 };
