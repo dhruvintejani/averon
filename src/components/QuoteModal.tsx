@@ -413,7 +413,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           )}
 
           <p id="quote-email-fallback-note" className="border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
-            Until Brevo email delivery is connected, <strong>Request a Quote</strong> opens your device's default email application with these details prefilled. You must press Send in your email app to complete the enquiry.
+            Until Brevo email delivery is connected, this form depends on a configured email application. <strong>Request a Quote</strong> attempts to open your default email app with these details prefilled; you must press Send there to complete the enquiry. If no email app is configured, contact Averon directly by email or phone.
           </p>
 
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
