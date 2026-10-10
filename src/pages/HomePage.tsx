@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   Anchor,
   ArrowRight,
@@ -359,6 +360,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             fetchPriority="high"
             decoding="async"
             src={currentSlide.image}
+            srcSet={getPexelsSrcSet(currentSlide.image)}
+            sizes="100vw"
             alt=""
             className="h-full w-full object-cover object-center transition-opacity duration-700"
           />
@@ -509,6 +512,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.16)]">
               <img
                 src="https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="International cargo port operations"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -708,6 +713,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1100&w=1920"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1100&w=1920")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
@@ -840,6 +847,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1920"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1920")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
