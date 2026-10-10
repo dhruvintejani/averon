@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   Eye,
@@ -55,9 +54,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800")}
-              sizes="100vw"
+            src="/images/1000000434.jpg"
             alt="Container vessel and port operations"
             className="h-full w-full object-cover object-center"
           />
@@ -122,9 +119,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.16)]">
               <img
-                src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
-              sizes="100vw"
+                src="/images/1000003845.jpg"
                 alt="International logistics and port operations"
                 loading="lazy" decoding="async"
                 className="h-[320px] w-full object-cover sm:h-[390px] lg:h-[470px]"
@@ -230,9 +225,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-14 text-white sm:py-16 lg:py-20">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
-              sizes="100vw"
+            src="/images/1000006814.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
