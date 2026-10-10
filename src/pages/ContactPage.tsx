@@ -444,7 +444,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               )}
 
               <p className="mt-7 border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
-                Until Brevo email delivery is connected, <strong>Request a Quote</strong> opens your device's default email application with the enquiry details prefilled. You must press Send in your email app to complete the enquiry.
+                Until Brevo email delivery is connected, this form depends on a configured email application. <strong>Request a Quote</strong> attempts to open your default email app with the enquiry details prefilled; you must press Send there to complete the enquiry. If no email app is configured, contact Averon directly by email or phone.
               </p>
 
               <div className="mt-5 flex flex-wrap gap-3">
