@@ -23,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({
               onClick={() => onNavigate('home')}
               aria-label="Go to Averon home page"
             >
-              <img src="/averon-logo.png" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain sm:h-[58px] sm:max-w-[245px]" />
+              <img src="/SVG%20Final/AFS%20-%20Horizontal%20for%20Dark%20BG.svg" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain sm:h-[58px] sm:max-w-[245px]" />
             </button>
             <p className="text-sm font-semibold text-white">Your Gateway to Global Trade</p>
             <p className="max-w-[300px] text-[11px] leading-5 text-slate-400">

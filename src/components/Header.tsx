@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
           aria-label="Go to Averon home page"
         >
           <img
-            src="/averon-logo.png"
+            src="/SVG%20Final/AFS%20-%20Horizontal%20SVG.svg"
             alt="Averon Freight Solutions LLP"
             className="h-[42px] w-auto max-w-[176px] object-contain transition-transform duration-300 group-hover:scale-[1.025] sm:h-[48px] sm:max-w-[205px] xl:h-[52px] xl:max-w-[225px]"
           />
