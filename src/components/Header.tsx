@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {isServicesOpen && (
-              <div role="menu" className="absolute left-0 top-[calc(100%+8px)] z-50 w-[350px] overflow-hidden rounded-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
+              <div role="menu" className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
                 <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
                   Logistics & Transport Solutions
                 </div>
