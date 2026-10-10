@@ -1,19 +1,42 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { ServicesOverviewPage } from './pages/ServicesOverviewPage';
-import { LCLConsolidationPage } from './pages/LCLConsolidationPage';
-import { GlobalReachPage } from './pages/GlobalReachPage';
-import { ContactPage } from './pages/ContactPage';
-import { TrackShipmentPage } from './pages/TrackShipmentPage';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
-import { TermsConditionsPage } from './pages/TermsConditionsPage';
-import { ProjectCargoPendingPage } from './pages/ProjectCargoPendingPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+
+const AboutPage = lazy(() =>
+  import('./pages/AboutPage').then((module) => ({ default: module.AboutPage }))
+);
+const ServicesPage = lazy(() =>
+  import('./pages/ServicesPage').then((module) => ({ default: module.ServicesPage }))
+);
+const ServicesOverviewPage = lazy(() =>
+  import('./pages/ServicesOverviewPage').then((module) => ({ default: module.ServicesOverviewPage }))
+);
+const LCLConsolidationPage = lazy(() =>
+  import('./pages/LCLConsolidationPage').then((module) => ({ default: module.LCLConsolidationPage }))
+);
+const GlobalReachPage = lazy(() =>
+  import('./pages/GlobalReachPage').then((module) => ({ default: module.GlobalReachPage }))
+);
+const ContactPage = lazy(() =>
+  import('./pages/ContactPage').then((module) => ({ default: module.ContactPage }))
+);
+const TrackShipmentPage = lazy(() =>
+  import('./pages/TrackShipmentPage').then((module) => ({ default: module.TrackShipmentPage }))
+);
+const PrivacyPolicyPage = lazy(() =>
+  import('./pages/PrivacyPolicyPage').then((module) => ({ default: module.PrivacyPolicyPage }))
+);
+const TermsConditionsPage = lazy(() =>
+  import('./pages/TermsConditionsPage').then((module) => ({ default: module.TermsConditionsPage }))
+);
+const ProjectCargoPendingPage = lazy(() =>
+  import('./pages/ProjectCargoPendingPage').then((module) => ({ default: module.ProjectCargoPendingPage }))
+);
+const NotFoundPage = lazy(() =>
+  import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage }))
+);
 import { applySeo } from './utils/seo';
 import {
   getPathForRoute,
@@ -159,7 +182,17 @@ export function App() {
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
-      <main className="flex-grow">{renderCurrentPage()}</main>
+      <main className="flex-grow">
+        <Suspense
+          fallback={
+            <div className="min-h-[55vh] bg-white" aria-busy="true" aria-live="polite">
+              <span className="sr-only">Loading page</span>
+            </div>
+          }
+        >
+          {renderCurrentPage()}
+        </Suspense>
+      </main>
 
       <Footer
         onNavigate={handleNavigate}
