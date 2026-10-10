@@ -3,7 +3,6 @@ import {
   Anchor,
   ArrowRight,
   BadgeDollarSign,
-  Box,
   BriefcaseBusiness,
   ChevronLeft,
   ChevronRight,
