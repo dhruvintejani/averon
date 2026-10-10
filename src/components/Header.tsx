@@ -152,7 +152,17 @@ export const Header: React.FC<HeaderProps> = ({
           <div
             className="relative"
             onMouseEnter={() => setIsServicesOpen(true)}
-            onMouseLeave={() => setIsServicesOpen(false)}
+            onMouseLeave={(event) => {
+              if (!event.currentTarget.contains(document.activeElement)) {
+                setIsServicesOpen(false);
+              }
+            }}
+            onFocusCapture={() => setIsServicesOpen(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setIsServicesOpen(false);
+              }
+            }}
           >
             <button
               type="button"
