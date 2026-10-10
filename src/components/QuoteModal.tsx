@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Calculator, X } from 'lucide-react';
 import { PremiumSelect } from './PremiumSelect';
 import { FormFieldError } from './FormFieldError';
-import { PhoneNumberField, formatInternationalPhone, isValidPhoneNumber } from './PhoneNumberField';
+import { PhoneNumberField, isValidPhoneNumber } from './PhoneNumberField';
+import { sendEnquiry } from '../utils/enquiry';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -65,12 +66,19 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   });
   const [countryCode, setCountryCode] = useState('+91');
   const [errors, setErrors] = useState<QuoteErrors>({});
+  const [website, setWebsite] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState('');
+  const [submissionError, setSubmissionError] = useState('');
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!isOpen) {
       setErrors({});
+      setSubmissionMessage('');
+      setSubmissionError('');
+      setWebsite('');
       return;
     }
 
@@ -171,8 +179,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
+    setSubmissionMessage('');
+    setSubmissionError('');
 
     const nextErrors = validateForm();
     if (Object.keys(nextErrors).length > 0) {
@@ -182,27 +194,50 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     }
 
     setErrors({});
+    setIsSubmitting(true);
 
-    // Brevo submission will replace this mailto fallback after the client provides API keys.
-    const subject = encodeURIComponent(
-      `Freight Quote Request - ${formData.companyName || formData.fullName}`
-    );
-    const body = encodeURIComponent(
-      [
-        `Full Name: ${formData.fullName}`,
-        `Company Name: ${formData.companyName}`,
-        `Email: ${formData.email}`,
-        `Phone / WhatsApp: ${formatInternationalPhone(countryCode, formData.phone)}`,
-        `Origin - POL: ${formData.origin}`,
-        `Destination - POD: ${formData.destination}`,
-        `Mode: ${formData.mode}`,
-        `Shipment Type: ${formData.type}`,
-        `Incoterm: ${formData.incoterm}`,
-        `Cargo Details: ${formData.details || '-'}`,
-      ].join('\n')
-    );
+    try {
+      const result = await sendEnquiry({
+        enquiryType: 'quote',
+        fullName: formData.fullName,
+        companyName: formData.companyName,
+        email: formData.email,
+        countryCode,
+        phone: formData.phone,
+        origin: formData.origin,
+        destination: formData.destination,
+        mode: formData.mode,
+        type: formData.type,
+        incoterm: formData.incoterm,
+        cargoDetails: formData.details,
+        message: '',
+        website,
+      });
 
-    window.location.href = `mailto:sales@averonfs.com?subject=${subject}&body=${body}`;
+      setSubmissionMessage(result.message);
+      setFormData({
+        fullName: '',
+        companyName: '',
+        email: '',
+        phone: '',
+        origin: '',
+        destination: '',
+        mode: 'Ocean Freight',
+        type: 'FCL',
+        incoterm: 'FOB',
+        details: '',
+      });
+      setCountryCode('+91');
+      setWebsite('');
+    } catch (error) {
+      setSubmissionError(
+        error instanceof Error
+          ? error.message
+          : 'We could not send your enquiry right now. Please try again shortly or contact Averon directly.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -211,7 +246,6 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="quote-modal-title"
-      aria-describedby="quote-email-fallback-note"
       onMouseDown={(event) => {
         if (event.currentTarget === event.target) onClose();
       }}
@@ -234,6 +268,19 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} noValidate className="space-y-5 p-4 sm:p-6">
+          <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="quote-website">Website</label>
+            <input
+              id="quote-website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(event) => setWebsite(event.target.value)}
+            />
+          </div>
+
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <label className={labelClass} htmlFor="quote-fullName">Full Name *</label>
@@ -411,16 +458,26 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
             </div>
           )}
 
-          <p id="quote-email-fallback-note" className="border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
-            Until Brevo email delivery is connected, this form depends on a configured email application. <strong>Request a Quote</strong> attempts to open your default email app with these details prefilled; you must press Send there to complete the enquiry. If no email app is configured, contact Averon directly by email or phone.
-          </p>
+          {submissionMessage && (
+            <div className="border-l-4 border-emerald-500 bg-emerald-50 px-4 py-3 text-xs font-semibold leading-5 text-emerald-800" role="status" aria-live="polite">
+              {submissionMessage}
+            </div>
+          )}
+
+          {submissionError && (
+            <div className="border-l-4 border-rose-500 bg-rose-50 px-4 py-3 text-xs font-semibold leading-5 text-rose-700" role="alert">
+              {submissionError}
+            </div>
+          )}
 
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="submit"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
-              Request a Quote
+              {isSubmitting ? 'Sending...' : 'Request a Quote'}
               <ArrowRight className="h-4 w-4" />
             </button>
 
