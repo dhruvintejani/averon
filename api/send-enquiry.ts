@@ -140,7 +140,7 @@ const validate = (raw: unknown): EnquiryPayload => {
 
   const body = raw as Record<string, unknown>;
   const enquiryType = singleLine(body.enquiryType, 20, 'Enquiry type');
-  const fullName = singleLine(body.fullName, 100, 'Full name');
+  const fullName = singleLine(body.fullName, 70, 'Full name');
   const companyName = singleLine(body.companyName, 120, 'Company name');
   const email = singleLine(body.email, 254, 'Email').toLowerCase();
   const countryCode = singleLine(body.countryCode, 5, 'Country code');
@@ -218,7 +218,6 @@ const buildMessage = (data: EnquiryPayload) => {
   return {
     subject,
     htmlContent: `<div style="font-family:Arial,sans-serif;color:#14263d;line-height:1.5;"><h2 style="margin:0 0 16px;color:#071a33;">${escapeHtml(label)}</h2><p style="margin:0 0 18px;color:#475569;">A new enquiry was submitted through the Averon Freight Solutions website.</p><table role="presentation" style="width:100%;max-width:720px;border-collapse:collapse;border:1px solid #e5e7eb;">${htmlRows}</table></div>`,
-    textContent: [label, '', 'A new enquiry was submitted through the Averon Freight Solutions website.', '', ...rows.map(([key, value]) => `${key}: ${value}`)].join('\n'),
   };
 };
 
@@ -284,7 +283,6 @@ export default async function handler(req: ApiRequest, res: ServerResponse) {
           },
           subject: email.subject,
           htmlContent: email.htmlContent,
-          textContent: email.textContent,
         }),
         signal: controller.signal,
       });
