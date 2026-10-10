@@ -326,6 +326,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   }, [isHeroPaused, prefersReducedMotion]);
 
   const currentSlide = heroSlides[heroSlide];
+  const isAutoRotationPaused = isHeroPaused || prefersReducedMotion;
 
   const handleHeroPrimaryAction = () => {
     if (currentSlide.action === 'quote') {
@@ -363,7 +364,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-center px-4 py-14 sm:min-h-[640px] sm:px-6 sm:py-16 lg:min-h-[720px] lg:px-8 lg:py-20">
-          <div className="max-w-[780px]" aria-live="polite" aria-atomic="true">
+          <div className="max-w-[780px]">
             <div className="mb-6 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d4af37]">
               <span className="h-[2px] w-10 bg-[#c9a227]" />
               <span>{currentSlide.eyebrow}</span>
@@ -373,7 +374,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               International Freight Forwarding • Customs Solutions • Global Logistics
             </p>
 
-            <div className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]">
+            <div className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]" aria-live="polite" aria-atomic="true">
               <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[64px]">
                 {currentSlide.title}
               </h1>
@@ -448,11 +449,18 @@ export const HomePage: React.FC<HomePageProps> = ({
               <button
                 type="button"
                 onClick={() => setIsHeroPaused((paused) => !paused)}
-                className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
-                aria-label={isHeroPaused ? 'Resume automatic hero slides' : 'Pause automatic hero slides'}
-                aria-pressed={isHeroPaused}
+                disabled={prefersReducedMotion}
+                className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37] disabled:cursor-not-allowed disabled:opacity-60"
+                aria-label={
+                  prefersReducedMotion
+                    ? 'Automatic hero slides are disabled because reduced motion is enabled'
+                    : isHeroPaused
+                      ? 'Resume automatic hero slides'
+                      : 'Pause automatic hero slides'
+                }
+                aria-pressed={isAutoRotationPaused}
               >
-                {isHeroPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                {isAutoRotationPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
               </button>
 
               <span className="text-xs font-bold tracking-[0.18em] text-slate-300" aria-label={`Slide ${heroSlide + 1} of ${heroSlides.length}`}>
