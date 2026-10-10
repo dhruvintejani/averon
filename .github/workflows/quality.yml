@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
         run: npm audit --audit-level=high
 
-      - name: Desktop and mobile browser smoke tests
+      - name: Desktop, tablet and mobile browser smoke tests
         shell: bash
         run: |
           set -euo pipefail
@@ -107,7 +107,44 @@ jobs:
           render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
           render_and_check "/shipment-status" "Request a Shipment Status Update" "390,844" "status-mobile"
 
+          # Representative tablet viewports catch breakpoint and navigation regressions.
+          render_and_check "/" "Connecting Your Cargo to Global Markets" "768,1024" "home-tablet"
+          render_and_check "/services" "Freight & Logistics" "768,1024" "services-tablet"
+          render_and_check "/global-reach" "Global Reach" "768,1024" "global-tablet"
+          render_and_check "/contact" "Start With Your Shipment Details" "768,1024" "contact-tablet"
+          render_and_check "/shipment-status" "Request a Shipment Status Update" "768,1024" "status-tablet"
+
+      - name: Local Lighthouse quality audit
+        id: lighthouse
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          npm run preview -- --host 127.0.0.1 > /tmp/averon-lighthouse-vite.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill "$PREVIEW_PID" 2>/dev/null || true' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/             --quiet             --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage"             --only-categories=performance,accessibility,best-practices,seo             --output=json             --output-path=/tmp/averon-lighthouse.json
+
+          node - <<'NODE'
+          const fs = require('fs');
+          const report = JSON.parse(fs.readFileSync('/tmp/averon-lighthouse.json', 'utf8'));
+          for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+            const score = Math.round((report.categories[key]?.score ?? 0) * 100);
+            console.log(`${key}: ${score}`);
+          }
+          NODE
+
       - name: Report full audit status
         if: always()
         run: |
           echo "Full npm audit outcome: ${{ steps.full-audit.outcome }}"
+          echo "Lighthouse audit outcome: ${{ steps.lighthouse.outcome }}"
