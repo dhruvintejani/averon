@@ -52,7 +52,7 @@ const heroSlides = [
       'Reliable FCL & LCL ocean freight solutions with professional coordination from origin to destination.',
     cta: 'GET A QUOTE',
     image:
-      'https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1080&w=1920',
+      '/images/1000004351.jpg',
     serviceId: 'ocean-freight',
     action: 'quote' as const,
   },
@@ -533,9 +533,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.16)]">
               <img
-                src="https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
-              sizes="100vw"
+                src="/images/1000004527.jpg"
                 alt="International cargo port operations"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -743,9 +741,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-20 text-white sm:py-24">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1100&w=1920"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1100&w=1920")}
-              sizes="100vw"
+            src="/images/1000013332.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
@@ -877,9 +873,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-20 text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1920"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1920")}
-              sizes="100vw"
+            src="/images/1000013091.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
