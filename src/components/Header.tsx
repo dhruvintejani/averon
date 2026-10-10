@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Anchor,
   ArrowRight,
@@ -32,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const servicesTriggerRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!isMobileMenuOpen) return;
@@ -143,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </a>
 
-        <nav className="hidden flex-1 items-center justify-center gap-5 text-sm font-semibold text-slate-700 xl:flex 2xl:gap-7">
+        <nav aria-label="Primary navigation" className="hidden flex-1 items-center justify-center gap-5 text-sm font-semibold text-slate-700 xl:flex 2xl:gap-7">
           {[
             ['home', 'Home'],
             ['about', 'About Us'],
@@ -152,6 +153,7 @@ export const Header: React.FC<HeaderProps> = ({
               key={page}
               href={getPathForRoute(page)}
               onClick={(event) => navigateFromLink(event, page)}
+              aria-current={currentPage === page ? 'page' : undefined}
               className={`rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage === page
                   ? 'border-[#c9a227] text-[#071a33]'
@@ -176,12 +178,21 @@ export const Header: React.FC<HeaderProps> = ({
                 setIsServicesOpen(false);
               }
             }}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                event.preventDefault();
+                setIsServicesOpen(false);
+                servicesTriggerRef.current?.focus();
+              }
+            }}
           >
             <a
+              ref={servicesTriggerRef}
               href="/services"
               onClick={(event) => navigateFromLink(event, 'services')}
               aria-haspopup="true"
               aria-expanded={isServicesOpen}
+              aria-current={currentPage === 'services' ? 'page' : undefined}
               className={`flex items-center gap-1 rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage.startsWith('service')
                   ? 'border-[#c9a227] text-[#071a33]'
@@ -194,7 +205,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {isServicesOpen && (
               <div className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
-                <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
                   Logistics & Transport Solutions
                 </div>
                 {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
@@ -222,10 +233,11 @@ export const Header: React.FC<HeaderProps> = ({
             ['global-reach', 'Global Reach'],
             ['contact', 'Contact Us'],
           ].map(([page, label]) => (
-            <button
+            <a
               key={page}
-              type="button"
-              onClick={() => navigate(page)}
+              href={getPathForRoute(page)}
+              onClick={(event) => navigateFromLink(event, page)}
+              aria-current={currentPage === page ? 'page' : undefined}
               className={`rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage === page
                   ? 'border-[#c9a227] text-[#071a33]'
@@ -244,6 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
               event.preventDefault();
               onOpenTrackModal();
             }}
+            aria-current={currentPage === 'track-shipment' ? 'page' : undefined}
             className={`flex min-h-10 items-center gap-2 border px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.08em] transition-colors ${
               currentPage === 'track-shipment'
                 ? 'border-[#071a33] bg-[#071a33] text-white'
@@ -274,10 +287,10 @@ export const Header: React.FC<HeaderProps> = ({
 
       {isMobileMenuOpen && (
         <div id="mobile-navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-98px)] overflow-y-auto border-t border-slate-200 bg-white shadow-[0_22px_50px_rgba(7,26,51,0.16)] xl:hidden">
-          <div className="mx-auto max-w-[1360px] px-4 py-4 sm:px-6">
+          <nav aria-label="Mobile navigation" className="mx-auto max-w-[1360px] px-4 py-4 sm:px-6">
             <div className="grid gap-1">
-              <a href="/" onClick={(event) => navigateFromLink(event, 'home')} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'home' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>Home</a>
-              <a href="/about" onClick={(event) => navigateFromLink(event, 'about')} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'about' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>About Us</a>
+              <a href="/" onClick={(event) => navigateFromLink(event, 'home')} aria-current={currentPage === 'home' ? 'page' : undefined} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'home' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>Home</a>
+              <a href="/about" onClick={(event) => navigateFromLink(event, 'about')} aria-current={currentPage === 'about' ? 'page' : undefined} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'about' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>About Us</a>
 
               <div className="border-b border-slate-100 py-3">
                 <a href="/services" onClick={(event) => navigateFromLink(event, 'services')} className="mb-3 flex min-h-9 w-full items-center justify-between text-left text-sm font-semibold text-slate-800">
@@ -305,7 +318,13 @@ export const Header: React.FC<HeaderProps> = ({
                 ['global-reach', 'Global Reach'],
                 ['contact', 'Contact Us'],
               ].map(([page, label]) => (
-                <a key={page} href={getPathForRoute(page)} onClick={(event) => navigateFromLink(event, page)} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === page ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>
+                <a
+                  key={page}
+                  href={getPathForRoute(page)}
+                  onClick={(event) => navigateFromLink(event, page)}
+                  aria-current={currentPage === page ? 'page' : undefined}
+                  className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === page ? 'text-[#8b6b1f]' : 'text-slate-800'}`}
+                >
                   {label}
                 </a>
               ))}
@@ -337,7 +356,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
-          </div>
+          </nav>
         </div>
       )}
     </header>
