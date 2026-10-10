@@ -78,6 +78,10 @@ const LinkedInMark = () => (
 type ContactErrorKey = 'fullName' | 'companyName' | 'email' | 'phone' | 'origin' | 'destination';
 type ContactErrors = Partial<Record<ContactErrorKey, string>>;
 
+const officeMapQuery = encodeURIComponent(COMPANY_INFO.address);
+const officeMapEmbedUrl = `https://www.google.com/maps?q=${officeMapQuery}&output=embed`;
+const officeMapLink = `https://www.google.com/maps/search/?api=1&query=${officeMapQuery}`;
+
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -590,19 +594,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              <div className="overflow-hidden border border-slate-200 bg-white">
-                <img
-                  src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900")}
-              sizes="100vw"
-                  alt="Mumbai freight and logistics visual"
-                  loading="lazy" decoding="async"
-                  className="h-44 w-full object-cover"
-                />
+              <div className="overflow-hidden border border-slate-200 bg-white shadow-[0_14px_36px_rgba(7,26,51,.06)]">
+                <div className="relative h-56 w-full bg-slate-100 sm:h-64">
+                  <iframe
+                    title="Averon Freight Solutions office location on Google Maps"
+                    src={officeMapEmbedUrl}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-full w-full border-0"
+                    allowFullScreen
+                  />
+                </div>
 
                 <div className="p-6">
                   <div className="text-[10px] font-extrabold uppercase tracking-[0.17em] text-[#8b6b1f]">
-                    Office
+                    Office Location
                   </div>
                   <h4 className="mt-2 text-sm font-extrabold text-[#071a33]">
                     Averon Freight Solutions LLP
@@ -612,6 +618,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#8b6b1f]" />
                     <p>{COMPANY_INFO.address}</p>
                   </div>
+
+                  <a
+                    href={officeMapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex min-h-10 items-center justify-center gap-2 border border-[#071a33]/15 bg-[#f8f6f0] px-4 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:border-[#c9a227] hover:bg-white"
+                  >
+                    OPEN IN GOOGLE MAPS
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
                 </div>
               </div>
             </div>

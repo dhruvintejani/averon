@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { PageLoader } from './components/PageLoader';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { HomePage } from './pages/HomePage';
 
 const AboutPage = lazy(() =>
@@ -216,6 +217,8 @@ export function App() {
         onOpenTrackModal={() => handleNavigate('track-shipment')}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
+
+      <FloatingWhatsApp />
 
       <QuoteModal
         isOpen={isQuoteModalOpen}
