@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   ClipboardCheck,
@@ -241,9 +240,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800")}
-              sizes="100vw"
+            src="/images/1000003852.jpg"
             alt="International cargo terminal"
             className="h-full w-full object-cover object-center"
           />
@@ -676,9 +673,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
       <section className="relative overflow-hidden bg-[#071a33] py-16 text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
-              sizes="100vw"
+            src="/images/1000004213.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
