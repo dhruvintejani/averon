@@ -135,10 +135,6 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
     <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-20">
       <div className="mx-auto grid max-w-[1100px] gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8">
         <div className="space-y-5">
-          <div className="border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-900">
-            <strong>Draft for client review:</strong> this is a practical interim website privacy policy prepared for Averon’s current website. It should be reviewed and replaced or amended if the client or legal adviser provides approved wording, or if new tools such as analytics, CRM, cookies or automated integrations are added.
-          </div>
-
           <div className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.05)] sm:p-8">
             <h2 className="text-xl font-extrabold text-[#071a33]">About this policy</h2>
             <p className="mt-3 text-sm leading-7 text-slate-700">
