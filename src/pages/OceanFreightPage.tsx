@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   Anchor,
   ArrowRight,
@@ -80,6 +81,8 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
+              sizes="100vw"
             alt="Container vessel and port operations"
             className="h-full w-full object-cover object-center"
           />
@@ -138,6 +141,8 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
                 src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="Modern ocean freight vessel"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -226,6 +231,8 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
@@ -268,6 +275,8 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-18"
