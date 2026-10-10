@@ -48,7 +48,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <div>
-            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Quick Links</h4>
+            <h2 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Quick Links</h2>
             <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs text-slate-300 sm:block sm:space-y-2.5">
               {[
                 ['home', 'Home'],
@@ -84,7 +84,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <div>
-            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Services</h4>
+            <h2 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Services</h2>
             <ul className="grid gap-2 text-xs text-slate-300">
               {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
                 <li key={service.id}>
@@ -101,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <div>
-            <h4 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Contact</h4>
+            <h2 className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#d4af37]">Contact</h2>
             <div className="space-y-3 text-xs text-slate-300">
               <div className="space-y-2">
                 {COMPANY_INFO.phones.map((phone) => (
