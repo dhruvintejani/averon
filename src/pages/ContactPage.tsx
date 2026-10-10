@@ -3,7 +3,6 @@ import {
   ArrowRight,
   ClipboardCheck,
   Globe,
-  Linkedin,
   Mail,
   MapPin,
   Phone,
@@ -11,6 +10,7 @@ import {
   Send,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
+import { PremiumSelect } from '../components/PremiumSelect';
 
 interface ContactPageProps {
   onNavigate: (page: string) => void;
@@ -39,6 +39,33 @@ const inputClass =
 
 const labelClass =
   'mb-1.5 block text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#071a33]';
+
+const shipmentModeOptions = [
+  { value: 'Ocean', label: 'Ocean Freight' },
+  { value: 'Air', label: 'Air Freight' },
+  { value: 'Road', label: 'Road & Inland Transport' },
+];
+
+const shipmentTypeOptions = [
+  { value: 'FCL', label: 'FCL — Full Container Load' },
+  { value: 'LCL', label: 'LCL — Less than Container Load' },
+  { value: 'Air Cargo', label: 'Air Cargo' },
+  { value: 'Other', label: 'Other / Not Sure' },
+];
+
+const incotermOptions = [
+  { value: 'EXW', label: 'EXW — Ex Works' },
+  { value: 'FOB', label: 'FOB — Free on Board' },
+  { value: 'CIF', label: 'CIF — Cost, Insurance & Freight' },
+  { value: 'DDP', label: 'DDP — Delivered Duty Paid' },
+  { value: 'Other', label: 'Other / Not Sure' },
+];
+
+const LinkedInMark = () => (
+  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+  </svg>
+);
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
@@ -242,44 +269,38 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
                 <div>
                   <label className={labelClass}>Shipment Mode</label>
-                  <select
+                  <PremiumSelect
+                    id="contact-shipment-mode"
+                    name="shipmentMode"
+                    ariaLabel="Shipment mode"
                     value={formData.mode}
-                    onChange={(e) => setFormData({ ...formData, mode: e.target.value })}
-                    className={inputClass}
-                  >
-                    <option>Ocean</option>
-                    <option>Air</option>
-                    <option>Road</option>
-                  </select>
+                    options={shipmentModeOptions}
+                    onChange={(value) => setFormData({ ...formData, mode: value })}
+                  />
                 </div>
 
                 <div>
                   <label className={labelClass}>Shipment Type</label>
-                  <select
+                  <PremiumSelect
+                    id="contact-shipment-type"
+                    name="shipmentType"
+                    ariaLabel="Shipment type"
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className={inputClass}
-                  >
-                    <option>FCL</option>
-                    <option>LCL</option>
-                    <option>Air Cargo</option>
-                    <option>Other</option>
-                  </select>
+                    options={shipmentTypeOptions}
+                    onChange={(value) => setFormData({ ...formData, type: value })}
+                  />
                 </div>
 
                 <div>
                   <label className={labelClass}>Incoterm</label>
-                  <select
+                  <PremiumSelect
+                    id="contact-incoterm"
+                    name="incoterm"
+                    ariaLabel="Incoterm"
                     value={formData.incoterm}
-                    onChange={(e) => setFormData({ ...formData, incoterm: e.target.value })}
-                    className={inputClass}
-                  >
-                    <option>EXW</option>
-                    <option>FOB</option>
-                    <option>CIF</option>
-                    <option>DDP</option>
-                    <option>Other</option>
-                  </select>
+                    options={incotermOptions}
+                    onChange={(value) => setFormData({ ...formData, incoterm: value })}
+                  />
                 </div>
 
                 <div>
@@ -382,7 +403,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     aria-label="Averon Freight Solutions on LinkedIn"
                     className="inline-flex h-10 w-10 items-center justify-center border border-white/15 text-slate-200 transition hover:border-[#c9a227] hover:text-[#d4af37]"
                   >
-                    <Linkedin className="h-4 w-4" />
+                    <LinkedInMark />
                   </a>
                 </div>
               </div>
