@@ -174,3 +174,9 @@ main section {
 .animate-pulse-glow {
   animation: pulse-glow 3s infinite ease-in-out;
 }
+
+
+/* Accessible dark-gold text for small gold copy and icons on light surfaces. */
+[class~="text-[#b88924]"] {
+  color: #8b6b1f !important;
+}
