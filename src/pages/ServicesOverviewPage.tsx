@@ -1,5 +1,6 @@
 import React from 'react';
 import { getPexelsSrcSet } from '../utils/image';
+import { getPathForRoute } from '../utils/routes';
 import {
   Anchor,
   ArrowRight,
@@ -213,10 +214,13 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
               const Icon = service.icon;
 
               return (
-                <button
+                <a
                   key={service.id}
-                  type="button"
-                  onClick={() => onNavigate('service-detail', service.id)}
+                  href={getPathForRoute('service-detail', service.id)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onNavigate('service-detail', service.id);
+                  }}
                   className="group grid w-full grid-cols-[56px_1fr] gap-4 border-b border-slate-200 px-2 py-6 text-left transition last:border-b-0 hover:bg-[#f8f6f0] lg:grid-cols-[56px_minmax(220px,.8fr)_1.5fr_auto] lg:items-center lg:gap-6 lg:px-5"
                 >
                   <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 bg-white text-[#8b6b1f] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
@@ -240,7 +244,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                     Explore
                     <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </div>
-                </button>
+                </a>
               );
             })}
           </div>
@@ -264,14 +268,17 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
               Our LCL services support import and export shipments with coordinated origin handling, consolidation, main-port movement, destination handling and final delivery.
             </p>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('lcl-consolidation')}
+            <a
+              href={getPathForRoute('lcl-consolidation')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('lcl-consolidation');
+              }}
               className="mt-8 inline-flex min-h-11 w-full items-center sm:w-auto gap-2 bg-[#c9a227] px-5 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
             >
               EXPLORE LCL SOLUTIONS
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
 
           <div className="relative overflow-hidden border border-white/10 bg-[#0b2342] p-6 sm:p-8 lg:col-span-7">
@@ -374,14 +381,17 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
               <ArrowRight className="h-4 w-4" />
             </button>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('contact')}
+            <a
+              href={getPathForRoute('contact')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('contact');
+              }}
               className="inline-flex min-h-12 w-full items-center sm:w-auto gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
         </div>
       </section>
