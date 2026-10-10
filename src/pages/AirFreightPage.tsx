@@ -58,7 +58,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -76,6 +76,9 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
       <section className="relative min-h-[400px] overflow-hidden bg-[#071a33] text-white sm:min-h-[440px] lg:min-h-[470px]">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/32642359/pexels-photo-32642359.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
             alt="Cargo aircraft at an international airport"
             className="h-full w-full object-cover object-center"
@@ -147,7 +150,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
               <img
                 src="https://images.pexels.com/photos/32642359/pexels-photo-32642359.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Air freight cargo aircraft operations"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
@@ -172,7 +175,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
 
             <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
               <article className="bg-white p-6">
-                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                   <Clock3 className="h-5 w-5" strokeWidth={1.7} />
                 </div>
                 <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">Express Shipments</h3>
@@ -182,7 +185,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
               </article>
 
               <article className="bg-white p-6">
-                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                   <Plane className="h-5 w-5" strokeWidth={1.7} />
                 </div>
                 <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">Standard Air Freight</h3>
@@ -216,7 +219,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
               const Icon = item.icon;
               return (
                 <article key={item.title} className="bg-white p-7 transition hover:bg-[#f8f6f0]">
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
                   <h3 className="mt-5 text-sm font-extrabold leading-5 text-[#071a33]">
@@ -235,7 +238,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32642359/pexels-photo-32642359.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-15"
           />
           <div className="absolute inset-0 bg-[#071a33]/84" />
@@ -277,7 +280,7 @@ export const AirFreightPage: React.FC<AirFreightPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32642359/pexels-photo-32642359.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.86),rgba(7,26,51,.78))]" />

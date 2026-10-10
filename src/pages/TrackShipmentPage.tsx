@@ -84,7 +84,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -123,6 +123,9 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
       <section className="relative min-h-[430px] overflow-hidden bg-[#071a33] text-white">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1800"
             alt="International container terminal"
             className="h-full w-full object-cover object-center"
@@ -175,7 +178,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
 
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8">
-              <div className="mb-6 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#b88924]">
+              <div className="mb-6 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8b6b1f]">
                 Shipment Reference
               </div>
 
@@ -229,7 +232,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                   </div>
                 ) : (
                   <div className="border-l-4 border-[#c9a227] bg-[#f8f6f0] p-5">
-                    <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#b88924]">
+                    <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#8b6b1f]">
                       Reference for Manual Status Enquiry
                     </div>
                     <div className="mt-1 break-all text-lg font-extrabold text-[#071a33]">
@@ -344,7 +347,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
               return (
                 <article key={step.num} className="relative bg-white p-7">
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
                     <span className="text-2xl font-extrabold text-[#8b6b1f]">{step.num}</span>
@@ -370,7 +373,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
             <img
               src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1200"
               alt="Container vessel moving international cargo"
-              loading="lazy"
+              loading="lazy" decoding="async"
               className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[390px]"
             />
           </div>
@@ -393,7 +396,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                 'Responsive customer communication',
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3 border-t border-slate-200 pt-4">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#b88924]" />
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#8b6b1f]" />
                   <span className="text-sm font-semibold text-[#071a33]">{item}</span>
                 </div>
               ))}
@@ -408,7 +411,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />

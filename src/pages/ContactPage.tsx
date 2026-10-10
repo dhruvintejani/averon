@@ -28,7 +28,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -199,6 +199,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
       <section className="relative min-h-[420px] overflow-hidden bg-[#071a33] text-white">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
             alt="International cargo terminal"
             className="h-full w-full object-cover object-center"
@@ -255,7 +258,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               noValidate
               className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8"
             >
-              <div className="mb-7 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#b88924]">
+              <div className="mb-7 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8b6b1f]">
                 Shipment Enquiry
               </div>
 
@@ -533,12 +536,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 <img
                   src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900"
                   alt="Mumbai freight and logistics visual"
-                  loading="lazy"
+                  loading="lazy" decoding="async"
                   className="h-44 w-full object-cover"
                 />
 
                 <div className="p-6">
-                  <div className="text-[10px] font-extrabold uppercase tracking-[0.17em] text-[#b88924]">
+                  <div className="text-[10px] font-extrabold uppercase tracking-[0.17em] text-[#8b6b1f]">
                     Office
                   </div>
                   <h4 className="mt-2 text-sm font-extrabold text-[#071a33]">
@@ -546,7 +549,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   </h4>
 
                   <div className="mt-3 flex items-start gap-2 text-xs leading-5 text-slate-600">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b88924]" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#8b6b1f]" />
                     <p>{COMPANY_INFO.address}</p>
                   </div>
                 </div>
@@ -576,7 +579,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               return (
                 <article key={step.num} className="bg-white p-7">
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="text-2xl font-extrabold text-[#8b6b1f]">{step.num}</span>
@@ -597,7 +600,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />
