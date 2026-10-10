@@ -196,7 +196,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             </div>
 
             <p className="max-w-[520px] text-sm leading-6 text-slate-600">
-              Seven logistics services covering international freight, customs, inland movement, storage and coordinated shipment planning.
+              Logistics services covering international freight, customs, inland movement, storage and coordinated shipment planning.
             </p>
           </div>
 
