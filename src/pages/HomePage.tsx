@@ -352,15 +352,19 @@ export const HomePage: React.FC<HomePageProps> = ({
               International Freight Forwarding • Customs Solutions • Global Logistics
             </p>
 
-            <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[64px]">
-              {currentSlide.title}
-            </h1>
+            <div className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]">
+              <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[64px]">
+                {currentSlide.title}
+              </h1>
+            </div>
 
-            <p className="mt-6 max-w-[650px] text-base leading-7 text-slate-200 sm:text-lg">
-              {currentSlide.description}
-            </p>
+            <div className="mt-5 flex h-[112px] items-start sm:h-[84px] lg:h-[64px]">
+              <p className="max-w-[650px] text-base leading-7 text-slate-200 sm:text-lg">
+                {currentSlide.description}
+              </p>
+            </div>
 
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-7 flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={handleHeroPrimaryAction}
@@ -380,7 +384,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="mt-12 flex items-center gap-5">
+            <div className="mt-10 flex items-center gap-5">
               <div className="flex items-center gap-2">
                 {heroSlides.map((slide, index) => (
                   <button
