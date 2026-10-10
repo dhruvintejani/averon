@@ -3,6 +3,12 @@ import { Globe, Mail, Phone } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
 import { getPathForRoute } from '../utils/routes';
 
+const GoogleMark = () => (
+  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21.35 12.27c0-.69-.06-1.2-.19-1.74H12v3.33h5.38a4.6 4.6 0 0 1-1.99 2.93l-.02.11 2.89 2.24.2.02c1.83-1.69 2.89-4.18 2.89-6.89ZM12 21.82c2.62 0 4.82-.86 6.43-2.36l-3.07-2.37c-.82.56-1.92.95-3.36.95-2.52 0-4.66-1.7-5.43-4.06l-.1.01-3 2.32-.03.1A9.72 9.72 0 0 0 12 21.82ZM6.57 13.98A5.84 5.84 0 0 1 6.25 12c0-.69.12-1.35.31-1.98l-.01-.13-3.03-2.36-.1.05A9.8 9.8 0 0 0 2.35 12c0 1.59.38 3.1 1.06 4.42l3.16-2.44ZM12 5.96c1.82 0 3.05.79 3.76 1.44l2.74-2.67C16.82 3.16 14.62 2.18 12 2.18A9.72 9.72 0 0 0 3.42 7.58l3.14 2.44C7.34 7.66 9.48 5.96 12 5.96Z" />
+  </svg>
+);
+
 interface FooterProps {
   onNavigate: (page: string, serviceId?: string) => void;
   onOpenTrackModal: () => void;
@@ -128,11 +134,23 @@ export const Footer: React.FC<FooterProps> = ({
                 </a>
               </div>
 
+              <div className="flex items-center gap-2">
               <a href={COMPANY_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 w-10 items-center justify-center border border-white/15 text-slate-200 transition-colors hover:border-[#c9a227] hover:bg-[#c9a227] hover:text-[#071a33]" aria-label="Averon Freight Solutions on LinkedIn">
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                 </svg>
               </a>
+                <a
+                  href={COMPANY_INFO.googleBusiness}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center border border-white/15 text-slate-200 transition-colors hover:border-[#c9a227] hover:bg-[#c9a227] hover:text-[#071a33]"
+                  aria-label="Averon Freight Solutions on Google"
+                  title="View Averon Freight Solutions on Google"
+                >
+                  <GoogleMark />
+                </a>
+              </div>
             </div>
           </div>
         </div>

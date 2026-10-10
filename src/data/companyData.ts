@@ -19,6 +19,8 @@ export const COMPANY_INFO = {
   emails: ["info@averonfs.com", "sales@averonfs.com"],
   website: "www.averonfs.com",
   linkedin: "https://www.linkedin.com/company/averonfreightsolutions/",
+  googleMaps: "https://maps.app.goo.gl/7DhrQB3EtkT49ec5A?g_st=iwb",
+  googleBusiness: "https://share.google/ThpBZY3e7bZTj7azL",
   address: "Office No. 404, 4th Floor, Dev Milan Co-operative Premises Society, Above Woodland Retreat, LBS Marg, Near Tip Top Plaza, Thane West – 400604, Mumbai, Maharashtra, India.",
   experience: "12+ Years of Combined Industry Experience",
   aboutSummary: "Averon Freight Solutions LLP is a Mumbai-based freight forwarding and international logistics company led by experienced logistics professionals with 12+ years of combined industry experience. We are dedicated to facilitating seamless global trade through reliable, efficient and customized logistics solutions. We help importers, exporters, manufacturers and traders move cargo across international markets with confidence, transparency and operational excellence."

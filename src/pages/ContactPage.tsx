@@ -82,7 +82,7 @@ const officeMapLocation = `${COMPANY_INFO.name}, ${COMPANY_INFO.address}`;
 const officeMapQuery = encodeURIComponent(officeMapLocation);
 const officeMapEmbedUrl =
   `https://maps.google.com/maps?hl=en&q=${officeMapQuery}&z=18&ie=UTF8&iwloc=B&output=embed`;
-const officeMapLink = `https://www.google.com/maps/search/?api=1&query=${officeMapQuery}`;
+const officeMapLink = COMPANY_INFO.googleMaps;
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
