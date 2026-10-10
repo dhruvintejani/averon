@@ -56,7 +56,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -74,6 +74,9 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
       <section className="relative min-h-[400px] overflow-hidden bg-[#071a33] text-white sm:min-h-[440px] lg:min-h-[470px]">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
             alt="Modern warehouse and distribution operation"
             className="h-full w-full object-cover object-center"
@@ -145,7 +148,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
               <img
                 src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Clean warehouse and cargo handling environment"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
@@ -170,7 +173,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
 
             <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
               <article className="bg-white p-6">
-                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                   <Warehouse className="h-5 w-5" strokeWidth={1.7} />
                 </div>
                 <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">Cargo Storage Support</h3>
@@ -180,7 +183,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
               </article>
 
               <article className="bg-white p-6">
-                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                   <Route className="h-5 w-5" strokeWidth={1.7} />
                 </div>
                 <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">Onward Distribution</h3>
@@ -220,7 +223,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
                     index === solutions.length - 1 ? 'lg:col-span-1' : ''
                   }`}
                 >
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
                   <h3 className="mt-5 text-sm font-extrabold leading-5 text-[#071a33]">
@@ -239,7 +242,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
           <img
             src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
           />
           <div className="absolute inset-0 bg-[#071a33]/84" />
@@ -282,7 +285,7 @@ export const WarehousingDistributionPage: React.FC<WarehousingDistributionPagePr
           <img
             src="https://images.pexels.com/photos/13804490/pexels-photo-13804490.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-15"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.86),rgba(7,26,51,.78))]" />
