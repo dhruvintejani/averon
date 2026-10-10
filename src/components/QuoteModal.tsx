@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Calculator, X } from 'lucide-react';
+import { PremiumSelect } from './PremiumSelect';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -12,6 +13,30 @@ const inputClass =
 
 const labelClass =
   'mb-1.5 block text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#071a33]';
+
+const modeOptions = [
+  { value: 'Ocean Freight', label: 'Ocean Freight' },
+  { value: 'Air Freight', label: 'Air Freight' },
+  { value: 'Road Freight', label: 'Road & Inland Transport' },
+  { value: 'Customs Clearance Only', label: 'Customs Clearance Only' },
+];
+
+const typeOptions = [
+  { value: 'FCL', label: 'FCL — Full Container Load' },
+  { value: 'LCL', label: 'LCL — Less than Container Load' },
+  { value: 'Air Cargo', label: 'Air Cargo' },
+  { value: 'Project Cargo', label: 'Project Cargo / Breakbulk' },
+  { value: 'Other', label: 'Other / Not Sure' },
+];
+
+const incotermOptions = [
+  { value: 'FOB', label: 'FOB — Free on Board' },
+  { value: 'CIF', label: 'CIF — Cost, Insurance & Freight' },
+  { value: 'EXW', label: 'EXW — Ex Works' },
+  { value: 'DDP', label: 'DDP — Delivered Duty Paid' },
+  { value: 'DAP', label: 'DAP — Delivered at Place' },
+  { value: 'Other', label: 'Other / Not Sure' },
+];
 
 export const QuoteModal: React.FC<QuoteModalProps> = ({
   isOpen,
@@ -139,33 +164,36 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
               <label className={labelClass} htmlFor="quote-mode">Mode</label>
-              <select id="quote-mode" name="mode" value={formData.mode} onChange={(e) => setFormData({ ...formData, mode: e.target.value })} className={inputClass}>
-                <option>Ocean Freight</option>
-                <option>Air Freight</option>
-                <option>Road Freight</option>
-                <option>Customs Clearance Only</option>
-              </select>
+              <PremiumSelect
+                id="quote-mode"
+                name="mode"
+                ariaLabel="Freight mode"
+                value={formData.mode}
+                options={modeOptions}
+                onChange={(value) => setFormData({ ...formData, mode: value })}
+              />
             </div>
             <div>
               <label className={labelClass} htmlFor="quote-type">Shipment Type</label>
-              <select id="quote-type" name="type" value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value })} className={inputClass}>
-                <option value="FCL">FCL</option>
-                <option value="LCL">LCL</option>
-                <option value="Air Cargo">Air Cargo</option>
-                <option value="Project Cargo">Project / Breakbulk</option>
-                <option value="Other">Other</option>
-              </select>
+              <PremiumSelect
+                id="quote-type"
+                name="type"
+                ariaLabel="Shipment type"
+                value={formData.type}
+                options={typeOptions}
+                onChange={(value) => setFormData({ ...formData, type: value })}
+              />
             </div>
             <div>
               <label className={labelClass} htmlFor="quote-incoterm">Incoterm</label>
-              <select id="quote-incoterm" name="incoterm" value={formData.incoterm} onChange={(e) => setFormData({ ...formData, incoterm: e.target.value })} className={inputClass}>
-                <option>FOB</option>
-                <option>CIF</option>
-                <option>EXW</option>
-                <option>DDP</option>
-                <option>DAP</option>
-                <option>Other</option>
-              </select>
+              <PremiumSelect
+                id="quote-incoterm"
+                name="incoterm"
+                ariaLabel="Incoterm"
+                value={formData.incoterm}
+                options={incotermOptions}
+                onChange={(value) => setFormData({ ...formData, incoterm: value })}
+              />
             </div>
           </div>
 
