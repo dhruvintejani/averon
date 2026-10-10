@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
@@ -54,6 +54,8 @@ export function App() {
     initialRoute.serviceId ?? 'ocean-freight'
   );
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+  const hasMountedRef = useRef(false);
 
   const applyRouteState = (route: RouteState) => {
     setCurrentPage(route.page);
@@ -78,6 +80,12 @@ export function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
     applySeo(currentPage, selectedServiceId);
+
+    if (hasMountedRef.current) {
+      requestAnimationFrame(() => mainRef.current?.focus());
+    } else {
+      hasMountedRef.current = true;
+    }
   }, [currentPage, selectedServiceId]);
 
   const handleNavigate = (page: string, serviceId?: string) => {
@@ -182,7 +190,7 @@ export function App() {
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
-      <main className="flex-grow">
+      <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-grow outline-none">
         <Suspense
           fallback={
             <div className="min-h-[55vh] bg-white" aria-busy="true" aria-live="polite">

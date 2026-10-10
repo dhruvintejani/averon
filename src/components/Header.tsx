@@ -33,6 +33,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const servicesTriggerRef = useRef<HTMLAnchorElement>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!isMobileMenuOpen) return;
@@ -40,15 +42,29 @@ export const Header: React.FC<HeaderProps> = ({
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
+    requestAnimationFrame(() => {
+      mobileNavRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled])')?.focus();
+    });
+
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMobileMenuOpen(false);
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      setIsMobileMenuOpen(false);
+      requestAnimationFrame(() => mobileMenuButtonRef.current?.focus());
+    };
+
+    const desktopQuery = window.matchMedia('(min-width: 1280px)');
+    const closeAtDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsMobileMenuOpen(false);
     };
 
     window.addEventListener('keydown', closeOnEscape);
+    desktopQuery.addEventListener('change', closeAtDesktop);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', closeOnEscape);
+      desktopQuery.removeEventListener('change', closeAtDesktop);
     };
   }, [isMobileMenuOpen]);
 
@@ -92,6 +108,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white shadow-[0_6px_24px_rgba(7,26,51,0.06)]">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-[#071a33] focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-white focus:shadow-xl"
+      >
+        Skip to main content
+      </a>
       <div className="border-b border-white/10 bg-[#071a33] px-3 py-1.5 text-[10px] text-slate-200 sm:px-4 sm:py-2 sm:text-[11px]">
         <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-4 lg:gap-6">
@@ -192,6 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={(event) => navigateFromLink(event, 'services')}
               aria-haspopup="true"
               aria-expanded={isServicesOpen}
+              aria-controls="services-dropdown"
               aria-current={currentPage === 'services' ? 'page' : undefined}
               className={`flex items-center gap-1 rounded-md border-b-2 px-1.5 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c9a227] hover:bg-[#f8f6f0] hover:text-[#071a33] ${
                 currentPage.startsWith('service')
@@ -204,7 +227,7 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
 
             {isServicesOpen && (
-              <div className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
+              <div id="services-dropdown" className="absolute left-0 top-full z-50 w-[350px] overflow-hidden rounded-b-xl border border-slate-200 border-t-2 border-t-[#c9a227] bg-white py-2 shadow-[0_24px_60px_rgba(7,26,51,0.18)]">
                 <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
                   Logistics & Transport Solutions
                 </div>
@@ -274,6 +297,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <button
+          ref={mobileMenuButtonRef}
           type="button"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           className="grid h-11 w-11 shrink-0 place-items-center rounded-md text-slate-700 transition-all duration-200 hover:bg-[#f8f6f0] hover:text-[#071a33] xl:hidden"
@@ -287,7 +311,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {isMobileMenuOpen && (
         <div id="mobile-navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-98px)] overflow-y-auto border-t border-slate-200 bg-white shadow-[0_22px_50px_rgba(7,26,51,0.16)] xl:hidden">
-          <nav aria-label="Mobile navigation" className="mx-auto max-w-[1360px] px-4 py-4 sm:px-6">
+          <nav ref={mobileNavRef} aria-label="Mobile navigation" className="mx-auto max-w-[1360px] px-4 py-4 sm:px-6">
             <div className="grid gap-1">
               <a href="/" onClick={(event) => navigateFromLink(event, 'home')} aria-current={currentPage === 'home' ? 'page' : undefined} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'home' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>Home</a>
               <a href="/about" onClick={(event) => navigateFromLink(event, 'about')} aria-current={currentPage === 'about' ? 'page' : undefined} className={`flex min-h-11 items-center rounded-md border-b border-slate-100 px-2 text-left text-sm font-semibold transition-all hover:bg-[#f8f6f0] hover:pl-3 ${currentPage === 'about' ? 'text-[#8b6b1f]' : 'text-slate-800'}`}>About Us</a>

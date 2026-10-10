@@ -304,7 +304,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   onOpenQuoteModal,
 }) => {
   const [heroSlide, setHeroSlide] = useState(0);
-  const [isHeroPaused, setIsHeroPaused] = useState(false);
+  const [isHeroManuallyPaused, setIsHeroManuallyPaused] = useState(false);
+  const [isHeroInteractionPaused, setIsHeroInteractionPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -317,18 +318,20 @@ export const HomePage: React.FC<HomePageProps> = ({
     return () => media.removeEventListener('change', updatePreference);
   }, []);
 
+  const isAutoRotationPaused =
+    isHeroManuallyPaused || isHeroInteractionPaused || prefersReducedMotion;
+
   useEffect(() => {
-    if (isHeroPaused || prefersReducedMotion) return;
+    if (isAutoRotationPaused) return;
 
     const timer = window.setInterval(() => {
       setHeroSlide((current) => (current + 1) % heroSlides.length);
     }, 7000);
 
     return () => window.clearInterval(timer);
-  }, [isHeroPaused, prefersReducedMotion]);
+  }, [isAutoRotationPaused]);
 
   const currentSlide = heroSlides[heroSlide];
-  const isAutoRotationPaused = isHeroPaused || prefersReducedMotion;
 
   const handleHeroPrimaryAction = () => {
     if (currentSlide.action === 'quote') {
@@ -346,12 +349,12 @@ export const HomePage: React.FC<HomePageProps> = ({
         className="relative min-h-[600px] overflow-hidden bg-[#071a33] text-white sm:min-h-[640px] lg:min-h-[720px]"
         aria-roledescription="carousel"
         aria-label="Averon freight services"
-        onMouseEnter={() => setIsHeroPaused(true)}
-        onMouseLeave={() => setIsHeroPaused(false)}
-        onFocusCapture={() => setIsHeroPaused(true)}
+        onMouseEnter={() => setIsHeroInteractionPaused(true)}
+        onMouseLeave={() => setIsHeroInteractionPaused(false)}
+        onFocusCapture={() => setIsHeroInteractionPaused(true)}
         onBlurCapture={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-            setIsHeroPaused(false);
+            setIsHeroInteractionPaused(false);
           }
         }}
       >
@@ -381,7 +384,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               International Freight Forwarding • Customs Solutions • Global Logistics
             </p>
 
-            <div className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]" aria-live="polite" aria-atomic="true">
+            <div
+              id="home-hero-slide"
+              className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]"
+              aria-live={isAutoRotationPaused ? 'polite' : 'off'}
+              aria-atomic="true"
+            >
               <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[64px]">
                 {currentSlide.title}
               </h1>
@@ -422,7 +430,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <button
                     key={slide.title}
                     type="button"
-                    onClick={() => setHeroSlide(index)}
+                    onClick={() => {
+                      setHeroSlide(index);
+                      setIsHeroManuallyPaused(true);
+                    }}
+                    aria-controls="home-hero-slide"
+                    aria-current={index === heroSlide ? 'true' : undefined}
                     aria-label={`Show slide ${index + 1}: ${slide.title}`}
                     className={`h-[3px] transition-all ${
                       index === heroSlide ? 'w-11 bg-[#d4af37]' : 'w-5 bg-white/35 hover:bg-white/60'
@@ -435,11 +448,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <button
                   type="button"
                   aria-label="Previous hero slide"
-                  onClick={() =>
+                  onClick={() => {
                     setHeroSlide((current) =>
                       current === 0 ? heroSlides.length - 1 : current - 1
-                    )
-                  }
+                    );
+                    setIsHeroManuallyPaused(true);
+                  }}
                   className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -447,9 +461,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <button
                   type="button"
                   aria-label="Next hero slide"
-                  onClick={() =>
-                    setHeroSlide((current) => (current + 1) % heroSlides.length)
-                  }
+                  onClick={() => {
+                    setHeroSlide((current) => (current + 1) % heroSlides.length);
+                    setIsHeroManuallyPaused(true);
+                  }}
                   className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
                 >
                   <ChevronRight className="h-4 w-4" />
@@ -458,19 +473,19 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               <button
                 type="button"
-                onClick={() => setIsHeroPaused((paused) => !paused)}
+                onClick={() => setIsHeroManuallyPaused((paused) => !paused)}
                 disabled={prefersReducedMotion}
                 className="grid h-9 w-9 place-items-center border border-white/25 text-white transition hover:border-[#d4af37] hover:text-[#d4af37] disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label={
                   prefersReducedMotion
                     ? 'Automatic hero slides are disabled because reduced motion is enabled'
-                    : isHeroPaused
+                    : isHeroManuallyPaused
                       ? 'Resume automatic hero slides'
                       : 'Pause automatic hero slides'
                 }
-                aria-pressed={isAutoRotationPaused}
+                aria-pressed={isHeroManuallyPaused}
               >
-                {isAutoRotationPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                {isHeroManuallyPaused || prefersReducedMotion ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
               </button>
 
               <span className="text-xs font-bold tracking-[0.18em] text-slate-300" aria-label={`Slide ${heroSlide + 1} of ${heroSlides.length}`}>
