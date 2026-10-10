@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 're
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
+import { PageLoader } from './components/PageLoader';
 import { HomePage } from './pages/HomePage';
 
 const AboutPage = lazy(() =>
@@ -205,17 +206,7 @@ export function App() {
       />
 
       <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-grow outline-none">
-        <Suspense
-          fallback={
-            <div
-              className="min-h-[100dvh] bg-white"
-              aria-busy="true"
-              aria-live="polite"
-            >
-              <span className="sr-only">Loading page</span>
-            </div>
-          }
-        >
+        <Suspense fallback={<PageLoader />}>
           {renderCurrentPage()}
         </Suspense>
       </main>
