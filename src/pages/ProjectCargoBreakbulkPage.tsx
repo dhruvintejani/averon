@@ -125,7 +125,7 @@ export const ProjectCargoBreakbulkPage: React.FC<ProjectCargoBreakbulkPageProps>
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
-                src="https://images.pexels.com/photos/38414138/pexels-photo-38414138.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+                src="/images/1000004437.jpg"
                 alt="Oversized cargo handling operation"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
