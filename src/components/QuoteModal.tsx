@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Calculator, X } from 'lucide-react';
 import { PremiumSelect } from './PremiumSelect';
 import { FormFieldError } from './FormFieldError';
@@ -66,6 +66,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   });
   const [countryCode, setCountryCode] = useState('+91');
   const [errors, setErrors] = useState<QuoteErrors>({});
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -73,17 +75,54 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
       return;
     }
 
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+    const focusableSelector =
+      'button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+
+    requestAnimationFrame(() => {
+      modalRef.current?.querySelector<HTMLElement>(focusableSelector)?.focus();
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(focusableSelector)
+      ).filter((element) => !element.hasAttribute('disabled'));
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    window.addEventListener('keydown', closeOnEscape);
+    window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
+      window.removeEventListener('keydown', handleKeyDown);
+      previousFocusRef.current?.focus();
     };
   }, [isOpen, onClose]);
 
@@ -173,11 +212,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="quote-modal-title"
+      aria-describedby="quote-email-fallback-note"
       onMouseDown={(event) => {
         if (event.currentTarget === event.target) onClose();
       }}
     >
-      <div className="max-h-[94dvh] w-full overflow-y-auto rounded-t-2xl border border-slate-200 bg-white shadow-2xl sm:max-w-3xl sm:rounded-lg">
+      <div ref={modalRef} className="max-h-[94dvh] w-full overflow-y-auto rounded-t-2xl border border-slate-200 bg-white shadow-2xl sm:max-w-3xl sm:rounded-lg">
         <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-white/10 bg-[#071a33] px-4 py-4 text-white sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <div className="grid h-10 w-10 shrink-0 place-items-center bg-[#c9a227] text-[#071a33]">
@@ -371,6 +411,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               Please check the highlighted fields above. Your quote request has not been submitted yet.
             </div>
           )}
+
+          <p id="quote-email-fallback-note" className="border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
+            Until Brevo email delivery is connected, <strong>Request a Quote</strong> opens your device's default email application with these details prefilled. You must press Send in your email app to complete the enquiry.
+          </p>
 
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
             <button
