@@ -17,7 +17,21 @@ export const getPexelsSrcSet = (
 ) => {
   if (!src.includes('images.pexels.com')) return undefined;
 
-  return widths
+  let sourceWidth: number | undefined;
+  try {
+    const parsed = new URL(src);
+    const widthParam = Number(parsed.searchParams.get('w'));
+    if (Number.isFinite(widthParam) && widthParam > 0) sourceWidth = widthParam;
+  } catch {
+    sourceWidth = undefined;
+  }
+
+  const responsiveWidths = sourceWidth
+    ? [...widths.filter((width) => width < sourceWidth), sourceWidth]
+    : [...widths];
+
+  return [...new Set(responsiveWidths)]
+    .sort((a, b) => a - b)
     .map((width) => `${withPexelsWidth(src, width)} ${width}w`)
     .join(', ');
 };
