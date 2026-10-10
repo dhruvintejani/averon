@@ -373,7 +373,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#071a33] to-transparent" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-center px-4 py-14 sm:min-h-[640px] sm:px-6 sm:py-16 lg:min-h-[720px] lg:px-8 lg:py-20">
+        <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-start px-4 pb-10 pt-14 sm:min-h-[640px] sm:px-6 sm:pb-12 sm:pt-16 lg:min-h-[720px] lg:px-8 lg:pb-14 lg:pt-20">
           <div className="max-w-[780px]">
             <div className="mb-6 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d4af37]">
               <span className="h-[2px] w-10 bg-[#c9a227]" />
