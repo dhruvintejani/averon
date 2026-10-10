@@ -8,7 +8,7 @@ interface TermsConditionsPageProps {
 
 export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavigate }) => (
   <div className="bg-white text-[#14263d]">
-    <section className="bg-[#071a33] py-16 text-white sm:py-20">
+    <section className="bg-[#071a33] pb-14 pt-16 text-white sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
       <div className="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-8">
         <div className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#d4af37]">Legal</div>
         <h1 className="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Terms & Conditions</h1>
