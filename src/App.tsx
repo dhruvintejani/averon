@@ -38,7 +38,9 @@ export function App() {
   };
 
   useEffect(() => {
-    if (window.location.pathname === '/track-shipment') {
+    if (window.location.pathname === '/home') {
+      window.history.replaceState({}, '', '/');
+    } else if (window.location.pathname === '/track-shipment') {
       window.history.replaceState({}, '', '/shipment-status');
     }
 
