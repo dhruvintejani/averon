@@ -119,7 +119,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
-      <section className="relative min-h-[450px] overflow-hidden bg-[#071a33] text-white">
+      <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[480px] lg:min-h-[500px]">
         <div className="absolute inset-0">
           <img
             loading="eager"
@@ -134,7 +134,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.92)_42%,rgba(7,26,51,.66)_72%,rgba(7,26,51,.42)_100%)]" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[450px] max-w-[1360px] items-center px-4 py-16 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-[1360px] items-start px-4 pb-14 pt-16 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-20 lg:min-h-[500px] lg:px-8 lg:pb-20 lg:pt-24">
           <div className="max-w-[760px]">
             <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
