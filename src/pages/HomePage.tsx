@@ -580,7 +580,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <div className="grid h-11 w-11 place-items-center bg-[#071a33] text-[#d4af37]">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <span className="text-xs font-extrabold tracking-[0.16em] text-[#c9a227]">
+                    <span className="text-xs font-extrabold tracking-[0.16em] text-[#8b6b1f]">
                       0{index + 1}
                     </span>
                   </div>
@@ -752,7 +752,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <div className="grid h-11 w-11 place-items-center border border-[#c9a227]/55 text-[#b88924]">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <span className="text-2xl font-extrabold text-[#c9a227]">{step.num}</span>
+                    <span className="text-2xl font-extrabold text-[#8b6b1f]">{step.num}</span>
                   </div>
                   <h3 className="text-sm font-extrabold leading-5 text-[#071a33]">{step.title}</h3>
                   <p className="mt-2 text-xs leading-5 text-slate-600">{step.desc}</p>
