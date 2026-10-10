@@ -207,7 +207,11 @@ export function App() {
       <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-grow outline-none">
         <Suspense
           fallback={
-            <div className="min-h-[55vh] bg-white" aria-busy="true" aria-live="polite">
+            <div
+              className="min-h-[100dvh] bg-white"
+              aria-busy="true"
+              aria-live="polite"
+            >
               <span className="sr-only">Loading page</span>
             </div>
           }
