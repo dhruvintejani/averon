@@ -102,7 +102,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -120,6 +120,9 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
       <section className="relative min-h-[450px] overflow-hidden bg-[#071a33] text-white">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1800"
             alt="International freight and logistics port"
             className="h-full w-full object-cover"
@@ -162,7 +165,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
             <img
               src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
               alt="International cargo movement"
-              loading="lazy"
+              loading="lazy" decoding="async"
               className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[390px]"
             />
           </div>
@@ -211,7 +214,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                   onClick={() => onNavigate('service-detail', service.id)}
                   className="group grid w-full grid-cols-[56px_1fr] gap-4 border-b border-slate-200 px-2 py-6 text-left transition last:border-b-0 hover:bg-[#f8f6f0] lg:grid-cols-[56px_minmax(220px,.8fr)_1.5fr_auto] lg:items-center lg:gap-6 lg:px-5"
                 >
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 bg-white text-[#b88924] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 bg-white text-[#8b6b1f] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
 
@@ -228,7 +231,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                     {service.desc}
                   </p>
 
-                  <div className="col-span-2 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#071a33] transition group-hover:text-[#b88924] lg:col-span-1">
+                  <div className="col-span-2 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#071a33] transition group-hover:text-[#8b6b1f] lg:col-span-1">
                     Explore
                     <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </div>
@@ -321,7 +324,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
 
               return (
                 <article key={item.title} className="bg-white p-6">
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
                   <h3 className="mt-5 text-sm font-extrabold text-[#071a33]">{item.title}</h3>
@@ -339,7 +342,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />

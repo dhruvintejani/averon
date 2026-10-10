@@ -269,7 +269,7 @@ const audiences: { title: string; icon: IconType }[] = [
 
 const SectionEyebrow = ({ children, light = false }: { children: React.ReactNode; light?: boolean }) => (
   <div className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-    light ? 'text-[#d4af37]' : 'text-[#b88924]'
+    light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
   }`}>
     <span className="h-[2px] w-8 bg-[#c9a227]" />
     <span>{children}</span>
@@ -284,7 +284,7 @@ const RouteMapGraphic = () => (
       <img
         src="/Global%20Logistics%20Network%20Hub.png"
         alt="Illustrative global logistics network with India as the coordination point"
-        loading="lazy"
+        loading="lazy" decoding="async"
         className="h-full w-full object-contain"
       />
       <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
@@ -355,6 +355,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       >
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src={currentSlide.image}
             alt=""
             className="h-full w-full object-cover object-center transition-opacity duration-700"
@@ -495,7 +498,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('about')}
-              className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#b88924]"
+              className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               LEARN MORE ABOUT AVERON
               <ArrowRight className="h-4 w-4" />
@@ -507,7 +510,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <img
                 src="https://images.pexels.com/photos/36652833/pexels-photo-36652833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="International cargo port operations"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/35 via-transparent to-transparent" />
@@ -538,7 +541,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               const Icon = item.icon;
               return (
                 <article key={item.title} className="group bg-white p-7 transition hover:bg-[#f8f6f0]">
-                  <div className="mb-5 grid h-12 w-12 place-items-center border border-[#c9a227]/50 text-[#b88924] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
+                  <div className="mb-5 grid h-12 w-12 place-items-center border border-[#c9a227]/50 text-[#8b6b1f] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
                   <h3 className="text-base font-extrabold text-[#071a33]">{item.title}</h3>
@@ -564,7 +567,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('services')}
-              className="inline-flex shrink-0 items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#b88924]"
+              className="inline-flex shrink-0 items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               VIEW ALL SERVICES
               <ArrowRight className="h-4 w-4" />
@@ -593,7 +596,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </div>
                   <h3 className="text-lg font-extrabold leading-6 text-[#071a33]">{service.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">{service.desc}</p>
-                  <div className="mt-5 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#b88924]">
+                  <div className="mt-5 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#8b6b1f]">
                     Explore service
                     <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </div>
@@ -687,7 +690,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#b88924]"
+              className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               TALK TO OUR LOGISTICS TEAM
               <ArrowRight className="h-4 w-4" />
@@ -706,7 +709,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1100&w=1920"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[#071a33]/80" />
@@ -756,7 +759,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               return (
                 <article key={step.num} className="relative border-t border-slate-200 pt-6">
                   <div className="mb-5 flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center border border-[#c9a227]/55 text-[#b88924]">
+                    <div className="grid h-11 w-11 place-items-center border border-[#c9a227]/55 text-[#8b6b1f]">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
                     <span className="text-2xl font-extrabold text-[#8b6b1f]">{step.num}</span>
@@ -793,7 +796,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 const Icon = item.icon;
                 return (
                   <article key={item.title} className="bg-white p-6">
-                    <Icon className="h-6 w-6 text-[#b88924]" strokeWidth={1.7} />
+                    <Icon className="h-6 w-6 text-[#8b6b1f]" strokeWidth={1.7} />
                     <h3 className="mt-5 text-sm font-extrabold leading-5 text-[#071a33]">{item.title}</h3>
                   </article>
                 );
@@ -838,7 +841,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1920"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.80),rgba(7,26,51,.72))]" />

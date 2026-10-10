@@ -71,7 +71,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -89,6 +89,9 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
       <section className="relative min-h-[500px] overflow-hidden bg-[#071a33] text-white">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/15346128/pexels-photo-15346128.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
             alt="LCL cargo movement at an international port"
             className="h-full w-full object-cover object-center"
@@ -161,7 +164,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
               <img
                 src="https://images.pexels.com/photos/30115463/pexels-photo-30115463.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Container consolidation and cargo handling"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/50 via-transparent to-transparent" />
@@ -193,7 +196,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
 
               return (
                 <article key={item.title} className="bg-white p-7 transition hover:bg-[#f8f6f0]">
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
                   <h3 className="mt-5 text-sm font-extrabold leading-5 text-[#071a33]">
@@ -263,7 +266,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
 
               return (
                 <article key={item.title} className="bg-white p-7">
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
 
@@ -282,7 +285,7 @@ export const LCLConsolidationPage: React.FC<LCLConsolidationPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />

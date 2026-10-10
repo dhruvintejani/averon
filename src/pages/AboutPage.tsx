@@ -33,7 +33,7 @@ const SectionEyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -51,6 +51,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[500px]">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
             alt="Container vessel and port operations"
             className="h-full w-full object-cover object-center"
@@ -118,7 +121,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <img
                 src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="International logistics and port operations"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[320px] w-full object-cover sm:h-[390px] lg:h-[470px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/60 via-transparent to-transparent" />
@@ -198,7 +201,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   key={value.title}
                   className="group min-h-[280px] bg-white p-6 transition hover:bg-[#f8f6f0]"
                 >
-                  <div className="grid h-12 w-12 place-items-center rounded-full border border-[#c9a227]/60 bg-[#f8f6f0] text-[#b88924] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
+                  <div className="grid h-12 w-12 place-items-center rounded-full border border-[#c9a227]/60 bg-[#f8f6f0] text-[#8b6b1f] transition group-hover:bg-[#071a33] group-hover:text-[#d4af37]">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
 
@@ -224,7 +227,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.82),rgba(7,26,51,.74))]" />

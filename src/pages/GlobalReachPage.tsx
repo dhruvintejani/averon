@@ -48,7 +48,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-3 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] ${
-      light ? 'text-[#d4af37]' : 'text-[#b88924]'
+      light ? 'text-[#d4af37]' : 'text-[#8b6b1f]'
     }`}
   >
     <span className="h-[2px] w-8 bg-[#c9a227]" />
@@ -64,7 +64,7 @@ const GlobalMap = () => (
       <img
         src="/Global%20Logistics%20Network%20Hub.png"
         alt="Illustrative global trade route network with India as the coordination point"
-        loading="lazy"
+        loading="lazy" decoding="async"
         className="h-full w-full object-contain"
       />
 
@@ -89,6 +89,9 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       <section className="relative min-h-[500px] overflow-hidden bg-[#071a33] text-white">
         <div className="absolute inset-0">
           <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
             alt="International freight and port operations"
             className="h-full w-full object-cover object-center"
@@ -148,7 +151,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
               <img
                 src="https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
                 alt="Container vessel on an international trade route"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071a33]/55 via-transparent to-transparent" />
@@ -198,7 +201,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
             <div className="mt-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2">
               {TRADE_LANES.map((lane) => (
                 <div key={lane} className="flex items-center gap-3 bg-white px-5 py-4">
-                  <CircleDot className="h-4 w-4 shrink-0 text-[#b88924]" strokeWidth={1.7} />
+                  <CircleDot className="h-4 w-4 shrink-0 text-[#8b6b1f]" strokeWidth={1.7} />
                   <span className="text-sm font-extrabold text-[#071a33]">{lane}</span>
                 </div>
               ))}
@@ -242,7 +245,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
               <img
                 src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1100"
                 alt="International cargo coordination"
-                loading="lazy"
+                loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
               />
             </div>
@@ -265,7 +268,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
 
                 return (
                   <article key={item.title} className="bg-white p-6">
-                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
+                    <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#8b6b1f]">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
 
@@ -285,7 +288,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
             alt=""
-            loading="lazy"
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98),rgba(7,26,51,.84),rgba(7,26,51,.76))]" />
