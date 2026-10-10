@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { QuoteModal } from './components/QuoteModal';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -9,32 +10,76 @@ import { LCLConsolidationPage } from './pages/LCLConsolidationPage';
 import { GlobalReachPage } from './pages/GlobalReachPage';
 import { ContactPage } from './pages/ContactPage';
 import { TrackShipmentPage } from './pages/TrackShipmentPage';
-import { QuoteModal } from './components/QuoteModal';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsConditionsPage } from './pages/TermsConditionsPage';
+import { ProjectCargoPendingPage } from './pages/ProjectCargoPendingPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { applySeo } from './utils/seo';
+import {
+  getPathForRoute,
+  resolveRoute,
+  type AppPage,
+  type RouteState,
+} from './utils/routes';
+
+const getInitialRoute = (): RouteState => resolveRoute(window.location.pathname);
 
 export function App() {
-  const [currentPage, setCurrentPage] = useState<string>('home');
-  const [selectedServiceId, setSelectedServiceId] = useState<string>('ocean-freight');
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState<boolean>(false);
+  const initialRoute = getInitialRoute();
+  const [currentPage, setCurrentPage] = useState<AppPage>(initialRoute.page);
+  const [selectedServiceId, setSelectedServiceId] = useState<string>(
+    initialRoute.serviceId ?? 'ocean-freight'
+  );
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
-  // Scroll to top on page change
+  const applyRouteState = (route: RouteState) => {
+    setCurrentPage(route.page);
+    if (route.serviceId) setSelectedServiceId(route.serviceId);
+  };
+
+  useEffect(() => {
+    if (window.location.pathname === '/track-shipment') {
+      window.history.replaceState({}, '', '/shipment-status');
+    }
+
+    const handlePopState = () => {
+      applyRouteState(resolveRoute(window.location.pathname));
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
+    applySeo(currentPage, selectedServiceId);
   }, [currentPage, selectedServiceId]);
 
   const handleNavigate = (page: string, serviceId?: string) => {
-    if (serviceId) {
-      setSelectedServiceId(serviceId);
-      setCurrentPage('service-detail');
+    let route: RouteState;
+
+    if (serviceId === 'project-cargo') {
+      route = { page: 'project-cargo-pending', serviceId };
+    } else if (serviceId) {
+      route = { page: 'service-detail', serviceId };
     } else {
-      setCurrentPage(page);
+      route = { page: page as AppPage };
     }
+
+    const nextPath = getPathForRoute(route.page, route.serviceId);
+
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, '', nextPath);
+    }
+
+    applyRouteState(route);
   };
 
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'home':
         return (
-          <HomePage 
+          <HomePage
             onNavigate={handleNavigate}
             onOpenTrackModal={() => handleNavigate('track-shipment')}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
@@ -42,7 +87,7 @@ export function App() {
         );
       case 'about':
         return (
-          <AboutPage 
+          <AboutPage
             onNavigate={handleNavigate}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
@@ -64,14 +109,14 @@ export function App() {
         );
       case 'lcl-consolidation':
         return (
-          <LCLConsolidationPage 
+          <LCLConsolidationPage
             onNavigate={handleNavigate}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
         );
       case 'global-reach':
         return (
-          <GlobalReachPage 
+          <GlobalReachPage
             onNavigate={handleNavigate}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
@@ -90,41 +135,37 @@ export function App() {
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
         );
+      case 'privacy-policy':
+        return <PrivacyPolicyPage onNavigate={handleNavigate} />;
+      case 'terms-conditions':
+        return <TermsConditionsPage onNavigate={handleNavigate} />;
+      case 'project-cargo-pending':
+        return <ProjectCargoPendingPage onNavigate={handleNavigate} />;
+      case 'not-found':
+        return <NotFoundPage onNavigate={handleNavigate} />;
       default:
-        return (
-          <HomePage 
-            onNavigate={handleNavigate}
-            onOpenTrackModal={() => handleNavigate('track-shipment')}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-          />
-        );
+        return <NotFoundPage onNavigate={handleNavigate} />;
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-[#c9a227] selection:text-[#071a33]">
-      {/* Navigation Header */}
-      <Header 
+    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-[#c9a227] selection:text-[#071a33]">
+      <Header
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onOpenTrackModal={() => handleNavigate('track-shipment')}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
-      {/* Main Page View */}
-      <main className="flex-grow">
-        {renderCurrentPage()}
-      </main>
+      <main className="flex-grow">{renderCurrentPage()}</main>
 
-      {/* Footer */}
-      <Footer 
+      <Footer
         onNavigate={handleNavigate}
         onOpenTrackModal={() => handleNavigate('track-shipment')}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
-      {/* Modals */}
-      <QuoteModal 
+      <QuoteModal
         isOpen={isQuoteModalOpen}
         onClose={() => setIsQuoteModalOpen(false)}
         onNavigateToFullContact={() => handleNavigate('contact')}
