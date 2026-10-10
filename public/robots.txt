@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /services/project-cargo-breakbulk
+Disallow: /privacy-policy
+Disallow: /terms-and-conditions
+
+Sitemap: https://www.averonfs.com/sitemap.xml
