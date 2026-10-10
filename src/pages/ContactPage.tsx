@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   ClipboardCheck,
@@ -203,6 +204,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800")}
+              sizes="100vw"
             alt="International cargo terminal"
             className="h-full w-full object-cover object-center"
           />
@@ -535,6 +538,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <div className="overflow-hidden border border-slate-200 bg-white">
                 <img
                   src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=520&w=900")}
+              sizes="100vw"
                   alt="Mumbai freight and logistics visual"
                   loading="lazy" decoding="async"
                   className="h-44 w-full object-cover"
@@ -599,6 +604,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
