@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
+import { FormFieldError } from '../components/FormFieldError';
 
 interface TrackShipmentPageProps {
   onNavigate: (page: string) => void;
@@ -97,11 +98,22 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
 }) => {
   const [trackingRef, setTrackingRef] = useState('');
   const [submittedRef, setSubmittedRef] = useState('');
+  const [trackingError, setTrackingError] = useState('');
 
   const handleTrack = (event: React.FormEvent) => {
     event.preventDefault();
     const value = trackingRef.trim();
-    if (!value) return;
+
+    if (!value) {
+      setTrackingError('Please enter your tracking number or shipment reference.');
+      setSubmittedRef('');
+      requestAnimationFrame(() => {
+        document.getElementById('tracking-reference')?.focus();
+      });
+      return;
+    }
+
+    setTrackingError('');
     setSubmittedRef(value);
   };
 
@@ -167,17 +179,28 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                 Enter Your Shipment Reference
               </div>
 
-              <form onSubmit={handleTrack} className="flex flex-col gap-3 sm:flex-row">
+              <form onSubmit={handleTrack} noValidate className="flex flex-col gap-3 sm:flex-row sm:items-start">
                 <div className="relative flex-1">
                   <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <input
+                    id="tracking-reference"
+                    name="trackingReference"
                     type="text"
-                    required
                     value={trackingRef}
-                    onChange={(event) => setTrackingRef(event.target.value)}
+                    onChange={(event) => {
+                      setTrackingRef(event.target.value);
+                      if (trackingError) setTrackingError('');
+                    }}
                     placeholder="Enter tracking number or shipment reference"
-                    className="h-12 w-full border border-slate-300 bg-white pl-11 pr-4 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]"
+                    aria-invalid={Boolean(trackingError)}
+                    aria-describedby={trackingError ? 'tracking-reference-error' : undefined}
+                    className={`h-12 w-full border bg-white pl-11 pr-4 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 ${
+                      trackingError
+                        ? 'border-rose-400 ring-2 ring-rose-100'
+                        : 'border-slate-300 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]'
+                    }`}
                   />
+                  <FormFieldError id="tracking-reference-error" message={trackingError} />
                 </div>
 
                 <button
