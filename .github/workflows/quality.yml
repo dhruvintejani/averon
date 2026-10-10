@@ -141,6 +141,17 @@ jobs:
             const score = Math.round((report.categories[key]?.score ?? 0) * 100);
             console.log(`${key}: ${score}`);
           }
+
+          console.log('Lighthouse checks that need attention:');
+          for (const key of ['accessibility', 'best-practices', 'seo']) {
+            for (const ref of report.categories[key]?.auditRefs ?? []) {
+              const audit = report.audits[ref.id];
+              if (!audit || ['notApplicable', 'manual', 'informative'].includes(audit.scoreDisplayMode)) continue;
+              if (audit.score !== null && audit.score < 1) {
+                console.log(`[${key}] ${ref.id}: ${audit.title} (score: ${audit.score})`);
+              }
+            }
+          }
           NODE
 
       - name: Report full audit status
