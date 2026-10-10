@@ -6,7 +6,6 @@ import {
   Network,
   Route,
   Truck,
-  Warehouse,
 } from 'lucide-react';
 
 interface SupplyChainManagementPageProps {
