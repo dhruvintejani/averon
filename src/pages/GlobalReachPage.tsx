@@ -222,7 +222,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
                     key={origin.code}
                     className="flex items-center gap-3 border border-slate-200 bg-white px-4 py-3"
                   >
-                    <span className="text-[10px] font-extrabold tracking-[0.16em] text-[#c9a227]">
+                    <span className="text-[10px] font-extrabold tracking-[0.16em] text-[#8b6b1f]">
                       {origin.code}
                     </span>
                     <span className="text-sm font-extrabold text-[#071a33]">{origin.name}</span>
