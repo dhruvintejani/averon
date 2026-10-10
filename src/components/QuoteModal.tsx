@@ -31,7 +31,6 @@ const typeOptions = [
   { value: 'FCL', label: 'FCL — Full Container Load' },
   { value: 'LCL', label: 'LCL — Less than Container Load' },
   { value: 'Air Cargo', label: 'Air Cargo' },
-  { value: 'Project Cargo', label: 'Project Cargo / Breakbulk' },
   { value: 'Other', label: 'Other / Not Sure' },
 ];
 
