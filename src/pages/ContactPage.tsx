@@ -13,7 +13,8 @@ import {
 import { COMPANY_INFO } from '../data/companyData';
 import { PremiumSelect } from '../components/PremiumSelect';
 import { FormFieldError } from '../components/FormFieldError';
-import { PhoneNumberField, formatInternationalPhone, isValidPhoneNumber } from '../components/PhoneNumberField';
+import { PhoneNumberField, isValidPhoneNumber } from '../components/PhoneNumberField';
+import { sendEnquiry } from '../utils/enquiry';
 
 interface ContactPageProps {
   onNavigate: (page: string) => void;
@@ -93,6 +94,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   });
   const [countryCode, setCountryCode] = useState('+91');
   const [errors, setErrors] = useState<ContactErrors>({});
+  const [website, setWebsite] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState('');
+  const [submissionError, setSubmissionError] = useState('');
 
   const clearError = (key: ContactErrorKey) => {
     setErrors((current) => {
@@ -138,8 +143,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setSubmissionMessage('');
+    setSubmissionError('');
 
     const nextErrors = validateForm();
     if (Object.keys(nextErrors).length > 0) {
@@ -149,28 +158,51 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
     }
 
     setErrors({});
+    setIsSubmitting(true);
 
-    const subject = encodeURIComponent(
-      `Shipment Enquiry - ${formData.companyName || formData.fullName}`
-    );
+    try {
+      const result = await sendEnquiry({
+        enquiryType: 'contact',
+        fullName: formData.fullName,
+        companyName: formData.companyName,
+        email: formData.email,
+        countryCode,
+        phone: formData.phone,
+        origin: formData.origin,
+        destination: formData.destination,
+        mode: formData.mode,
+        type: formData.type,
+        incoterm: formData.incoterm,
+        cargoDetails: formData.cargoDetails,
+        message: formData.message,
+        website,
+      });
 
-    const body = encodeURIComponent(
-      [
-        `Full Name: ${formData.fullName}`,
-        `Company Name: ${formData.companyName}`,
-        `Email: ${formData.email}`,
-        `Phone / WhatsApp: ${formatInternationalPhone(countryCode, formData.phone)}`,
-        `Origin - POL: ${formData.origin}`,
-        `Destination - POD: ${formData.destination}`,
-        `Shipment Mode: ${formData.mode}`,
-        `Shipment Type: ${formData.type}`,
-        `Incoterm: ${formData.incoterm}`,
-        `Cargo Details: ${formData.cargoDetails || '-'}`,
-        `Message: ${formData.message || '-'}`,
-      ].join('\n')
-    );
-
-    window.location.href = `mailto:sales@averonfs.com?subject=${subject}&body=${body}`;
+      setSubmissionMessage(result.message);
+      setFormData({
+        fullName: '',
+        companyName: '',
+        email: '',
+        phone: '',
+        origin: '',
+        destination: '',
+        mode: 'Ocean',
+        type: 'FCL',
+        incoterm: 'FOB',
+        cargoDetails: '',
+        message: '',
+      });
+      setCountryCode('+91');
+      setWebsite('');
+    } catch (error) {
+      setSubmissionError(
+        error instanceof Error
+          ? error.message
+          : 'We could not send your enquiry right now. Please try again shortly or contact Averon directly.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const nextSteps = [
@@ -263,6 +295,19 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             >
               <div className="mb-7 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8b6b1f]">
                 Shipment Enquiry
+              </div>
+
+              <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                <label htmlFor="contact-website">Website</label>
+                <input
+                  id="contact-website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(event) => setWebsite(event.target.value)}
+                />
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
@@ -449,16 +494,26 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 </div>
               )}
 
-              <p className="mt-7 border-l-4 border-[#c9a227] bg-[#f8f6f0] px-4 py-3 text-xs leading-5 text-slate-700">
-                Until Brevo email delivery is connected, this form depends on a configured email application. <strong>Request a Quote</strong> attempts to open your default email app with the enquiry details prefilled; you must press Send there to complete the enquiry. If no email app is configured, contact Averon directly by email or phone.
-              </p>
+              {submissionMessage && (
+                <div className="mt-6 border-l-4 border-emerald-500 bg-emerald-50 px-4 py-3 text-xs font-semibold leading-5 text-emerald-800" role="status" aria-live="polite">
+                  {submissionMessage}
+                </div>
+              )}
+
+              {submissionError && (
+                <div className="mt-6 border-l-4 border-rose-500 bg-rose-50 px-4 py-3 text-xs font-semibold leading-5 text-rose-700" role="alert">
+                  {submissionError}
+                </div>
+              )}
 
               <div className="mt-5 flex flex-wrap gap-3">
                 <button
                   type="submit"
-                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto"
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
+                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
-                  REQUEST A QUOTE
+                  {isSubmitting ? 'SENDING...' : 'REQUEST A QUOTE'}
                   <ArrowRight className="h-4 w-4" />
                 </button>
 
