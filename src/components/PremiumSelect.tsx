@@ -24,12 +24,42 @@ export const PremiumSelect: React.FC<PremiumSelectProps> = ({
   ariaLabel,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  const selected = options.find((option) => option.value === value) ?? options[0];
+  const selectedIndex = Math.max(
+    0,
+    options.findIndex((option) => option.value === value)
+  );
+  const selected = options[selectedIndex] ?? options[0];
+
+  const openMenu = (index = selectedIndex) => {
+    setActiveIndex(Math.max(0, Math.min(index, options.length - 1)));
+    setIsOpen(true);
+  };
+
+  const closeMenu = (restoreFocus = false) => {
+    setIsOpen(false);
+    if (restoreFocus) {
+      requestAnimationFrame(() => triggerRef.current?.focus());
+    }
+  };
+
+  const chooseOption = (index: number) => {
+    const option = options[index];
+    if (!option) return;
+    onChange(option.value);
+    closeMenu(true);
+  };
 
   useEffect(() => {
     if (!isOpen) return;
+
+    requestAnimationFrame(() => {
+      optionRefs.current[activeIndex]?.focus();
+    });
 
     const handlePointerDown = (event: PointerEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
@@ -37,32 +67,76 @@ export const PremiumSelect: React.FC<PremiumSelectProps> = ({
       }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsOpen(false);
-      }
-    };
-
     document.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('pointerdown', handlePointerDown);
-      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, activeIndex]);
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      openMenu(selectedIndex);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      openMenu(selectedIndex);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      openMenu(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      openMenu(options.length - 1);
+    }
+  };
+
+  const handleOptionKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActiveIndex((index + 1) % options.length);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActiveIndex((index - 1 + options.length) % options.length);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      setActiveIndex(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      setActiveIndex(options.length - 1);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      chooseOption(index);
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu(true);
+    } else if (event.key === 'Tab') {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div ref={rootRef} className="relative">
       {name && <input type="hidden" name={name} value={value} />}
 
       <button
+        ref={triggerRef}
         id={id}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls={`${id}-listbox`}
         aria-label={ariaLabel}
-        onClick={() => setIsOpen((open) => !open)}
+        onKeyDown={handleTriggerKeyDown}
+        onClick={() => {
+          if (isOpen) {
+            closeMenu(false);
+          } else {
+            openMenu(selectedIndex);
+          }
+        }}
         className={`group flex min-h-12 w-full items-center justify-between gap-3 border bg-white px-4 text-left text-sm font-semibold text-[#14263d] shadow-[0_1px_0_rgba(7,26,51,.03)] outline-none transition-all duration-200 ${
           isOpen
             ? 'border-[#c9a227] ring-2 ring-[#c9a227]/15'
@@ -81,28 +155,36 @@ export const PremiumSelect: React.FC<PremiumSelectProps> = ({
 
       {isOpen && (
         <div
+          id={`${id}-listbox`}
           role="listbox"
-          aria-labelledby={id}
+          aria-label={ariaLabel}
           className="absolute left-0 right-0 z-40 mt-2 overflow-hidden border border-slate-200 bg-white py-1.5 shadow-[0_18px_45px_rgba(7,26,51,.14)]"
         >
           <div className="max-h-64 overflow-y-auto py-1">
-            {options.map((option) => {
+            {options.map((option, index) => {
               const isSelected = option.value === value;
+              const isActive = index === activeIndex;
 
               return (
                 <button
                   key={option.value}
+                  ref={(node) => {
+                    optionRefs.current[index] = node;
+                  }}
+                  id={`${id}-option-${index}`}
                   type="button"
                   role="option"
                   aria-selected={isSelected}
-                  onClick={() => {
-                    onChange(option.value);
-                    setIsOpen(false);
-                  }}
+                  tabIndex={isActive ? 0 : -1}
+                  onFocus={() => setActiveIndex(index)}
+                  onKeyDown={(event) => handleOptionKeyDown(event, index)}
+                  onClick={() => chooseOption(index)}
                   className={`group flex min-h-11 w-full items-center justify-between gap-3 border-l-2 px-4 text-left text-sm transition-all duration-150 ${
                     isSelected
                       ? 'border-[#c9a227] bg-[#f8f6f0] font-bold text-[#071a33]'
-                      : 'border-transparent text-slate-700 hover:border-[#c9a227] hover:bg-[#fffaf0] hover:pl-5 hover:text-[#071a33]'
+                      : isActive
+                        ? 'border-[#c9a227] bg-[#fffaf0] text-[#071a33]'
+                        : 'border-transparent text-slate-700 hover:border-[#c9a227] hover:bg-[#fffaf0] hover:pl-5 hover:text-[#071a33]'
                   }`}
                 >
                   <span>{option.label}</span>
