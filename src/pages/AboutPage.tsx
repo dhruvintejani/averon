@@ -49,7 +49,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
-      <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[500px]">
+      <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[480px] lg:min-h-[500px]">
         <div className="absolute inset-0">
           <img
             loading="eager"
@@ -65,7 +65,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071a33]/55 to-transparent" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-[1360px] items-center px-4 py-16 sm:min-h-[500px] sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-[1360px] items-start px-4 pb-14 pt-16 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-20 lg:min-h-[500px] lg:px-8 lg:pb-20 lg:pt-24">
           <div className="max-w-[740px]">
             <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
