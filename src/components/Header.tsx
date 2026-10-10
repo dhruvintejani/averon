@@ -174,7 +174,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="border-b border-slate-100 px-4 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
                   Logistics & Transport Solutions
                 </div>
-                {SERVICES_LIST.map((service) => (
+                {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
                   <button
                     key={service.id}
                     type="button"
@@ -226,7 +226,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Truck className={`h-4 w-4 ${currentPage === 'track-shipment' ? 'text-[#d4af37]' : 'text-[#071a33]'}`} />
-            <span>Track Shipment</span>
+            <span>Shipment Status</span>
           </button>
 
           <button type="button" onClick={onOpenQuoteModal} className="flex min-h-10 items-center gap-1.5 bg-[#c9a227] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[#071a33] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4af37] hover:shadow-[0_10px_24px_rgba(201,162,39,.26)]">
@@ -261,7 +261,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
 
                 <div className="grid gap-1 border-l-2 border-[#c9a227] pl-3 sm:grid-cols-2 sm:gap-x-5">
-                  {SERVICES_LIST.map((service) => (
+                  {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
                     <button
                       key={service.id}
                       type="button"
@@ -296,7 +296,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="flex min-h-12 w-full items-center justify-center gap-2 border border-slate-300 bg-slate-50 px-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#071a33]"
               >
                 <Truck className="h-4 w-4" />
-                <span>Track Shipment</span>
+                <span>Shipment Status</span>
               </button>
 
               <button
