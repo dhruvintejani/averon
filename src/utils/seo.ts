@@ -86,15 +86,15 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
     },
     'privacy-policy': {
       title: 'Privacy Policy | Averon Freight Solutions',
-      description: 'Privacy policy page for Averon Freight Solutions LLP. Client-approved legal text is pending publication.',
+      description: 'Read how Averon Freight Solutions LLP may collect, use, protect and handle information submitted through its website and business enquiries.',
       path: '/privacy-policy',
-      robots: 'noindex, nofollow',
+      robots: 'noindex, follow',
     },
     'terms-conditions': {
       title: 'Terms & Conditions | Averon Freight Solutions',
-      description: 'Terms and conditions page for Averon Freight Solutions LLP. Client-approved legal text is pending publication.',
+      description: 'Read the website terms governing use of the Averon Freight Solutions LLP website, enquiries, quotations and general service information.',
       path: '/terms-and-conditions',
-      robots: 'noindex, nofollow',
+      robots: 'noindex, follow',
     },
     'project-cargo-pending': {
       title: 'Project Cargo Service Confirmation Pending | Averon Freight Solutions',
