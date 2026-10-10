@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getPexelsSrcSet } from '../utils/image';
+import { getPathForRoute } from '../utils/routes';
 import {
   Anchor,
   ArrowRight,
@@ -498,14 +499,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('about')}
+            <a
+              href={getPathForRoute('about')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('about');
+              }}
               className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               LEARN MORE ABOUT AVERON
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
 
           <div className="relative lg:col-span-6">
@@ -569,14 +573,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               </h2>
             </div>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('services')}
+            <a
+              href={getPathForRoute('services')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('services');
+              }}
               className="inline-flex shrink-0 items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               VIEW ALL SERVICES
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
