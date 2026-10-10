@@ -57,62 +57,22 @@ const Eyebrow = ({
 );
 
 const GlobalMap = () => (
-  <div className="relative overflow-hidden border border-white/10 bg-[#061426] p-4 sm:p-7">
-    <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] [background-size:34px_34px]" />
+  <div className="relative overflow-hidden border border-[#c9a227]/25 bg-[#041325] shadow-[0_32px_90px_rgba(0,0,0,.28)]">
+    <div className="absolute inset-x-0 top-0 z-20 h-px bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
 
-    <svg
-      viewBox="0 0 960 460"
-      className="relative z-10 min-h-[250px] w-full sm:min-h-[300px] lg:min-h-[330px]"
-      role="img"
-      aria-label="Illustrative global trade route map with India as the coordination point"
-    >
-      <g fill="#173a5d" stroke="#315777" strokeWidth="2">
-        <path d="M72 125l96-47 91 22 38 53-43 46-86 0-48 47-59-51z" />
-        <path d="M248 224l50 36 21 55-23 84-39-33-17-79z" />
-        <path d="M399 106l59-25 45 19-2 37-44 14-50-11z" />
-        <path d="M446 154l72 19 47 70-28 116-49-12-31-78-45-64z" />
-        <path d="M510 109l105-48 137 19 78 49-38 56-101 5-60 55-84-21-22-51z" />
-        <path d="M745 296l63-23 52 36-24 47-66 8-36-34z" />
-      </g>
+    <div className="relative aspect-[3/2] overflow-hidden bg-[#041325]">
+      <img
+        src="/Global%20Logistics%20Network%20Hub.png"
+        alt="Illustrative global trade route network with India as the coordination point"
+        loading="lazy"
+        className="h-full w-full object-contain"
+      />
 
-      <g fill="none" stroke="#c9a227" strokeWidth="2.25" opacity=".9">
-        <path d="M620 205 Q438 24 170 143" />
-        <path d="M620 205 Q485 54 460 123" />
-        <path d="M620 205 Q623 67 756 133" />
-        <path d="M620 205 Q795 165 804 324" />
-        <path d="M620 205 Q516 279 514 301" />
-        <path d="M620 205 Q400 255 285 299" />
-        <path d="M620 205 Q335 133 104 176" />
-      </g>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_68%_48%,rgba(201,162,39,.08),transparent_30%)]" />
+      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+    </div>
 
-      <g fill="#d4af37">
-        <circle cx="620" cy="205" r="10" />
-        <circle cx="170" cy="143" r="5" />
-        <circle cx="460" cy="123" r="5" />
-        <circle cx="756" cy="133" r="5" />
-        <circle cx="804" cy="324" r="5" />
-        <circle cx="514" cy="301" r="5" />
-        <circle cx="285" cy="299" r="5" />
-        <circle cx="104" cy="176" r="5" />
-      </g>
-
-      <g
-        fill="#f8fafc"
-        fontSize="13"
-        fontFamily="Inter, Arial, sans-serif"
-        fontWeight="700"
-      >
-        <text x="635" y="198">INDIA</text>
-        <text x="125" y="132">USA / CANADA</text>
-        <text x="420" y="112">EUROPE</text>
-        <text x="727" y="121">FAR EAST</text>
-        <text x="762" y="386">AUSTRALIA</text>
-        <text x="468" y="331">AFRICA</text>
-        <text x="251" y="329">LATAM</text>
-      </g>
-    </svg>
-
-    <div className="relative z-10 mt-2 flex flex-col gap-2 border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.17em] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-2 border-t border-white/10 bg-[#061426] px-5 py-4 text-[10px] font-bold uppercase tracking-[0.17em] text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <span>Partner-network coverage across major international trade lanes</span>
       <span className="text-[#d4af37]">India coordination point</span>
     </div>

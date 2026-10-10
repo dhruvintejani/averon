@@ -282,47 +282,20 @@ const SectionEyebrow = ({ children, light = false }: { children: React.ReactNode
 );
 
 const RouteMapGraphic = () => (
-  <div className="relative min-h-[350px] overflow-hidden border border-white/10 bg-[#061426] p-5 sm:p-8">
-    <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:34px_34px]" />
-    <svg viewBox="0 0 800 360" className="relative z-10 h-full min-h-[300px] w-full" aria-label="Illustrative global partner-network routes">
-      <g fill="#173a5d" stroke="#315777" strokeWidth="2">
-        <path d="M70 90l85-38 73 23 31 47-35 41-76 1-42 38-53-45z" />
-        <path d="M220 184l45 29 18 50-20 73-33-28-15-72z" />
-        <path d="M356 87l50-22 39 18-2 31-38 11-44-8z" />
-        <path d="M393 129l64 17 41 62-24 99-45-10-26-69-40-56z" />
-        <path d="M447 91l90-40 118 16 70 43-33 49-88 4-52 49-72-19-20-45z" />
-        <path d="M650 248l55-20 45 31-21 42-58 7-31-31z" />
-      </g>
-      <g fill="none" stroke="#c9a227" strokeWidth="2.2" opacity=".9">
-        <path d="M535 170 Q385 20 155 115" />
-        <path d="M535 170 Q430 50 397 101" />
-        <path d="M535 170 Q548 52 650 105" />
-        <path d="M535 170 Q690 120 705 270" />
-        <path d="M535 170 Q450 230 451 251" />
-        <path d="M535 170 Q355 210 250 246" />
-        <path d="M535 170 Q280 115 88 145" />
-      </g>
-      <g fill="#d4af37">
-        <circle cx="535" cy="170" r="9" />
-        <circle cx="155" cy="115" r="5" />
-        <circle cx="397" cy="101" r="5" />
-        <circle cx="650" cy="105" r="5" />
-        <circle cx="705" cy="270" r="5" />
-        <circle cx="451" cy="251" r="5" />
-        <circle cx="250" cy="246" r="5" />
-        <circle cx="88" cy="145" r="5" />
-      </g>
-      <g fill="#f8fafc" fontSize="13" fontFamily="Inter, Arial, sans-serif" fontWeight="700">
-        <text x="548" y="164">INDIA</text>
-        <text x="118" y="106">USA / CANADA</text>
-        <text x="362" y="91">EUROPE</text>
-        <text x="621" y="96">FAR EAST</text>
-        <text x="665" y="327">AUSTRALIA</text>
-        <text x="406" y="276">AFRICA</text>
-        <text x="214" y="272">LATAM</text>
-      </g>
-    </svg>
-    <div className="relative z-10 mt-1 flex flex-col gap-2 border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+  <div className="relative overflow-hidden border border-[#c9a227]/25 bg-[#041325] shadow-[0_28px_70px_rgba(7,26,51,.22)]">
+    <div className="absolute inset-x-0 top-0 z-20 h-px bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
+
+    <div className="relative aspect-[3/2] overflow-hidden bg-[#041325]">
+      <img
+        src="/Global%20Logistics%20Network%20Hub.png"
+        alt="Illustrative global logistics network with India as the coordination point"
+        loading="lazy"
+        className="h-full w-full object-contain"
+      />
+      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+    </div>
+
+    <div className="flex flex-col gap-2 border-t border-white/10 bg-[#061426] px-5 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <span>Illustrative partner-network routes</span>
       <span className="text-[#d4af37]">India coordination point</span>
     </div>
