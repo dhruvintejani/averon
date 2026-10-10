@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
@@ -63,6 +63,9 @@ export function App() {
   };
 
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+
     if (window.location.pathname === '/home') {
       window.history.replaceState({}, '', '/');
     } else if (window.location.pathname === '/track-shipment') {
@@ -70,22 +73,29 @@ export function App() {
     }
 
     const handlePopState = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       applyRouteState(resolveRoute(window.location.pathname));
     };
 
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
   }, []);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    applySeo(currentPage, selectedServiceId);
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
     if (hasMountedRef.current) {
-      requestAnimationFrame(() => mainRef.current?.focus());
+      mainRef.current?.focus({ preventScroll: true });
     } else {
       hasMountedRef.current = true;
     }
+  }, [currentPage, selectedServiceId]);
+
+  useEffect(() => {
+    applySeo(currentPage, selectedServiceId);
   }, [currentPage, selectedServiceId]);
 
   const handleNavigate = (page: string, serviceId?: string) => {
@@ -100,6 +110,10 @@ export function App() {
     }
 
     const nextPath = getPathForRoute(route.page, route.serviceId);
+
+    // Reset scroll before the new route renders so the previous page's
+    // scroll position/footer never flashes during lazy page loading.
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
     if (window.location.pathname !== nextPath) {
       window.history.pushState({}, '', nextPath);
