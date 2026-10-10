@@ -403,14 +403,17 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <ArrowRight className="h-4 w-4" />
               </button>
 
-              <button
-                type="button"
-                onClick={() => onNavigate('services')}
+              <a
+                href={getPathForRoute('services')}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onNavigate('services');
+                }}
                 className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 bg-[#071a33]/35 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white backdrop-blur-sm transition hover:border-[#d4af37] hover:text-[#d4af37]"
               >
                 EXPLORE OUR SERVICES
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </a>
             </div>
 
             <div className="mt-10 flex items-center gap-5">
@@ -590,10 +593,13 @@ export const HomePage: React.FC<HomePageProps> = ({
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <button
+                <a
                   key={service.id}
-                  type="button"
-                  onClick={() => onNavigate('service-detail', service.id)}
+                  href={getPathForRoute('service-detail', service.id)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onNavigate('service-detail', service.id);
+                  }}
                   className={`group min-h-[245px] border border-slate-200 bg-white p-6 text-left transition duration-300 hover:-translate-y-1 hover:border-[#c9a227] hover:shadow-[0_18px_46px_rgba(7,26,51,.10)] ${
                     index >= 4 ? 'lg:col-span-1' : ''
                   }`}
@@ -612,7 +618,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     Explore service
                     <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
                   </div>
-                </button>
+                </a>
               );
             })}
 
@@ -699,14 +705,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               Key import origins include China, Far East, Europe, Dubai, Istanbul and USA.
             </p>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('contact')}
+            <a
+              href={getPathForRoute('contact')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('contact');
+              }}
               className="mt-8 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[#071a33] transition hover:text-[#8b6b1f]"
             >
               TALK TO OUR LOGISTICS TEAM
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
 
           <div className="lg:col-span-7">
@@ -883,14 +892,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               GET A QUOTE
               <ArrowRight className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              onClick={() => onNavigate('contact')}
+            <a
+              href={getPathForRoute('contact')}
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate('contact');
+              }}
               className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 border border-white/45 px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
             >
               CONTACT US
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </a>
           </div>
         </div>
       </section>
