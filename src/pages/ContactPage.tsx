@@ -579,7 +579,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     <div className="grid h-11 w-11 place-items-center rounded-full border border-[#c9a227]/60 text-[#b88924]">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="text-2xl font-extrabold text-[#c9a227]">{step.num}</span>
+                    <span className="text-2xl font-extrabold text-[#8b6b1f]">{step.num}</span>
                   </div>
 
                   <h3 className="mt-6 text-base font-extrabold text-[#071a33]">{step.title}</h3>
