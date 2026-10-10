@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
 import { PremiumSelect } from '../components/PremiumSelect';
+import { FormFieldError } from '../components/FormFieldError';
+import { PhoneNumberField, formatInternationalPhone, isValidPhoneNumber } from '../components/PhoneNumberField';
 
 interface ContactPageProps {
   onNavigate: (page: string) => void;
@@ -34,8 +36,12 @@ const Eyebrow = ({
   </div>
 );
 
-const inputClass =
-  'w-full border border-slate-300 bg-white px-3.5 py-3 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]';
+const inputClass = (hasError = false) =>
+  `w-full border bg-white px-3.5 py-3 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 ${
+    hasError
+      ? 'border-rose-400 ring-2 ring-rose-100'
+      : 'border-slate-300 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]'
+  }`;
 
 const labelClass =
   'mb-1.5 block text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#071a33]';
@@ -67,6 +73,9 @@ const LinkedInMark = () => (
   </svg>
 );
 
+type ContactErrorKey = 'fullName' | 'companyName' | 'email' | 'phone' | 'origin' | 'destination';
+type ContactErrors = Partial<Record<ContactErrorKey, string>>;
+
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -81,9 +90,64 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
     cargoDetails: '',
     message: '',
   });
+  const [countryCode, setCountryCode] = useState('+91');
+  const [errors, setErrors] = useState<ContactErrors>({});
+
+  const clearError = (key: ContactErrorKey) => {
+    setErrors((current) => {
+      if (!current[key]) return current;
+      const next = { ...current };
+      delete next[key];
+      return next;
+    });
+  };
+
+  const validateForm = () => {
+    const next: ContactErrors = {};
+
+    if (!formData.fullName.trim()) next.fullName = 'Please enter your full name.';
+    if (!formData.companyName.trim()) next.companyName = 'Please enter your company name.';
+
+    const email = formData.email.trim();
+    if (!email) {
+      next.email = 'Please enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      next.email = 'Please enter a valid email address.';
+    }
+
+    if (!formData.phone.trim()) {
+      next.phone = 'Please enter your phone or WhatsApp number.';
+    } else if (!isValidPhoneNumber(formData.phone)) {
+      next.phone = 'Please enter a valid phone number.';
+    }
+
+    if (!formData.origin.trim()) next.origin = 'Please enter the shipment origin.';
+    if (!formData.destination.trim()) next.destination = 'Please enter the shipment destination.';
+
+    return next;
+  };
+
+  const focusFirstError = (nextErrors: ContactErrors) => {
+    const order: ContactErrorKey[] = ['fullName', 'companyName', 'email', 'phone', 'origin', 'destination'];
+    const first = order.find((key) => nextErrors[key]);
+    if (!first) return;
+
+    requestAnimationFrame(() => {
+      document.getElementById(`contact-${first}`)?.focus();
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const nextErrors = validateForm();
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      focusFirstError(nextErrors);
+      return;
+    }
+
+    setErrors({});
 
     const subject = encodeURIComponent(
       `Shipment Enquiry - ${formData.companyName || formData.fullName}`
@@ -94,7 +158,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
         `Full Name: ${formData.fullName}`,
         `Company Name: ${formData.companyName}`,
         `Email: ${formData.email}`,
-        `Phone / WhatsApp: ${formData.phone}`,
+        `Phone / WhatsApp: ${formatInternationalPhone(countryCode, formData.phone)}`,
         `Origin - POL: ${formData.origin}`,
         `Destination - POD: ${formData.destination}`,
         `Shipment Mode: ${formData.mode}`,
@@ -188,6 +252,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           <div className="grid gap-8 lg:grid-cols-12">
             <form
               onSubmit={handleSubmit}
+              noValidate
               className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8"
             >
               <div className="mb-7 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#b88924]">
@@ -196,75 +261,117 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className={labelClass}>Full Name *</label>
+                  <label className={labelClass} htmlFor="contact-fullName">Full Name *</label>
                   <input
-                    required
+                    id="contact-fullName"
+                    name="fullName"
+                    autoComplete="name"
                     type="text"
                     placeholder="Your full name"
                     value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => {
+                      setFormData({ ...formData, fullName: e.target.value });
+                      clearError('fullName');
+                    }}
+                    aria-invalid={Boolean(errors.fullName)}
+                    aria-describedby={errors.fullName ? 'contact-fullName-error' : undefined}
+                    className={inputClass(Boolean(errors.fullName))}
                   />
+                  <FormFieldError id="contact-fullName-error" message={errors.fullName} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Company Name *</label>
+                  <label className={labelClass} htmlFor="contact-companyName">Company Name *</label>
                   <input
-                    required
+                    id="contact-companyName"
+                    name="companyName"
+                    autoComplete="organization"
                     type="text"
                     placeholder="Company name"
                     value={formData.companyName}
-                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => {
+                      setFormData({ ...formData, companyName: e.target.value });
+                      clearError('companyName');
+                    }}
+                    aria-invalid={Boolean(errors.companyName)}
+                    aria-describedby={errors.companyName ? 'contact-companyName-error' : undefined}
+                    className={inputClass(Boolean(errors.companyName))}
                   />
+                  <FormFieldError id="contact-companyName-error" message={errors.companyName} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Email *</label>
+                  <label className={labelClass} htmlFor="contact-email">Email *</label>
                   <input
-                    required
+                    id="contact-email"
+                    name="email"
+                    autoComplete="email"
                     type="email"
                     placeholder="name@company.com"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      clearError('email');
+                    }}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                    className={inputClass(Boolean(errors.email))}
                   />
+                  <FormFieldError id="contact-email-error" message={errors.email} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Phone / WhatsApp *</label>
-                  <input
-                    required
-                    type="tel"
-                    placeholder="+91"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className={inputClass}
+                  <label className={labelClass} htmlFor="contact-phone">Phone / WhatsApp *</label>
+                  <PhoneNumberField
+                    id="contact-phone"
+                    countryCode={countryCode}
+                    number={formData.phone}
+                    onCountryCodeChange={setCountryCode}
+                    onNumberChange={(value) => {
+                      setFormData({ ...formData, phone: value });
+                      clearError('phone');
+                    }}
+                    error={errors.phone}
                   />
+                  <FormFieldError id="contact-phone-error" message={errors.phone} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Origin – POL *</label>
+                  <label className={labelClass} htmlFor="contact-origin">Origin – POL *</label>
                   <input
-                    required
+                    id="contact-origin"
+                    name="origin"
                     type="text"
                     placeholder="Origin / port of loading"
                     value={formData.origin}
-                    onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => {
+                      setFormData({ ...formData, origin: e.target.value });
+                      clearError('origin');
+                    }}
+                    aria-invalid={Boolean(errors.origin)}
+                    aria-describedby={errors.origin ? 'contact-origin-error' : undefined}
+                    className={inputClass(Boolean(errors.origin))}
                   />
+                  <FormFieldError id="contact-origin-error" message={errors.origin} />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Destination – POD *</label>
+                  <label className={labelClass} htmlFor="contact-destination">Destination – POD *</label>
                   <input
-                    required
+                    id="contact-destination"
+                    name="destination"
                     type="text"
                     placeholder="Destination / port of discharge"
                     value={formData.destination}
-                    onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => {
+                      setFormData({ ...formData, destination: e.target.value });
+                      clearError('destination');
+                    }}
+                    aria-invalid={Boolean(errors.destination)}
+                    aria-describedby={errors.destination ? 'contact-destination-error' : undefined}
+                    className={inputClass(Boolean(errors.destination))}
                   />
+                  <FormFieldError id="contact-destination-error" message={errors.destination} />
                 </div>
 
                 <div>
@@ -304,32 +411,42 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 </div>
 
                 <div>
-                  <label className={labelClass}>Cargo Details</label>
+                  <label className={labelClass} htmlFor="contact-cargoDetails">Cargo Details</label>
                   <textarea
+                    id="contact-cargoDetails"
+                    name="cargoDetails"
                     rows={3}
                     placeholder="Commodity, packages, weight, volume, dimensions if available"
                     value={formData.cargoDetails}
                     onChange={(e) => setFormData({ ...formData, cargoDetails: e.target.value })}
-                    className={inputClass}
+                    className={inputClass()}
                   />
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className={labelClass}>Message</label>
+                  <label className={labelClass} htmlFor="contact-message">Message</label>
                   <textarea
+                    id="contact-message"
+                    name="message"
                     rows={4}
                     placeholder="Optional additional requirements"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={inputClass}
+                    className={inputClass()}
                   />
                 </div>
               </div>
 
+              {Object.keys(errors).length > 0 && (
+                <div className="mt-6 border-l-4 border-rose-400 bg-rose-50 px-4 py-3 text-xs font-semibold leading-5 text-rose-700" role="alert">
+                  Please check the highlighted fields above. Your enquiry has not been submitted yet.
+                </div>
+              )}
+
               <div className="mt-7 flex flex-wrap gap-3">
                 <button
                   type="submit"
-                  className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#c9a227] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto"
                 >
                   REQUEST A QUOTE
                   <ArrowRight className="h-4 w-4" />
@@ -337,7 +454,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
                 <a
                   href="tel:+919833464629"
-                  className="inline-flex min-h-12 w-full items-center sm:w-auto justify-center gap-2 bg-[#071a33] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#0b2342]"
+                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#071a33] px-6 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#0b2342] sm:w-auto"
                 >
                   <Phone className="h-4 w-4 text-[#d4af37]" />
                   CALL OUR TEAM
