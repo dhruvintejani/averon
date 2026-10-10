@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   CircleDot,
@@ -93,9 +92,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
-              sizes="100vw"
+            src="/images/1000003974.jpg"
             alt="International freight and port operations"
             className="h-full w-full object-cover object-center"
           />
@@ -152,9 +149,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
-                src="https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/24246926/pexels-photo-24246926.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
-              sizes="100vw"
+                src="/images/1000006187.jpg"
                 alt="Container vessel on an international trade route"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -248,9 +243,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
           <div className="lg:col-span-5">
             <div className="overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.14)]">
               <img
-                src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1100"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1100")}
-              sizes="100vw"
+                src="/images/1000003848.jpg"
                 alt="International cargo coordination"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -293,9 +286,7 @@ export const GlobalReachPage: React.FC<GlobalReachPageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-14 text-white sm:py-16 lg:py-20">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
-              sizes="100vw"
+            src="/images/1000000437.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-20"
