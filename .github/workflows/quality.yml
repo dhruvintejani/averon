@@ -83,7 +83,7 @@ jobs:
           # Direct-route desktop rendering validates refreshability for every public route.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "1440,1000" "home-desktop"
           render_and_check "/about" "About Averon" "1440,1000" "about-desktop"
-          render_and_check "/services" "Freight & Logistics Services" "1440,1000" "services-desktop"
+          render_and_check "/services" "Freight & Logistics" "1440,1000" "services-desktop"
           render_and_check "/services/ocean-freight" "Ocean Freight" "1440,1000" "ocean-desktop"
           render_and_check "/services/air-freight" "Air Freight" "1440,1000" "air-desktop"
           render_and_check "/services/customs-clearance" "Customs Clearance" "1440,1000" "customs-desktop"
@@ -101,7 +101,7 @@ jobs:
 
           # Representative mobile viewports validate the responsive shell and core workflows.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "390,844" "home-mobile"
-          render_and_check "/services" "Freight & Logistics Services" "390,844" "services-mobile"
+          render_and_check "/services" "Freight & Logistics" "390,844" "services-mobile"
           render_and_check "/services/ocean-freight" "Ocean Freight" "390,844" "ocean-mobile"
           render_and_check "/global-reach" "Global Reach" "390,844" "global-mobile"
           render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
