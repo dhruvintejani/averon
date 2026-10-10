@@ -1,6 +1,7 @@
 import React from 'react';
 import { Globe, Mail, Phone } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
+import { getPathForRoute } from '../utils/routes';
 
 interface FooterProps {
   onNavigate: (page: string, serviceId?: string) => void;
@@ -12,19 +13,34 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigate,
   onOpenTrackModal,
 }) => {
+  const navigateFromLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    page: string,
+    serviceId?: string
+  ) => {
+    event.preventDefault();
+    onNavigate(page, serviceId);
+  };
+
   return (
     <footer className="border-t border-white/10 bg-[#071a33] text-slate-300">
       <div className="mx-auto max-w-[1360px] px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 sm:gap-10 xl:grid-cols-4">
           <div className="space-y-4">
-            <button
-              type="button"
+            <a
+              href="/"
               className="group inline-flex rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227] focus-visible:ring-offset-4 focus-visible:ring-offset-[#071a33]"
-              onClick={() => onNavigate('home')}
+              onClick={(event) => navigateFromLink(event, 'home')}
               aria-label="Go to Averon home page"
             >
-              <img src="/SVG%20Final/AFS%20-%20Horizontal%20for%20Dark%20BG.svg" alt="Averon Freight Solutions LLP" className="h-[50px] w-auto max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-[1.025] sm:h-[58px] sm:max-w-[245px]" />
-            </button>
+              <img
+                src="/SVG%20Final/AFS%20-%20Horizontal%20for%20Dark%20BG.svg"
+                alt="Averon Freight Solutions LLP"
+                loading="lazy"
+                decoding="async"
+                className="h-[50px] w-auto max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-[1.025] sm:h-[58px] sm:max-w-[245px]"
+              />
+            </a>
             <p className="text-sm font-semibold text-white">Your Gateway to Global Trade</p>
             <p className="max-w-[300px] text-[11px] leading-5 text-slate-400">
               International Freight Forwarding • Customs Solutions • Global Logistics
@@ -43,11 +59,26 @@ export const Footer: React.FC<FooterProps> = ({
                 ['contact', 'Contact Us'],
               ].map(([page, label]) => (
                 <li key={page}>
-                  <button type="button" onClick={() => onNavigate(page)} className="min-h-7 text-left transition-colors hover:text-[#d4af37]">{label}</button>
+                  <a
+                    href={getPathForRoute(page)}
+                    onClick={(event) => navigateFromLink(event, page)}
+                    className="inline-flex min-h-7 items-center text-left transition-colors hover:text-[#d4af37]"
+                  >
+                    {label}
+                  </a>
                 </li>
               ))}
               <li>
-                <button type="button" onClick={onOpenTrackModal} className="min-h-7 text-left transition-colors hover:text-[#d4af37]">Shipment Status</button>
+                <a
+                  href="/shipment-status"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onOpenTrackModal();
+                  }}
+                  className="inline-flex min-h-7 items-center text-left transition-colors hover:text-[#d4af37]"
+                >
+                  Shipment Status
+                </a>
               </li>
             </ul>
           </div>
@@ -57,7 +88,13 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="grid gap-2 text-xs text-slate-300">
               {SERVICES_LIST.filter((service) => service.id !== 'project-cargo').map((service) => (
                 <li key={service.id}>
-                  <button type="button" onClick={() => onNavigate('service-detail', service.id)} className="min-h-7 text-left leading-5 transition-colors hover:text-[#d4af37]">{service.title}</button>
+                  <a
+                    href={getPathForRoute('service-detail', service.id)}
+                    onClick={(event) => navigateFromLink(event, 'service-detail', service.id)}
+                    className="inline-flex min-h-7 items-center text-left leading-5 transition-colors hover:text-[#d4af37]"
+                  >
+                    {service.title}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -105,12 +142,20 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="mx-auto flex max-w-[1360px] flex-col gap-3 px-4 text-left sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>© 2026 Averon Freight Solutions LLP. All Rights Reserved.</div>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <button type="button" onClick={() => onNavigate('privacy-policy')} className="transition hover:text-[#d4af37]">
+            <a
+              href="/privacy-policy"
+              onClick={(event) => navigateFromLink(event, 'privacy-policy')}
+              className="transition hover:text-[#d4af37]"
+            >
               Privacy Policy
-            </button>
-            <button type="button" onClick={() => onNavigate('terms-conditions')} className="transition hover:text-[#d4af37]">
+            </a>
+            <a
+              href="/terms-and-conditions"
+              onClick={(event) => navigateFromLink(event, 'terms-conditions')}
+              className="transition hover:text-[#d4af37]"
+            >
               Terms & Conditions
-            </button>
+            </a>
           </div>
         </div>
       </div>
