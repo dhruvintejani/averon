@@ -75,7 +75,7 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
-      <section className="relative min-h-[400px] overflow-hidden bg-[#071a33] text-white sm:min-h-[440px] lg:min-h-[470px]">
+      <section className="relative min-h-[440px] overflow-hidden bg-[#071a33] text-white sm:min-h-[480px] lg:min-h-[500px]">
         <div className="absolute inset-0">
           <img
             loading="eager"
@@ -90,7 +90,7 @@ export const RoadInlandTransportPage: React.FC<RoadInlandTransportPageProps> = (
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.93)_44%,rgba(7,26,51,.60)_74%,rgba(7,26,51,.32)_100%)]" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[400px] max-w-[1360px] items-center px-4 py-12 sm:min-h-[440px] sm:px-6 sm:py-14 lg:min-h-[470px] lg:px-8 lg:py-16">
+        <div className="relative z-10 mx-auto flex min-h-[440px] max-w-[1360px] items-start px-4 pb-14 pt-16 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-20 lg:min-h-[500px] lg:px-8 lg:pb-20 lg:pt-24">
           <div className="max-w-[820px]">
             <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-300">
               <button
