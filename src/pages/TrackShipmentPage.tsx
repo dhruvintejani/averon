@@ -63,8 +63,8 @@ const processSteps: { num: string; title: string; desc: string; icon: IconType }
   },
   {
     num: '03',
-    title: 'Shipment Tracking',
-    desc: 'Shipment status and operational updates are coordinated.',
+    title: 'Shipment Status Coordination',
+    desc: 'Shipment status and operational updates are coordinated manually with the Averon team.',
     icon: Route,
   },
   {
@@ -141,17 +141,17 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                 Home
               </button>
               <span>/</span>
-              <span className="text-[#d4af37]">Track Shipment</span>
+              <span className="text-[#d4af37]">Shipment Status</span>
             </div>
 
-            <Eyebrow light>Track Shipment</Eyebrow>
+            <Eyebrow light>Manual Shipment Status</Eyebrow>
 
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[58px]">
-              Track Your Shipment
+              Request a Shipment Status Update
             </h1>
 
             <p className="mt-5 max-w-[720px] text-base leading-7 text-slate-200 sm:text-lg">
-              Shipment status and operational updates are coordinated throughout the journey, helping you stay informed from cargo movement through final delivery.
+              This page provides a manual shipment-status enquiry workflow. Live tracking is not connected. Use your shipment reference and the Averon team can assist with the latest operational update.
             </p>
           </div>
         </div>
@@ -162,21 +162,21 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <Eyebrow>Shipment Lookup</Eyebrow>
+              <Eyebrow>Manual Status Enquiry</Eyebrow>
               <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
-                Find Your Shipment
+                Use Your Shipment Reference
               </h2>
             </div>
 
             <p className="max-w-[540px] text-sm leading-6 text-slate-600">
-              Enter the tracking or shipment reference provided for your cargo. Available status information can be shared against the relevant shipment reference.
+              Enter the shipment reference provided for your cargo. This form does not query a live tracking API; it prepares the reference for manual status follow-up with the Averon team.
             </p>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8">
               <div className="mb-6 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#b88924]">
-                Enter Your Shipment Reference
+                Shipment Reference
               </div>
 
               <form onSubmit={handleTrack} noValidate className="flex flex-col gap-3 sm:flex-row sm:items-start">
@@ -209,7 +209,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                   type="submit"
                   className="inline-flex h-12 items-center justify-center gap-2 bg-[#c9a227] px-7 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
                 >
-                  TRACK SHIPMENT
+                  REQUEST STATUS
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </form>
@@ -223,20 +223,20 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                     <div>
                       <h3 className="text-sm font-extrabold text-[#071a33]">No shipment selected</h3>
                       <p className="mt-1 text-xs leading-5 text-slate-600">
-                        Enter a reference above to continue with shipment-status assistance.
+                        Enter a reference above to prepare a manual shipment-status enquiry.
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="border-l-4 border-[#c9a227] bg-[#f8f6f0] p-5">
                     <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#b88924]">
-                      Shipment Reference
+                      Reference for Manual Status Enquiry
                     </div>
                     <div className="mt-1 break-all text-lg font-extrabold text-[#071a33]">
                       {submittedRef}
                     </div>
                     <p className="mt-3 text-sm leading-6 text-slate-600">
-                      For the latest operational update on this shipment, contact the Averon team with this reference using the details shown alongside.
+                      Live tracking is not connected. Contact the Averon team with this reference using the details shown alongside to request the latest operational update.
                     </p>
                   </div>
                 )}
