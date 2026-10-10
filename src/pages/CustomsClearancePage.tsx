@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   Building2,
@@ -81,6 +82,8 @@ export const CustomsClearancePage: React.FC<CustomsClearancePageProps> = ({
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
+              sizes="100vw"
             alt="Cargo inspection and port clearance operations"
             className="h-full w-full object-cover object-center"
           />
@@ -150,6 +153,8 @@ export const CustomsClearancePage: React.FC<CustomsClearancePageProps> = ({
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
                 src="https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="Customs and cargo clearance operation"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -238,6 +243,8 @@ export const CustomsClearancePage: React.FC<CustomsClearancePageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
@@ -280,6 +287,8 @@ export const CustomsClearancePage: React.FC<CustomsClearancePageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/28438249/pexels-photo-28438249.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
