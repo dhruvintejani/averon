@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPexelsSrcSet } from '../utils/image';
 import {
   ArrowRight,
   Eye,
@@ -55,6 +56,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             fetchPriority="high"
             decoding="async"
             src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=850&w=1800")}
+              sizes="100vw"
             alt="Container vessel and port operations"
             className="h-full w-full object-cover object-center"
           />
@@ -120,6 +123,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.16)]">
               <img
                 src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
+              sizes="100vw"
                 alt="International logistics and port operations"
                 loading="lazy" decoding="async"
                 className="h-[320px] w-full object-cover sm:h-[390px] lg:h-[470px]"
@@ -226,6 +231,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800"
+              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=800&w=1800")}
+              sizes="100vw"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-25"
