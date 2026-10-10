@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Anchor,
   ArrowRight,
-  Box,
   ClipboardCheck,
   Clock3,
   Eye,
@@ -54,12 +53,6 @@ const services: { id: string; title: string; desc: string; icon: IconType }[] = 
     title: 'Warehousing & Distribution',
     desc: 'Flexible storage, consolidation and onward distribution between shipping legs.',
     icon: Warehouse,
-  },
-  {
-    id: 'project-cargo',
-    title: 'Project Cargo & Breakbulk',
-    desc: 'Specialized handling for oversized, heavy-lift and non-containerized shipments.',
-    icon: Box,
   },
   {
     id: 'supply-chain-management',
