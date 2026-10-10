@@ -216,7 +216,7 @@ export const ServicesOverviewPage: React.FC<ServicesOverviewPageProps> = ({
                   </div>
 
                   <div>
-                    <div className="text-[10px] font-extrabold tracking-[0.17em] text-[#c9a227]">
+                    <div className="text-[10px] font-extrabold tracking-[0.17em] text-[#8b6b1f]">
                       0{index + 1}
                     </div>
                     <h3 className="mt-1 text-base font-extrabold text-[#071a33]">
