@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPexelsSrcSet } from '../utils/image';
 import {
   Anchor,
   ArrowRight,
@@ -80,9 +79,7 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            src="https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/39621578/pexels-photo-39621578.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1900")}
-              sizes="100vw"
+            src="/images/1000013330.jpg"
             alt="Container vessel and port operations"
             className="h-full w-full object-cover object-center"
           />
@@ -140,9 +137,7 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
           <div className="relative lg:col-span-6">
             <div className="relative overflow-hidden bg-[#071a33] shadow-[0_24px_70px_rgba(7,26,51,.15)]">
               <img
-                src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200")}
-              sizes="100vw"
+                src="/images/1000003925.jpg"
                 alt="Modern ocean freight vessel"
                 loading="lazy" decoding="async"
                 className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[430px]"
@@ -230,9 +225,7 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-20 text-white sm:py-24">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/32399137/pexels-photo-32399137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1000&w=1900")}
-              sizes="100vw"
+            src="/images/1000003805.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-16"
@@ -274,9 +267,7 @@ export const OceanFreightPage: React.FC<OceanFreightPageProps> = ({
       <section className="relative overflow-hidden bg-[#071a33] py-16 text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800"
-              srcSet={getPexelsSrcSet("https://images.pexels.com/photos/20581299/pexels-photo-20581299.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=700&w=1800")}
-              sizes="100vw"
+            src="/images/1000000438.jpg"
             alt=""
             loading="lazy" decoding="async"
             className="h-full w-full object-cover opacity-18"
