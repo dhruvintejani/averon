@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ArrowRight,
   ClipboardCheck,
@@ -9,14 +9,13 @@ import {
   MessageSquareText,
   PackageCheck,
   PackageOpen,
-  PackageSearch,
+  ExternalLink,
   Phone,
   Route,
-  Search,
   ShieldCheck,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/companyData';
-import { FormFieldError } from '../components/FormFieldError';
+import { FRESA_TRACKING_URL, TRACKING_PROVIDER_NAME } from '../config/tracking';
 
 interface TrackShipmentPageProps {
   onNavigate: (page: string) => void;
@@ -63,8 +62,8 @@ const processSteps: { num: string; title: string; desc: string; icon: IconType }
   },
   {
     num: '03',
-    title: 'Shipment Status Coordination',
-    desc: 'Shipment status and operational updates are coordinated manually with the Averon team.',
+    title: 'Track & Trace',
+    desc: 'Use Averon’s official FRESA Track & Trace portal for the shipment information available through the tracking service.',
     icon: Route,
   },
   {
@@ -96,27 +95,6 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
   onNavigate,
   onOpenQuoteModal,
 }) => {
-  const [trackingRef, setTrackingRef] = useState('');
-  const [submittedRef, setSubmittedRef] = useState('');
-  const [trackingError, setTrackingError] = useState('');
-
-  const handleTrack = (event: React.FormEvent) => {
-    event.preventDefault();
-    const value = trackingRef.trim();
-
-    if (!value) {
-      setTrackingError('Please enter your tracking number or shipment reference.');
-      setSubmittedRef('');
-      requestAnimationFrame(() => {
-        document.getElementById('tracking-reference')?.focus();
-      });
-      return;
-    }
-
-    setTrackingError('');
-    setSubmittedRef(value);
-  };
-
   return (
     <div className="bg-white text-[#14263d]">
       {/* HERO */}
@@ -144,116 +122,78 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                 Home
               </button>
               <span>/</span>
-              <span className="text-[#d4af37]">Shipment Status</span>
+              <span className="text-[#d4af37]">Track & Trace</span>
             </div>
 
-            <Eyebrow light>Manual Shipment Status</Eyebrow>
+            <Eyebrow light>FRESA Track & Trace</Eyebrow>
 
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[58px]">
-              Request a Shipment Status Update
+              Track Your Shipment
             </h1>
 
             <p className="mt-5 max-w-[720px] text-base leading-7 text-slate-200 sm:text-lg">
-              This page provides a manual shipment-status enquiry workflow. Live tracking is not connected. Use your shipment reference and the Averon team can assist with the latest operational update.
+              Open Averon’s official FRESA Track & Trace portal to access the shipment tracking information available for your cargo.
             </p>
           </div>
         </div>
       </section>
 
-      {/* TRACKING LOOKUP */}
+      {/* OFFICIAL TRACK & TRACE */}
       <section className="bg-[#f8f6f0] py-14 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <Eyebrow>Manual Status Enquiry</Eyebrow>
+              <Eyebrow>Official Tracking Portal</Eyebrow>
               <h2 className="text-3xl font-extrabold tracking-[-0.025em] text-[#071a33] sm:text-4xl">
-                Use Your Shipment Reference
+                Continue to FRESA Track & Trace
               </h2>
             </div>
 
             <p className="max-w-[540px] text-sm leading-6 text-slate-600">
-              Enter the shipment reference provided for your cargo. This form does not query a live tracking API; it prepares the reference for manual status follow-up with the Averon team.
+              Select the button below to open the official tracking portal in a new tab. The tracking experience is provided by FRESA Technologies.
             </p>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8 lg:col-span-8">
-              <div className="mb-6 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8b6b1f]">
-                Shipment Reference
-              </div>
-
-              <form onSubmit={handleTrack} noValidate className="flex flex-col gap-3 sm:flex-row sm:items-start">
-                <div className="flex-1">
-                  <div className="relative">
-                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input
-                      id="tracking-reference"
-                      name="trackingReference"
-                      type="text"
-                      value={trackingRef}
-                      onChange={(event) => {
-                        setTrackingRef(event.target.value);
-                        if (trackingError) setTrackingError('');
-                      }}
-                      placeholder="Enter tracking number or shipment reference"
-                      aria-invalid={Boolean(trackingError)}
-                      aria-describedby={trackingError ? 'tracking-reference-error' : undefined}
-                      className={`h-12 w-full border bg-white pl-11 pr-4 text-sm text-[#14263d] outline-none transition placeholder:text-slate-400 ${
-                        trackingError
-                          ? 'border-rose-400 ring-2 ring-rose-100'
-                          : 'border-slate-300 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227]'
-                      }`}
-                    />
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="max-w-xl">
+                  <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8b6b1f]">
+                    {TRACKING_PROVIDER_NAME}
                   </div>
-                  <FormFieldError id="tracking-reference-error" message={trackingError} />
+                  <h3 className="mt-2 text-2xl font-extrabold text-[#071a33]">
+                    Track Your Shipment Securely
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">
+                    Open the FRESA tracking portal and use the tracking tools provided there for your Averon shipment.
+                  </p>
                 </div>
 
-                <button
-                  type="submit"
-                  className="inline-flex h-12 items-center justify-center gap-2 bg-[#c9a227] px-7 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37]"
+                <a
+                  href={FRESA_TRACKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                  className="inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 bg-[#c9a227] px-7 text-xs font-extrabold uppercase tracking-[0.12em] text-[#071a33] transition hover:bg-[#d4af37] sm:w-auto"
+                  aria-label="Open FRESA Track and Trace in a new tab"
                 >
-                  REQUEST STATUS
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
+                  TRACK SHIPMENT
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
 
-              <div className="mt-7 border-t border-slate-200 pt-6">
-                {!submittedRef ? (
-                  <div className="flex items-start gap-4">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#f8f6f0] text-[#071a33]">
-                      <PackageSearch className="h-5 w-5" strokeWidth={1.7} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-extrabold text-[#071a33]">No shipment selected</h3>
-                      <p className="mt-1 text-xs leading-5 text-slate-600">
-                        Enter a reference above to prepare a manual shipment-status enquiry.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="border-l-4 border-[#c9a227] bg-[#f8f6f0] p-5">
-                    <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#8b6b1f]">
-                      Reference for Manual Status Enquiry
-                    </div>
-                    <div className="mt-1 break-all text-lg font-extrabold text-[#071a33]">
-                      {submittedRef}
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
-                      Live tracking is not connected. Contact the Averon team with this reference using the details shown alongside to request the latest operational update.
-                    </p>
-                  </div>
-                )}
+              <div className="mt-7 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500">
+                The tracking portal opens in a new browser tab and is operated by FRESA Technologies. Averon’s website does not simulate or generate shipment statuses.
               </div>
             </div>
 
             <aside className="bg-[#071a33] p-7 text-white shadow-[0_18px_45px_rgba(7,26,51,.16)] lg:col-span-4">
               <Eyebrow light>Need Assistance?</Eyebrow>
               <h3 className="text-2xl font-extrabold leading-tight">
-                One Point of Contact Throughout the Shipment Lifecycle
+                Need Help With a Shipment Update?
               </h3>
 
               <p className="mt-4 text-sm leading-6 text-slate-300">
-                Averon helps coordinate shipment communication, bookings and operational updates through one connected point of contact.
+                If you need assistance beyond the information shown in FRESA, contact the Averon team with your shipment reference.
               </p>
 
               <div className="mt-7 space-y-4 border-t border-white/10 pt-6 text-sm">
@@ -278,7 +218,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                     {COMPANY_INFO.phones.map((phone) => (
                       <a
                         key={phone}
-                        href={`tel:${phone.replace(/\s/g, '')}`}
+                        href={`tel:${phone.replace(/\\s/g, '')}`}
                         className="block font-semibold text-white transition hover:text-[#d4af37]"
                       >
                         {phone}

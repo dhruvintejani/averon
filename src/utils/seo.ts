@@ -80,8 +80,8 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
       path: '/contact',
     },
     'track-shipment': {
-      title: 'Shipment Status Enquiry | Averon Freight Solutions',
-      description: 'Submit or reference your shipment number for manual status assistance from the Averon Freight Solutions team. Live tracking is not connected.',
+      title: 'Track & Trace | Averon Freight Solutions',
+      description: 'Access Averon Freight Solutions’ official FRESA Track & Trace portal for available shipment tracking information.',
       path: '/shipment-status',
     },
     'privacy-policy': {

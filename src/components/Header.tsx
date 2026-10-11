@@ -287,7 +287,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Truck className={`h-4 w-4 ${currentPage === 'track-shipment' ? 'text-[#d4af37]' : 'text-[#071a33]'}`} />
-            <span>Shipment Status</span>
+            <span>Track & Trace</span>
           </a>
 
           <button type="button" onClick={onOpenQuoteModal} className="flex min-h-10 items-center gap-1.5 bg-[#c9a227] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[#071a33] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4af37] hover:shadow-[0_10px_24px_rgba(201,162,39,.26)]">
@@ -365,7 +365,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="flex min-h-12 w-full items-center justify-center gap-2 border border-slate-300 bg-slate-50 px-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#071a33]"
               >
                 <Truck className="h-4 w-4" />
-                <span>Shipment Status</span>
+                <span>Track & Trace</span>
               </a>
 
               <button
