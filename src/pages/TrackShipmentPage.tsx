@@ -218,7 +218,7 @@ export const TrackShipmentPage: React.FC<TrackShipmentPageProps> = ({
                     {COMPANY_INFO.phones.map((phone) => (
                       <a
                         key={phone}
-                        href={`tel:${phone.replace(/\\s/g, '')}`}
+                        href={`tel:${phone.replace(/\s/g, '')}`}
                         className="block font-semibold text-white transition hover:text-[#d4af37]"
                       >
                         {phone}

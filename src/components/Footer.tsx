@@ -83,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="inline-flex min-h-7 items-center text-left transition-colors hover:text-[#d4af37]"
                 >
-                  Shipment Status
+                  Track & Trace
                 </a>
               </li>
             </ul>
