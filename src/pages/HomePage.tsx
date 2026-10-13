@@ -374,7 +374,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[600px] max-w-[1360px] items-start px-4 pb-10 pt-14 sm:min-h-[640px] sm:px-6 sm:pb-12 sm:pt-16 lg:min-h-[720px] lg:px-8 lg:pb-14 lg:pt-20">
-          <div className="max-w-[780px]">
+          <div className="max-w-[780px] lg:max-w-[900px]">
             <div className="mb-6 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d4af37]">
               <span className="h-[2px] w-10 bg-[#c9a227]" />
               <span>{currentSlide.eyebrow}</span>
@@ -386,11 +386,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <div
               id="home-hero-slide"
-              className="flex h-[176px] items-start sm:h-[122px] lg:h-[142px]"
+              className="flex h-[176px] items-start sm:h-[122px] lg:h-[136px]"
               aria-live={isAutoRotationPaused ? 'polite' : 'off'}
               aria-atomic="true"
             >
-              <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[64px]">
+              <h1 className="max-w-[760px] text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:max-w-[880px] lg:text-[58px] lg:leading-[1.02]">
                 {currentSlide.title}
               </h1>
             </div>
