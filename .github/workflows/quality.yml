@@ -92,10 +92,21 @@ jobs:
             local size="$3"
             local slug="$4"
             local output="/tmp/${slug}.html"
+            local chrome_log="/tmp/${slug}.chrome.log"
 
-            timeout 45s "$CHROME"               --headless               --no-sandbox               --disable-gpu               --disable-dev-shm-usage               --window-size="$size"               --virtual-time-budget=2500               --dump-dom "http://127.0.0.1:4173${route}" > "$output"
+            echo "Checking ${slug}: ${route} at ${size}"
 
-            grep -Fq "$expected" "$output"
+            if ! timeout 45s "$CHROME"               --headless               --no-sandbox               --disable-gpu               --disable-dev-shm-usage               --window-size="$size"               --virtual-time-budget=2500               --dump-dom "http://127.0.0.1:4173${route}" > "$output" 2> "$chrome_log"; then
+              echo "Chrome failed while checking ${slug}."
+              tail -n 80 "$chrome_log" || true
+              return 1
+            fi
+
+            if ! grep -Fq "$expected" "$output"; then
+              echo "Expected text was not found for ${slug}: $expected"
+              grep -o '<h1[^>]*>[^<]*' "$output" | head -n 5 || true
+              return 1
+            fi
           }
 
           # Direct-route desktop rendering validates refreshability for every public route.
@@ -112,8 +123,8 @@ jobs:
           render_and_check "/global-reach" "Global Reach" "1440,1000" "global-desktop"
           render_and_check "/contact" "Start With Your Shipment Details" "1440,1000" "contact-desktop"
           render_and_check "/shipment-status" "Track Your Shipment" "1440,1000" "status-desktop"
-          render_and_check "/privacy-policy" "Client-approved legal text is pending" "1440,1000" "privacy-desktop"
-          render_and_check "/terms-and-conditions" "Client-approved legal text is pending" "1440,1000" "terms-desktop"
+          render_and_check "/privacy-policy" "Privacy Policy" "1440,1000" "privacy-desktop"
+          render_and_check "/terms-and-conditions" "Terms & Conditions" "1440,1000" "terms-desktop"
           render_and_check "/services/project-cargo-breakbulk" "Service confirmation pending" "1440,1000" "project-pending-desktop"
           render_and_check "/does-not-exist" "Page Not Found" "1440,1000" "not-found-desktop"
 
