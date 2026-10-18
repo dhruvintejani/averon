@@ -1,8 +1,9 @@
+import fs from "node:fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, type Plugin, type ResolvedConfig } from "vite";
 import {
   buildStructuredData,
   DEFAULT_IMAGE,
@@ -151,39 +152,50 @@ const renderStaticSeoHtml = (
   return html;
 };
 
-const staticSeoPagesPlugin = (): Plugin => ({
-  name: "averon-static-seo-pages",
-  apply: "build",
-  generateBundle(_options, bundle) {
-    const indexAsset = bundle["index.html"];
+const staticSeoPagesPlugin = (): Plugin => {
+  let resolvedConfig: ResolvedConfig;
 
-    if (!indexAsset || indexAsset.type !== "asset") {
-      this.error("Vite did not emit index.html; static SEO pages could not be generated.");
-      return;
-    }
-
-    const baseHtml = String(indexAsset.source);
-
-    for (const route of STATIC_SEO_ROUTES) {
-      const routeHtml = renderStaticSeoHtml(
-        baseHtml,
-        route.page,
-        route.serviceId
+  return {
+    name: "averon-static-seo-pages",
+    apply: "build",
+    configResolved(config) {
+      resolvedConfig = config;
+    },
+    writeBundle() {
+      const outDir = path.resolve(
+        resolvedConfig.root,
+        resolvedConfig.build.outDir
       );
+      const indexPath = path.join(outDir, "index.html");
 
-      if (!route.fileName) {
-        indexAsset.source = routeHtml;
-        continue;
+      if (!fs.existsSync(indexPath)) {
+        this.error(
+          "Vite did not write index.html; static SEO pages could not be generated."
+        );
+        return;
       }
 
-      this.emitFile({
-        type: "asset",
-        fileName: route.fileName,
-        source: routeHtml,
-      });
-    }
-  },
-});
+      const baseHtml = fs.readFileSync(indexPath, "utf8");
+
+      for (const route of STATIC_SEO_ROUTES) {
+        const routeHtml = renderStaticSeoHtml(
+          baseHtml,
+          route.page,
+          route.serviceId
+        );
+
+        if (!route.fileName) {
+          fs.writeFileSync(indexPath, routeHtml, "utf8");
+          continue;
+        }
+
+        const outputPath = path.join(outDir, route.fileName);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        fs.writeFileSync(outputPath, routeHtml, "utf8");
+      }
+    },
+  };
+};
 
 // https://vite.dev/config/
 export default defineConfig({
