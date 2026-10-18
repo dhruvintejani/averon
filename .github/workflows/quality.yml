@@ -33,6 +33,24 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Verify generated SEO route metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f dist/index.html
+          test -f dist/seo/about.html
+          test -f dist/seo/services-ocean-freight.html
+          test -f dist/seo/contact.html
+          test -f dist/seo/shipment-status.html
+
+          grep -Fq '<link rel="canonical" href="https://www.averonfs.com/about" />' dist/seo/about.html
+          grep -Fq '<meta property="og:url" content="https://www.averonfs.com/services/ocean-freight" />' dist/seo/services-ocean-freight.html
+          grep -Fq '<title>Contact &amp; Request a Quote | Averon Freight Solutions</title>' dist/seo/contact.html
+          grep -Fq '"@type":"BreadcrumbList"' dist/seo/contact.html
+          grep -Fq 'https://www.averonfs.com/sitemap.xml' dist/robots.txt
+          ! grep -Fq 'services/project-cargo-breakbulk' dist/sitemap.xml
+
       - name: Production dependency security audit
         run: npm run audit:prod
 
@@ -93,7 +111,7 @@ jobs:
           render_and_check "/lcl-consolidation" "LCL Consolidation" "1440,1000" "lcl-desktop"
           render_and_check "/global-reach" "Global Reach" "1440,1000" "global-desktop"
           render_and_check "/contact" "Start With Your Shipment Details" "1440,1000" "contact-desktop"
-          render_and_check "/shipment-status" "Request a Shipment Status Update" "1440,1000" "status-desktop"
+          render_and_check "/shipment-status" "Track Your Shipment" "1440,1000" "status-desktop"
           render_and_check "/privacy-policy" "Client-approved legal text is pending" "1440,1000" "privacy-desktop"
           render_and_check "/terms-and-conditions" "Client-approved legal text is pending" "1440,1000" "terms-desktop"
           render_and_check "/services/project-cargo-breakbulk" "Service confirmation pending" "1440,1000" "project-pending-desktop"
@@ -105,14 +123,14 @@ jobs:
           render_and_check "/services/ocean-freight" "Ocean Freight" "390,844" "ocean-mobile"
           render_and_check "/global-reach" "Global Reach" "390,844" "global-mobile"
           render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
-          render_and_check "/shipment-status" "Request a Shipment Status Update" "390,844" "status-mobile"
+          render_and_check "/shipment-status" "Track Your Shipment" "390,844" "status-mobile"
 
           # Representative tablet viewports catch breakpoint and navigation regressions.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "768,1024" "home-tablet"
           render_and_check "/services" "Freight & Logistics" "768,1024" "services-tablet"
           render_and_check "/global-reach" "Global Reach" "768,1024" "global-tablet"
           render_and_check "/contact" "Start With Your Shipment Details" "768,1024" "contact-tablet"
-          render_and_check "/shipment-status" "Request a Shipment Status Update" "768,1024" "status-tablet"
+          render_and_check "/shipment-status" "Track Your Shipment" "768,1024" "status-tablet"
 
       - name: Local Lighthouse quality audit
         id: lighthouse
