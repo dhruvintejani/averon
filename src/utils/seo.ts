@@ -1,8 +1,8 @@
 import { COMPANY_INFO, SERVICES_LIST } from '../data/companyData';
 import { SERVICE_PATHS, type AppPage } from './routes';
 
-const SITE_ORIGIN = 'https://www.averonfs.com';
-const DEFAULT_IMAGE = `${SITE_ORIGIN}/PNG/AFS%20-%20Horizontal.png`;
+export const SITE_ORIGIN = 'https://www.averonfs.com';
+export const DEFAULT_IMAGE = `${SITE_ORIGIN}/PNG/AFS%20-%20Horizontal.png`;
 const ORGANIZATION_ID = `${SITE_ORIGIN}/#organization`;
 const WEBSITE_ID = `${SITE_ORIGIN}/#website`;
 
@@ -113,6 +113,48 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
   return map[page as AppPage] ?? map.home!;
 };
 
+const getBreadcrumbItems = (page: AppPage | string, serviceId?: string) => {
+  const home = { name: 'Home', url: `${SITE_ORIGIN}/` };
+
+  if (page === 'home') return [home];
+
+  if (page === 'service-detail' && serviceId) {
+    const service = SERVICES_LIST.find((item) => item.id === serviceId);
+    return [
+      home,
+      { name: 'Services', url: `${SITE_ORIGIN}/services` },
+      {
+        name: service?.title ?? 'Service',
+        url: `${SITE_ORIGIN}${SERVICE_PATHS[serviceId] ?? '/services'}`,
+      },
+    ];
+  }
+
+  const map: Partial<Record<AppPage, { name: string; path: string }[]>> = {
+    about: [{ name: 'About Us', path: '/about' }],
+    services: [{ name: 'Services', path: '/services' }],
+    'lcl-consolidation': [{ name: 'LCL Consolidation', path: '/lcl-consolidation' }],
+    'global-reach': [{ name: 'Global Reach', path: '/global-reach' }],
+    contact: [{ name: 'Contact Us', path: '/contact' }],
+    'track-shipment': [{ name: 'Track & Trace', path: '/shipment-status' }],
+    'privacy-policy': [{ name: 'Privacy Policy', path: '/privacy-policy' }],
+    'terms-conditions': [{ name: 'Terms & Conditions', path: '/terms-and-conditions' }],
+    'project-cargo-pending': [
+      { name: 'Services', path: '/services' },
+      { name: 'Project Cargo & Breakbulk', path: '/services/project-cargo-breakbulk' },
+    ],
+    'not-found': [{ name: 'Page Not Found', path: '/404' }],
+  };
+
+  return [
+    home,
+    ...(map[page as AppPage] ?? []).map((item) => ({
+      name: item.name,
+      url: `${SITE_ORIGIN}${item.path}`,
+    })),
+  ];
+};
+
 const setMeta = (
   selector: string,
   attribute: 'name' | 'property',
@@ -139,7 +181,7 @@ const setJsonLd = (data: unknown) => {
   script.textContent = JSON.stringify(data);
 };
 
-const buildStructuredData = (
+export const buildStructuredData = (
   page: AppPage | string,
   serviceId: string | undefined,
   data: SeoData,
@@ -154,7 +196,7 @@ const buildStructuredData = (
     description: COMPANY_INFO.aboutSummary,
     email: COMPANY_INFO.emails[0],
     telephone: COMPANY_INFO.phones[0],
-    sameAs: [COMPANY_INFO.linkedin],
+    sameAs: [COMPANY_INFO.linkedin, COMPANY_INFO.googleBusiness].filter(Boolean),
     address: {
       '@type': 'PostalAddress',
       streetAddress:
@@ -182,9 +224,32 @@ const buildStructuredData = (
     description: data.description,
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': ORGANIZATION_ID },
+    inLanguage: 'en-IN',
   };
 
+  const breadcrumbItems = getBreadcrumbItems(page, serviceId);
+  const breadcrumbId = `${canonicalUrl}#breadcrumb`;
+
+  if (breadcrumbItems.length > 1) {
+    Object.assign(webPage, {
+      breadcrumb: { '@id': breadcrumbId },
+    });
+  }
+
   const graph: Record<string, unknown>[] = [organization, website, webPage];
+
+  if (breadcrumbItems.length > 1) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': breadcrumbId,
+      itemListElement: breadcrumbItems.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+  }
 
   if (page === 'service-detail' && serviceId) {
     const service = SERVICES_LIST.find((item) => item.id === serviceId);
