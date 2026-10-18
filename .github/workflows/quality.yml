@@ -171,6 +171,27 @@ jobs:
             console.log(`${key}: ${score}`);
           }
 
+          console.log('Core Web Vitals / lab metrics:');
+          for (const [id, label] of [
+            ['first-contentful-paint', 'FCP'],
+            ['largest-contentful-paint', 'LCP'],
+            ['total-blocking-time', 'TBT'],
+            ['cumulative-layout-shift', 'CLS'],
+            ['speed-index', 'Speed Index'],
+          ]) {
+            const audit = report.audits[id];
+            console.log(`${label}: ${audit?.displayValue ?? 'not available'}`);
+          }
+
+          console.log('Performance checks that need attention:');
+          for (const ref of report.categories.performance?.auditRefs ?? []) {
+            const audit = report.audits[ref.id];
+            if (!audit || ['notApplicable', 'manual', 'informative'].includes(audit.scoreDisplayMode)) continue;
+            if (audit.score !== null && audit.score < 1) {
+              console.log(`[performance] ${ref.id}: ${audit.title} (score: ${audit.score}, value: ${audit.displayValue ?? 'n/a'})`);
+            }
+          }
+
           console.log('Lighthouse checks that need attention:');
           for (const key of ['accessibility', 'best-practices', 'seo']) {
             for (const ref of report.categories[key]?.auditRefs ?? []) {
