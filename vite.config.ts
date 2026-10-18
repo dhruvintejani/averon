@@ -142,6 +142,13 @@ const renderStaticSeoHtml = (
     `<link rel="canonical" href="${canonicalUrl}" />`
   );
 
+  if (page !== "home") {
+    html = html.replace(
+      /\s*<link\s+id="home-lcp-preload"[^>]*>/i,
+      ""
+    );
+  }
+
   html = html.replace(
     /<script\s+id="structured-data"\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
     `<script id="structured-data" type="application/ld+json">${JSON.stringify(
