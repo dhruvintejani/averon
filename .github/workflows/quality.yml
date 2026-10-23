@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -159,6 +162,18 @@ jobs:
             const actual = decodeHtml(rootHeadings[0][1].replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim();
             if (actual !== page.h1) {
               throw new Error(page.path + ': expected raw H1 "' + page.h1 + '", got "' + actual + '".');
+            }
+
+            if (page.path === '/') {
+              const openingTag = rootHeadings[0][0].match(/^<h1\b[^>]*>/i)?.[0] ?? '';
+              if (
+                /\bsr-only\b/i.test(openingTag) ||
+                !/\bstyle="[^"]*display:\s*block/i.test(openingTag) ||
+                !/\bstyle="[^"]*visibility:\s*visible/i.test(openingTag)
+              ) {
+                throw new Error('/: expected the raw homepage H1 to be visibly rendered in the initial HTML.');
+              }
+              console.log('PASS: homepage raw H1 is visibly rendered in the initial HTML.');
             }
 
             if (page.path !== '/') {
