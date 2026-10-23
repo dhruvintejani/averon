@@ -224,6 +224,7 @@ const renderStaticSeoHtml = (
     '<span class="h-1.5 w-1.5 rounded-full bg-[#d4af37]/35 animate-pulse [animation-delay:320ms] motion-reduce:animate-none"></span>' +
     '</div>' +
     '<span class="sr-only">Loading page</span>' +
+    '</div>' +
     '</div>';
 
   html = html.replace(
