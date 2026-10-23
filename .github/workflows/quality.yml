@@ -92,10 +92,25 @@ jobs:
           for (const page of pages) {
             const html = fs.readFileSync(page.file, 'utf8');
             const allHeadings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
-            // Capture the full root, including nested loading-shell elements.
-            const root = html.match(/<div\s+id="root">([\s\S]*)<\/div>\s*<script type="module"/i);
-            const rootHeadings = root
-              ? [...root[1].matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+            // Find the matching closing tag for #root instead of stopping at a
+            // nested div inside the loading shell.
+            const rootStart = html.search(/<div\s+id="root">/i);
+            let rootHtml = null;
+            if (rootStart >= 0) {
+              const divTags = /<\/?div\b[^>]*>/gi;
+              divTags.lastIndex = rootStart;
+              let depth = 0;
+              let match;
+              while ((match = divTags.exec(html))) {
+                depth += /^<\/div/i.test(match[0]) ? -1 : 1;
+                if (depth === 0) {
+                  rootHtml = html.slice(rootStart, divTags.lastIndex);
+                  break;
+                }
+              }
+            }
+            const rootHeadings = rootHtml
+              ? [...rootHtml.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
               : [];
 
             if (allHeadings.length !== 1 || rootHeadings.length !== 1) {
