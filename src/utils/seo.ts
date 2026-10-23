@@ -51,7 +51,7 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
   const map: Partial<Record<AppPage, SeoData>> = {
     home: {
       title: 'Freight Forwarder in Mumbai | Averon Freight Solutions',
-      description: 'Freight forwarding from Mumbai, India, with air and ocean freight, LCL consolidation, customs support and inland transport coordination for importers and exporters.',
+      description: 'Freight forwarding from Mumbai, India: air and ocean freight, LCL consolidation, customs support and inland transport for importers and exporters.',
       path: '/',
     },
     about: {
@@ -65,8 +65,8 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
       path: '/services',
     },
     'lcl-consolidation': {
-      title: 'LCL Consolidation Services in India | Averon Freight Solutions',
-      description: 'LCL consolidation coordination for import and export shipments, from origin pickup and cargo consolidation to port handling and final delivery. Request a quote.',
+      title: 'LCL Consolidation in India | Averon Freight Solutions',
+      description: 'LCL consolidation for import and export shipments, from origin pickup and cargo consolidation to port handling and final delivery. Request a quote.',
       path: '/lcl-consolidation',
     },
     'global-reach': {
