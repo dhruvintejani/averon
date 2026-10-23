@@ -214,7 +214,7 @@ const renderStaticSeoHtml = (
     '<div class="absolute inset-0 rounded-full border border-white/10"></div>' +
     '<div class="absolute inset-0 rounded-full border-2 border-transparent border-t-[#d4af37] border-r-[#d4af37]/40 animate-spin motion-reduce:animate-none"></div>' +
     '<div class="absolute inset-[8px] rounded-full border border-[#c9a227]/25"></div>' +
-    '<img src="/SVG%20Final/Hexagon%20AFS%20Logo%20White%20SVG.svg" alt="" class="h-14 w-14 object-contain sm:h-16 sm:w-16" />' +
+    '<img src="/SVG%20Final/Hexagon%20AFS%20Logo%20White%20SVG.svg" alt="Averon Freight Solutions LLP" class="h-14 w-14 object-contain sm:h-16 sm:w-16" />' +
     '</div>' +
     '<div class="mt-6 text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#d4af37]">Averon Freight Solutions</div>' +
     '<p class="mt-2 text-xs font-medium tracking-[0.08em] text-slate-300">Preparing your logistics experience</p>' +
