@@ -165,11 +165,11 @@ jobs:
             }
 
             if (page.path === '/') {
-              const openingTag = rootHeadings[0][0].match(/^<h1\\b[^>]*>/i)?.[0] ?? '';
+              const openingTag = rootHeadings[0][0].match(/^<h1\b[^>]*>/i)?.[0] ?? '';
               if (
-                /\\bsr-only\\b/i.test(openingTag) ||
-                !/\\bstyle="[^"]*display:\\s*block/i.test(openingTag) ||
-                !/\\bstyle="[^"]*visibility:\\s*visible/i.test(openingTag)
+                /\bsr-only\b/i.test(openingTag) ||
+                !/\bstyle="[^"]*display:\s*block/i.test(openingTag) ||
+                !/\bstyle="[^"]*visibility:\s*visible/i.test(openingTag)
               ) {
                 throw new Error('/: expected the raw homepage H1 to be visibly rendered in the initial HTML.');
               }
