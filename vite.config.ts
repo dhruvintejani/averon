@@ -188,9 +188,9 @@ const renderStaticSeoHtml = (
     ).replace(/</g, "\\u003c")}</script>`
   );
 
-  // Keep a branded loading shell in the initial HTML so a delayed React bundle
-  // does not flash the SEO fallback heading by itself. The route-specific H1 stays
-  // in the raw HTML for crawlers; createRoot replaces this shell when React mounts.
+  // Keep the branded loading shell in the initial HTML. The homepage H1 is visible
+  // in that shell for crawlers; other routes retain their existing hidden fallback.
+  // React replaces this shell when the app mounts.
   const h1 = getStaticH1(page, serviceId);
   if (!h1) {
     throw new Error(
@@ -205,6 +205,13 @@ const renderStaticSeoHtml = (
     throw new Error("Could not find the empty React root while generating static SEO HTML.");
   }
 
+  const homepageFallbackH1 =
+    page === "home"
+      ? '<h1 id="seo-fallback-h1" style="display:block; visibility:visible; opacity:1; max-width:52rem; margin:1.5rem 0 0; color:#fff; font-size:clamp(1.875rem,4.5vw,3.5rem); font-weight:800; line-height:1.1; letter-spacing:-0.025em;">' +
+        escapeHtml(h1) +
+        '</h1>'
+      : '';
+
   const loadingShell =
     '<div id="seo-fallback-loader" class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#071a33] px-4 text-white" role="status" aria-live="polite" aria-label="Loading Averon Freight Solutions">' +
     '<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(201,162,39,.13),transparent_28%),linear-gradient(180deg,#071a33_0%,#061426_100%)]"></div>' +
@@ -217,6 +224,7 @@ const renderStaticSeoHtml = (
     '<img src="/SVG%20Final/Hexagon%20AFS%20Logo%20White%20SVG.svg" alt="Averon Freight Solutions LLP" class="h-14 w-14 object-contain sm:h-16 sm:w-16" />' +
     '</div>' +
     '<div class="mt-6 text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#d4af37]">Averon Freight Solutions</div>' +
+    homepageFallbackH1 +
     '<p class="mt-2 text-xs font-medium tracking-[0.08em] text-slate-300">Preparing your logistics experience</p>' +
     '<div class="mt-6 flex items-center gap-1.5" aria-hidden="true">' +
     '<span class="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse motion-reduce:animate-none"></span>' +
@@ -231,9 +239,12 @@ const renderStaticSeoHtml = (
     rootPattern,
     '<div id="root">' +
       loadingShell +
-      '<h1 id="seo-fallback-h1" class="sr-only">' +
-      escapeHtml(h1) +
-      '</h1></div>'
+      (page === "home"
+        ? ""
+        : '<h1 id="seo-fallback-h1" class="sr-only">' +
+          escapeHtml(h1) +
+          '</h1>') +
+      '</div>'
   );
 
   return html;
