@@ -290,6 +290,78 @@ jobs:
           }
           NODE
 
+      - name: Verify deployed raw H1 responses
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const pages = [
+            { path: '/', h1: 'Connecting Your Cargo to Global Markets' },
+            { path: '/about', h1: 'About Averon Freight Solutions' },
+            { path: '/services', h1: 'Freight & Logistics Solutions' },
+            { path: '/services/ocean-freight', h1: 'Ocean Freight — FCL & LCL' },
+            { path: '/services/air-freight', h1: 'Fast, Reliable Air Freight Solutions' },
+            { path: '/services/customs-clearance', h1: 'Smooth Customs. Efficient Cargo Movement.' },
+            { path: '/services/road-inland-transport', h1: 'Reliable Road & Inland Transport Solutions' },
+            { path: '/services/warehousing-distribution', h1: 'Warehousing & Distribution Support' },
+            { path: '/services/supply-chain-management', h1: 'Supply Chain Management' },
+            { path: '/lcl-consolidation', h1: 'LCL Consolidation' },
+            { path: '/global-reach', h1: 'Connecting Businesses Across International Trade Routes' },
+            { path: '/contact', h1: 'Tell Us About Your Shipment' },
+            { path: '/shipment-status', h1: 'Track Your Shipment' },
+          ];
+
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+          const decodeHtml = (value) => value
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, '&');
+
+          for (const page of pages) {
+            let verified = false;
+            let lastReason = 'no response';
+            for (let attempt = 1; attempt <= 12; attempt += 1) {
+              try {
+                const url = new URL(page.path, 'https://www.averonfs.com');
+                url.searchParams.set('__h1_check', process.env.GITHUB_SHA || 'main');
+                const response = await fetch(url, {
+                  headers: {
+                    'user-agent': 'Averon-H1-Verification/1.0',
+                    'cache-control': 'no-cache',
+                  },
+                });
+                const html = await response.text();
+                const headings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
+                const fallback = [...html.matchAll(/<h1\s+id="seo-fallback-h1"[^>]*>([\s\S]*?)<\/h1>/gi)];
+
+                if (response.ok && headings.length === 1 && fallback.length === 1) {
+                  const actual = decodeHtml(fallback[0][1].replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim();
+                  if (actual === page.h1) {
+                    console.log('PASS live raw HTTP H1 — ' + page.path + ': ' + actual);
+                    verified = true;
+                    break;
+                  }
+                  lastReason = 'expected "' + page.h1 + '", got "' + actual + '"';
+                } else {
+                  lastReason = 'HTTP ' + response.status + ', H1 count ' + headings.length + ', fallback count ' + fallback.length;
+                }
+              } catch (error) {
+                lastReason = String(error);
+              }
+
+              if (attempt < 12) await sleep(10000);
+            }
+
+            if (!verified) {
+              throw new Error('Live raw HTML H1 check failed for ' + page.path + ': ' + lastReason);
+            }
+          }
+
+          console.log('PASS: live HTTP responses contain the expected single raw H1 for all 13 sitemap URLs.');
+          NODE
+
       - name: Report full audit status
         if: always()
         run: |
