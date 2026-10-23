@@ -188,13 +188,16 @@ const renderStaticSeoHtml = (
     ).replace(/</g, "\\u003c")}</script>`
   );
 
-  // Keep the primary heading in the initial HTML response for crawlers that
-  // do not execute the client-side React bundle. React's createRoot replaces
-  // this temporary fallback when the full page mounts, so the visible site
-  // design and its single rendered H1 remain unchanged.
+  // Keep a branded loading shell in the initial HTML so a delayed React bundle
+  // does not flash the SEO fallback heading by itself. The route-specific H1 stays
+  // in the raw HTML for crawlers; createRoot replaces this shell when React mounts.
   const h1 = getStaticH1(page, serviceId);
   if (!h1) {
-    throw new Error(`Missing static H1 mapping for route: ${page}${serviceId ? ` (${serviceId})` : ""}`);
+    throw new Error(
+      "Missing static H1 mapping for route: " +
+        page +
+        (serviceId ? " (" + serviceId + ")" : "")
+    );
   }
 
   const rootPattern = /<div\s+id="root">\s*<\/div>/i;
@@ -202,9 +205,34 @@ const renderStaticSeoHtml = (
     throw new Error("Could not find the empty React root while generating static SEO HTML.");
   }
 
+  const loadingShell =
+    '<div id="seo-fallback-loader" class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#071a33] px-4 text-white" role="status" aria-live="polite" aria-label="Loading Averon Freight Solutions">' +
+    '<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(201,162,39,.13),transparent_28%),linear-gradient(180deg,#071a33_0%,#061426_100%)]"></div>' +
+    '<div class="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] [background-size:38px_38px]"></div>' +
+    '<div class="relative z-10 flex flex-col items-center text-center">' +
+    '<div class="relative grid h-24 w-24 place-items-center sm:h-28 sm:w-28">' +
+    '<div class="absolute inset-0 rounded-full border border-white/10"></div>' +
+    '<div class="absolute inset-0 rounded-full border-2 border-transparent border-t-[#d4af37] border-r-[#d4af37]/40 animate-spin motion-reduce:animate-none"></div>' +
+    '<div class="absolute inset-[8px] rounded-full border border-[#c9a227]/25"></div>' +
+    '<img src="/SVG%20Final/Hexagon%20AFS%20Logo%20White%20SVG.svg" alt="" class="h-14 w-14 object-contain sm:h-16 sm:w-16" />' +
+    '</div>' +
+    '<div class="mt-6 text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#d4af37]">Averon Freight Solutions</div>' +
+    '<p class="mt-2 text-xs font-medium tracking-[0.08em] text-slate-300">Preparing your logistics experience</p>' +
+    '<div class="mt-6 flex items-center gap-1.5" aria-hidden="true">' +
+    '<span class="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse motion-reduce:animate-none"></span>' +
+    '<span class="h-1.5 w-1.5 rounded-full bg-[#d4af37]/65 animate-pulse [animation-delay:160ms] motion-reduce:animate-none"></span>' +
+    '<span class="h-1.5 w-1.5 rounded-full bg-[#d4af37]/35 animate-pulse [animation-delay:320ms] motion-reduce:animate-none"></span>' +
+    '</div>' +
+    '<span class="sr-only">Loading page</span>' +
+    '</div>';
+
   html = html.replace(
     rootPattern,
-    `<div id="root"><h1 id="seo-fallback-h1" style="margin:0;padding:24px 16px;max-width:880px;color:#fff;font-family:Inter,Arial,sans-serif;font-size:clamp(2rem,5vw,3.625rem);font-weight:800;line-height:1.05;letter-spacing:-0.035em;">${escapeHtml(h1)}</h1></div>`
+    '<div id="root">' +
+      loadingShell +
+      '<h1 id="seo-fallback-h1" class="sr-only">' +
+      escapeHtml(h1) +
+      '</h1></div>'
   );
 
   return html;
