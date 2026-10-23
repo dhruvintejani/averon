@@ -18,7 +18,7 @@ export const PageLoader: React.FC = () => (
 
         <img
           src="/SVG%20Final/Hexagon%20AFS%20Logo%20White%20SVG.svg"
-          alt=""
+          alt="Averon Freight Solutions LLP"
           className="h-14 w-14 object-contain sm:h-16 sm:w-16"
         />
       </div>
