@@ -92,7 +92,8 @@ jobs:
           for (const page of pages) {
             const html = fs.readFileSync(page.file, 'utf8');
             const allHeadings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
-            const root = html.match(/<div\s+id="root">([\s\S]*?)<\/div>/i);
+            // Capture the full root, including nested loading-shell elements.
+            const root = html.match(/<div\s+id="root">([\s\S]*)<\/div>\s*<script type="module"/i);
             const rootHeadings = root
               ? [...root[1].matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
               : [];
