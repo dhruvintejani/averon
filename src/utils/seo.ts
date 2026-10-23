@@ -15,16 +15,16 @@ interface SeoData {
 
 const SERVICE_SEO: Record<string, Omit<SeoData, 'path'>> = {
   'ocean-freight': {
-    title: 'Ocean Freight — FCL & LCL | Averon Freight Solutions',
-    description: 'Reliable FCL and LCL ocean freight coordination across global trade routes with cargo handling, documentation support and shipment visibility.',
+    title: 'Sea Freight Services | FCL & LCL | Averon Freight Solutions',
+    description: 'FCL and LCL ocean freight coordination for import and export cargo across international trade routes, with documentation support and shipment updates.',
   },
   'air-freight': {
-    title: 'Air Freight | Averon Freight Solutions',
-    description: 'Fast, secure and dependable air freight coordination for time-sensitive and standard international shipments.',
+    title: 'Air Freight Services | Averon Freight Solutions',
+    description: 'International air freight coordination for urgent and standard cargo, with shipment planning, documentation support and delivery coordination.',
   },
   'customs-clearance': {
-    title: 'Customs Clearance | Averon Freight Solutions',
-    description: 'Import and export customs clearance support with documentation review, compliance coordination, tariff guidance and customs-authority coordination.',
+    title: 'Customs Clearance Support | Averon Freight Solutions',
+    description: 'Import and export customs clearance support, documentation review, tariff guidance and compliance coordination for international shipments.',
   },
   'road-inland-transport': {
     title: 'Road & Inland Transport | Averon Freight Solutions',
@@ -50,8 +50,8 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
 
   const map: Partial<Record<AppPage, SeoData>> = {
     home: {
-      title: 'Averon Freight Solutions LLP | Your Gateway to Global Trade',
-      description: 'International freight forwarding, customs solutions and global logistics coordination from Averon Freight Solutions LLP in Mumbai.',
+      title: 'Freight Forwarder in Mumbai | Averon Freight Solutions',
+      description: 'Freight forwarding from Mumbai, India, with air and ocean freight, LCL consolidation, customs support and inland transport coordination for importers and exporters.',
       path: '/',
     },
     about: {
@@ -65,8 +65,8 @@ export const getSeoData = (page: AppPage | string, serviceId?: string): SeoData 
       path: '/services',
     },
     'lcl-consolidation': {
-      title: 'LCL Consolidation | Averon Freight Solutions',
-      description: 'LCL consolidation coordination from origin pickup through consolidation, main port, destination and final delivery.',
+      title: 'LCL Consolidation Services in India | Averon Freight Solutions',
+      description: 'LCL consolidation coordination for import and export shipments, from origin pickup and cargo consolidation to port handling and final delivery. Request a quote.',
       path: '/lcl-consolidation',
     },
     'global-reach': {
