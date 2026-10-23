@@ -51,6 +51,84 @@ jobs:
           grep -Fq 'https://www.averonfs.com/sitemap.xml' dist/robots.txt
           ! grep -Fq 'services/project-cargo-breakbulk' dist/sitemap.xml
 
+      - name: Verify raw HTML H1 for public routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const pages = [
+            { path: '/', file: 'dist/index.html', h1: 'Connecting Your Cargo to Global Markets' },
+            { path: '/about', file: 'dist/seo/about.html', h1: 'About Averon Freight Solutions' },
+            { path: '/services', file: 'dist/seo/services.html', h1: 'Freight & Logistics Solutions' },
+            { path: '/services/ocean-freight', file: 'dist/seo/services-ocean-freight.html', h1: 'Ocean Freight — FCL & LCL' },
+            { path: '/services/air-freight', file: 'dist/seo/services-air-freight.html', h1: 'Fast, Reliable Air Freight Solutions' },
+            { path: '/services/customs-clearance', file: 'dist/seo/services-customs-clearance.html', h1: 'Smooth Customs. Efficient Cargo Movement.' },
+            { path: '/services/road-inland-transport', file: 'dist/seo/services-road-inland-transport.html', h1: 'Reliable Road & Inland Transport Solutions' },
+            { path: '/services/warehousing-distribution', file: 'dist/seo/services-warehousing-distribution.html', h1: 'Warehousing & Distribution Support' },
+            { path: '/services/supply-chain-management', file: 'dist/seo/services-supply-chain-management.html', h1: 'Supply Chain Management' },
+            { path: '/lcl-consolidation', file: 'dist/seo/lcl-consolidation.html', h1: 'LCL Consolidation' },
+            { path: '/global-reach', file: 'dist/seo/global-reach.html', h1: 'Connecting Businesses Across International Trade Routes' },
+            { path: '/contact', file: 'dist/seo/contact.html', h1: 'Tell Us About Your Shipment' },
+            { path: '/shipment-status', file: 'dist/seo/shipment-status.html', h1: 'Track Your Shipment' },
+            { path: '/privacy-policy', file: 'dist/seo/privacy-policy.html', h1: 'Privacy Policy' },
+            { path: '/terms-and-conditions', file: 'dist/seo/terms-and-conditions.html', h1: 'Terms & Conditions' },
+            { path: '/services/project-cargo-breakbulk', file: 'dist/seo/project-cargo-breakbulk.html', h1: 'Project Cargo & Breakbulk' },
+          ];
+
+          const decodeHtml = (value) => value
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, '&');
+
+          const vercel = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+          const sitemapXml = fs.readFileSync('dist/sitemap.xml', 'utf8');
+          const sitemapPaths = [...sitemapXml.matchAll(/<loc>(.*?)<\/loc>/g)]
+            .map(([, url]) => new URL(url).pathname);
+
+          for (const page of pages) {
+            const html = fs.readFileSync(page.file, 'utf8');
+            const allHeadings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
+            const root = html.match(/<div\s+id="root">([\s\S]*?)<\/div>/i);
+            const rootHeadings = root
+              ? [...root[1].matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
+              : [];
+
+            if (allHeadings.length !== 1 || rootHeadings.length !== 1) {
+              throw new Error(page.path + ': expected exactly one raw H1 inside #root; found ' + allHeadings.length + ' total and ' + rootHeadings.length + ' inside #root.');
+            }
+
+            const actual = decodeHtml(rootHeadings[0][1].replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim();
+            if (actual !== page.h1) {
+              throw new Error(page.path + ': expected raw H1 "' + page.h1 + '", got "' + actual + '".');
+            }
+
+            if (page.path !== '/') {
+              const rewrite = vercel.rewrites.find((item) => item.source === page.path);
+              const expectedDestination = '/' + page.file.replace(/^dist\//, '');
+              if (!rewrite || rewrite.destination !== expectedDestination) {
+                throw new Error(page.path + ': Vercel rewrite does not target ' + expectedDestination + '.');
+              }
+            }
+
+            console.log('PASS raw HTML H1 — ' + page.path + ': ' + actual);
+          }
+
+          if (sitemapPaths.length !== 13) {
+            throw new Error('Expected 13 sitemap URLs; found ' + sitemapPaths.length + '.');
+          }
+          const missing = sitemapPaths.filter((path) => !pages.some((page) => page.path === path));
+          if (missing.length) {
+            throw new Error('Sitemap URLs without raw-H1 validation: ' + missing.join(', '));
+          }
+
+          console.log('PASS: all 13 sitemap URLs have the expected H1 in their production HTML files and Vercel route mappings.');
+          console.log('PASS: legal and pending-confirmation routes also have route-specific raw H1 fallbacks.');
+          NODE
+
       - name: Production dependency security audit
         run: npm run audit:prod
 
@@ -107,6 +185,14 @@ jobs:
               grep -o '<h1[^>]*>[^<]*' "$output" | head -n 5 || true
               return 1
             fi
+            
+            local h1_count
+            h1_count="$(grep -oE '<h1([[:space:]>])' "$output" | wc -l | tr -d '[:space:]')"
+            if [ "$h1_count" -ne 1 ]; then
+              echo "Expected exactly one rendered H1 for $slug; found $h1_count."
+              grep -o '<h1[^>]*>[^<]*' "$output" | head -n 5 || true
+              return 1
+            fi
           }
 
           # Direct-route desktop rendering validates refreshability for every public route.
@@ -121,7 +207,7 @@ jobs:
           render_and_check "/services/supply-chain-management" "Supply Chain Management" "1440,1000" "supply-chain-desktop"
           render_and_check "/lcl-consolidation" "LCL Consolidation" "1440,1000" "lcl-desktop"
           render_and_check "/global-reach" "Global Reach" "1440,1000" "global-desktop"
-          render_and_check "/contact" "Start With Your Shipment Details" "1440,1000" "contact-desktop"
+          render_and_check "/contact" "Tell Us About Your Shipment" "1440,1000" "contact-desktop"
           render_and_check "/shipment-status" "Track Your Shipment" "1440,1000" "status-desktop"
           render_and_check "/privacy-policy" "Privacy Policy" "1440,1000" "privacy-desktop"
           render_and_check "/terms-and-conditions" "Terms & Conditions" "1440,1000" "terms-desktop"
@@ -133,14 +219,14 @@ jobs:
           render_and_check "/services" "Freight & Logistics" "390,844" "services-mobile"
           render_and_check "/services/ocean-freight" "Ocean Freight" "390,844" "ocean-mobile"
           render_and_check "/global-reach" "Global Reach" "390,844" "global-mobile"
-          render_and_check "/contact" "Start With Your Shipment Details" "390,844" "contact-mobile"
+          render_and_check "/contact" "Tell Us About Your Shipment" "390,844" "contact-mobile"
           render_and_check "/shipment-status" "Track Your Shipment" "390,844" "status-mobile"
 
           # Representative tablet viewports catch breakpoint and navigation regressions.
           render_and_check "/" "Connecting Your Cargo to Global Markets" "768,1024" "home-tablet"
           render_and_check "/services" "Freight & Logistics" "768,1024" "services-tablet"
           render_and_check "/global-reach" "Global Reach" "768,1024" "global-tablet"
-          render_and_check "/contact" "Start With Your Shipment Details" "768,1024" "contact-tablet"
+          render_and_check "/contact" "Tell Us About Your Shipment" "768,1024" "contact-tablet"
           render_and_check "/shipment-status" "Track Your Shipment" "768,1024" "status-tablet"
 
       - name: Local Lighthouse quality audit

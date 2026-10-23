@@ -67,6 +67,38 @@ const STATIC_SEO_ROUTES: StaticSeoRoute[] = [
   },
 ];
 
+const STATIC_SERVICE_H1: Record<string, string> = {
+  "ocean-freight": "Ocean Freight — FCL & LCL",
+  "air-freight": "Fast, Reliable Air Freight Solutions",
+  "customs-clearance": "Smooth Customs. Efficient Cargo Movement.",
+  "road-inland-transport": "Reliable Road & Inland Transport Solutions",
+  "warehousing-distribution": "Warehousing & Distribution Support",
+  "supply-chain-management": "Supply Chain Management",
+  "project-cargo": "Project Cargo & Breakbulk",
+};
+
+const STATIC_PAGE_H1: Partial<Record<AppPage, string>> = {
+  home: "Connecting Your Cargo to Global Markets",
+  about: "About Averon Freight Solutions",
+  services: "Freight & Logistics Solutions",
+  "lcl-consolidation": "LCL Consolidation",
+  "global-reach": "Connecting Businesses Across International Trade Routes",
+  contact: "Tell Us About Your Shipment",
+  "track-shipment": "Track Your Shipment",
+  "privacy-policy": "Privacy Policy",
+  "terms-conditions": "Terms & Conditions",
+  "project-cargo-pending": "Project Cargo & Breakbulk",
+  "not-found": "Page Not Found",
+};
+
+const getStaticH1 = (
+  page: AppPage,
+  serviceId?: string
+): string | undefined =>
+  page === "service-detail"
+    ? STATIC_SERVICE_H1[serviceId ?? ""]
+    : STATIC_PAGE_H1[page];
+
 const escapeHtml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
@@ -154,6 +186,25 @@ const renderStaticSeoHtml = (
     `<script id="structured-data" type="application/ld+json">${JSON.stringify(
       structuredData
     ).replace(/</g, "\\u003c")}</script>`
+  );
+
+  // Keep the primary heading in the initial HTML response for crawlers that
+  // do not execute the client-side React bundle. React's createRoot replaces
+  // this temporary fallback when the full page mounts, so the visible site
+  // design and its single rendered H1 remain unchanged.
+  const h1 = getStaticH1(page, serviceId);
+  if (!h1) {
+    throw new Error(`Missing static H1 mapping for route: ${page}${serviceId ? ` (${serviceId})` : ""}`);
+  }
+
+  const rootPattern = /<div\s+id="root">\s*<\/div>/i;
+  if (!rootPattern.test(html)) {
+    throw new Error("Could not find the empty React root while generating static SEO HTML.");
+  }
+
+  html = html.replace(
+    rootPattern,
+    `<div id="root"><h1 id="seo-fallback-h1" style="margin:0;padding:24px 16px;max-width:880px;color:#fff;font-family:Inter,Arial,sans-serif;font-size:clamp(2rem,5vw,3.625rem);font-weight:800;line-height:1.05;letter-spacing:-0.035em;">${escapeHtml(h1)}</h1></div>`
   );
 
   return html;
