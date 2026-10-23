@@ -33,6 +33,45 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Verify image alt attributes
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const roots = ['src', 'dist'];
+          const extensions = new Set(['.tsx', '.jsx', '.html', '.htm']);
+          const files = [];
+
+          function collect(directory) {
+            for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+              const fullPath = path.join(directory, entry.name);
+              if (entry.isDirectory()) collect(fullPath);
+              else if (extensions.has(path.extname(entry.name))) files.push(fullPath);
+            }
+          }
+
+          for (const root of roots) {
+            if (fs.existsSync(root)) collect(root);
+          }
+
+          let imageCount = 0;
+          for (const file of files) {
+            const source = fs.readFileSync(file, 'utf8');
+            const images = [...source.matchAll(/<img\\b[\\s\\S]*?>/gi)];
+            for (let index = 0; index < images.length; index += 1) {
+              if (!/\\balt\\s*=/.test(images[index][0])) {
+                throw new Error(file + ': <img> #' + (index + 1) + ' is missing an alt attribute.');
+              }
+              imageCount += 1;
+            }
+          }
+
+          if (imageCount === 0) throw new Error('No image elements were checked.');
+          console.log('PASS: ' + imageCount + ' image elements declare an alt attribute.');
+          NODE
+
       - name: Verify generated SEO route metadata
         shell: bash
         run: |
