@@ -158,6 +158,8 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <img
             src="/SVG%20Final/AFS%20-%20Horizontal%20SVG.svg"
+            width={167}
+            height={52}
             alt="Averon Freight Solutions LLP"
             loading="eager"
             fetchPriority="high"
