@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 
 const AirFreightPage = lazy(() =>
   import('./AirFreightPage').then((module) => ({ default: module.AirFreightPage }))
@@ -53,15 +53,5 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
     }
   };
 
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-[55vh] bg-white" aria-busy="true" aria-live="polite">
-          <span className="sr-only">Loading service</span>
-        </div>
-      }
-    >
-      {renderService()}
-    </Suspense>
-  );
+  return renderService();
 };

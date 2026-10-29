@@ -2,7 +2,7 @@ import React from 'react';
 
 export const PageLoader: React.FC = () => (
   <div
-    className="relative flex min-h-[calc(100dvh-100px)] items-center justify-center overflow-hidden bg-[#071a33] px-4 text-white"
+    className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-[#071a33] px-4 text-white"
     role="status"
     aria-live="polite"
     aria-label="Loading Averon Freight Solutions"
