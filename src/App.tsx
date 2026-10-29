@@ -4,8 +4,10 @@ import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { PageLoader } from './components/PageLoader';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
-import { HomePage } from './pages/HomePage';
 
+const HomePage = lazy(() =>
+  import('./pages/HomePage').then((module) => ({ default: module.HomePage }))
+);
 const AboutPage = lazy(() =>
   import('./pages/AboutPage').then((module) => ({ default: module.AboutPage }))
 );
@@ -198,34 +200,34 @@ export function App() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-[#c9a227] selection:text-[#071a33]">
-      <Header
-        currentPage={currentPage}
-        onNavigate={handleNavigate}
-        onOpenTrackModal={() => handleNavigate('track-shipment')}
-        onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-      />
+    <Suspense fallback={<PageLoader />}>
+      <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 selection:bg-[#c9a227] selection:text-[#071a33]">
+        <Header
+          currentPage={currentPage}
+          onNavigate={handleNavigate}
+          onOpenTrackModal={() => handleNavigate('track-shipment')}
+          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+        />
 
-      <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-grow outline-none">
-        <Suspense fallback={<PageLoader />}>
+        <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-grow outline-none">
           {renderCurrentPage()}
-        </Suspense>
-      </main>
+        </main>
 
-      <Footer
-        onNavigate={handleNavigate}
-        onOpenTrackModal={() => handleNavigate('track-shipment')}
-        onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-      />
+        <Footer
+          onNavigate={handleNavigate}
+          onOpenTrackModal={() => handleNavigate('track-shipment')}
+          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+        />
 
-      <FloatingWhatsApp />
+        <FloatingWhatsApp />
 
-      <QuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={() => setIsQuoteModalOpen(false)}
-        onNavigateToFullContact={() => handleNavigate('contact')}
-      />
-    </div>
+        <QuoteModal
+          isOpen={isQuoteModalOpen}
+          onClose={() => setIsQuoteModalOpen(false)}
+          onNavigateToFullContact={() => handleNavigate('contact')}
+        />
+      </div>
+    </Suspense>
   );
 }
 
